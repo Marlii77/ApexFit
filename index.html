@@ -5,22 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Fitness & Habits</title>
+    <title>Marlii – Focus, Fitness & Habits</title>
     
-    <!-- Icons & Moderne Schriftart -->
+    <!-- Icons & Inter Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
 
     <style>
         :root {
             --bg-main: #09090b;
             --card-bg: rgba(24, 24, 28, 0.85);
-            --card-inner: #222228;
+            --card-inner: #1f1f25;
             --border-subtle: rgba(255, 255, 255, 0.08);
-            --accent: #ffffff; /* Bevel nutzt oft starkes Weiß/Silber als edlen Akzent */
-            --accent-blue: #0a84ff;
+            --border-highlight: rgba(255, 255, 255, 0.14);
             --text-main: #f4f4f6;
             --text-muted: #8e8e93;
+            --accent-blue: #0a84ff;
+            --accent-green: #30d158;
+            --accent-purple: #bf5af2;
+            --accent-orange: #ff9f0a;
             --danger: #ff453a;
         }
 
@@ -33,49 +36,56 @@
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
             background-color: var(--bg-main);
-            /* Edler, subtiler Lichtschein oben wie bei Bevel */
-            background-image: radial-gradient(circle at 50% -10%, rgba(50, 60, 90, 0.28), transparent 60%);
+            background-image: 
+                radial-gradient(circle at 50% -15%, rgba(56, 75, 115, 0.32), transparent 55%),
+                radial-gradient(circle at 85% 20%, rgba(48, 209, 88, 0.06), transparent 40%);
             background-attachment: fixed;
             color: var(--text-main); 
             margin: 0; 
-            padding: 0 0 110px 0; 
+            padding: 0 0 115px 0; 
             min-height: 100vh;
         }
 
-        /* --- HEADER MIT PLUS-BUTTON --- */
+        /* --- HEADER --- */
         .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 45px 22px 20px 22px;
+            padding: 45px 22px 18px 22px;
             position: sticky;
             top: 0;
             z-index: 10;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: rgba(9, 9, 11, 0.7);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
         }
 
         .page-header h1 {
-            font-size: 30px;
+            font-size: 28px;
             font-weight: 700;
             margin: 0;
             letter-spacing: -0.6px;
         }
 
         .subtitle-date {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
-            font-weight: 500;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
+            letter-spacing: 0.8px;
             margin-bottom: 4px;
         }
 
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
         .icon-btn-top {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.09);
             border: 1px solid var(--border-subtle);
             color: var(--text-main);
             display: flex;
@@ -90,38 +100,323 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
-        /* --- KATEGORIEN & CARDS (BEVEL STYLE) --- */
         .container {
             padding: 0 20px;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .category-card {
+        /* --- BEVEL CARDS & BENTO GRID --- */
+        .bevel-card {
             background: var(--card-bg);
             border: 1px solid var(--border-subtle);
             border-radius: 24px;
             padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            margin-bottom: 18px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(20px);
         }
 
-        .category-header {
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .bento-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        .bento-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .bento-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* --- SVG SCORE RINGS (BEVEL STYLE) --- */
+        .ring-wrapper {
+            position: relative;
+            width: 108px;
+            height: 108px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 4px 0 12px 0;
+        }
+
+        .ring-svg {
+            width: 108px;
+            height: 108px;
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.07);
+            stroke-width: 10;
+        }
+
+        .ring-progress {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+            stroke-dasharray: 276.46; /* 2 * PI * 44 */
+            stroke-dashoffset: 276.46;
+            transition: stroke-dashoffset 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .ring-center {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ring-value {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+        }
+
+        .ring-sub {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 1px;
+        }
+
+        .bento-footer {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        /* --- 7-TAGE MATRIX --- */
+        .card-title-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 16px;
         }
 
-        .category-title-group {
+        .card-title-row h3 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .matrix-header-day {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+            padding-bottom: 10px;
+        }
+
+        .matrix-header-day.is-today {
+            color: var(--text-main);
+        }
+
+        .matrix-day-num {
+            display: block;
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 2px;
+        }
+
+        .matrix-row {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .matrix-habit-name {
+            padding: 12px 8px 12px 0;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 120px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .cat-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .matrix-cell {
+            text-align: center;
+            padding: 6px 2px;
+        }
+
+        .matrix-dot-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: transparent;
+            transition: all 0.18s ease;
+        }
+
+        .matrix-dot-btn.done {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+            color: #000;
+            box-shadow: 0 0 10px rgba(48, 209, 88, 0.35);
+        }
+
+        /* --- HABITS REITER (ZIELE & ROUTINEN) --- */
+        .action-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .action-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            padding: 12px 14px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .action-btn.primary-tint {
+            background: rgba(10, 132, 255, 0.15);
+            border-color: rgba(10, 132, 255, 0.35);
+            color: #5ac8fa;
+        }
+
+        .action-btn:active { transform: scale(0.97); }
+
+        .habit-item-row {
+            background: var(--card-inner);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 13px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+        }
+        .habit-item-row:last-child { margin-bottom: 0; }
+
+        .habit-left {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .check-circle {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .habit-item-row.completed .check-circle {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 12px rgba(48, 209, 88, 0.4);
+        }
+
+        .habit-item-row.completed .habit-title {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        .habit-title {
+            font-size: 15px;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .habit-right {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .category-title {
-            font-size: 19px;
+        .streak-pill {
+            font-size: 11px;
             font-weight: 600;
-            letter-spacing: -0.3px;
+            background: rgba(255, 159, 10, 0.12);
+            color: var(--accent-orange);
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+
+        /* --- FITNESS REITER ELEMENTE --- */
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .category-title-group {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: 600;
             margin: 0;
         }
 
@@ -130,13 +425,13 @@
             color: var(--text-muted);
             font-size: 12px;
             font-weight: 600;
-            padding: 3px 9px;
+            padding: 2px 8px;
             border-radius: 20px;
         }
 
         .category-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             align-items: center;
         }
 
@@ -144,18 +439,15 @@
             background: rgba(255, 255, 255, 0.09);
             border: 1px solid var(--border-subtle);
             color: var(--text-main);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            padding: 7px 13px;
+            padding: 6px 12px;
             border-radius: 20px;
             display: flex;
             align-items: center;
             gap: 4px;
             cursor: pointer;
-            transition: all 0.15s ease;
         }
-
-        .btn-pill:active { transform: scale(0.95); }
 
         .btn-delete-icon {
             background: transparent;
@@ -168,7 +460,6 @@
         }
         .btn-delete-icon:hover { color: var(--danger); }
 
-        /* --- ÜBUNGS-ELEMENTE & DIREKT-EDITIERUNG --- */
         .exercise-item {
             background: var(--card-inner);
             border: 1px solid rgba(255, 255, 255, 0.04);
@@ -182,13 +473,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .exercise-name {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
-            color: var(--text-main);
         }
 
         .metrics-grid {
@@ -205,7 +495,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: border-color 0.2s ease;
         }
 
         .metric-box:focus-within {
@@ -217,7 +506,6 @@
             font-size: 10px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
             color: var(--text-muted);
             margin-bottom: 4px;
         }
@@ -234,7 +522,6 @@
             padding: 0;
         }
 
-        /* Entfernt Standard-Pfeile bei Zahlen-Inputs */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -243,13 +530,13 @@
 
         .empty-hint {
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: 13px;
             text-align: center;
-            padding: 12px 0;
+            padding: 10px 0;
             margin: 0;
         }
 
-        /* --- MODAL / BOTTOM SHEET (FÜR EINGABEN) --- */
+        /* --- MODALS / BOTTOM SHEETS --- */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -261,7 +548,6 @@
             align-items: flex-end;
             justify-content: center;
         }
-
         .modal-overlay.open { display: flex; }
 
         .bottom-sheet {
@@ -293,20 +579,17 @@
             margin: 0 0 18px 0;
         }
 
-        .form-field {
-            margin-bottom: 14px;
-        }
-
+        .form-field { margin-bottom: 14px; }
         .form-field label {
             display: block;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
             font-weight: 600;
             margin-bottom: 6px;
             text-transform: uppercase;
         }
 
-        .form-input {
+        .form-input, .form-select {
             width: 100%;
             padding: 14px 16px;
             border-radius: 14px;
@@ -315,6 +598,25 @@
             color: white;
             font-size: 16px;
             font-family: inherit;
+        }
+
+        .color-picker-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .color-swatch {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.15s ease;
+        }
+        .color-swatch.selected {
+            border-color: #fff;
+            transform: scale(1.12);
         }
 
         .form-row-3 {
@@ -352,7 +654,7 @@
             cursor: pointer;
         }
 
-        /* --- NAVIGATION UNTEN --- */
+        /* --- FLOATING NAVIGATION UNTEN --- */
         .bottom-nav {
             position: fixed;
             bottom: 18px;
@@ -361,7 +663,7 @@
             width: calc(100% - 40px);
             max-width: 400px;
             height: 68px;
-            background-color: rgba(24, 24, 28, 0.8);
+            background-color: rgba(24, 24, 28, 0.82);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -369,7 +671,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
             z-index: 50;
         }
 
@@ -379,20 +681,19 @@
             align-items: center;
             color: var(--text-muted);
             cursor: pointer;
-            padding: 8px 18px;
+            padding: 8px 20px;
             border-radius: 25px;
             transition: all 0.2s ease;
         }
 
         .nav-item.active { 
             color: var(--text-main);
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.09);
         }
 
         .nav-item span.material-symbols-rounded { font-size: 24px; margin-bottom: 2px; }
         .nav-item span.label { font-size: 10px; font-weight: 600; }
 
-        /* Ansichten */
         .view { display: none; animation: fadeIn 0.25s ease; }
         .view.active { display: block; }
 
@@ -404,76 +705,141 @@
 </head>
 <body>
 
-    <!-- 1. HOME REITER -->
-    <div id="view-home" class="view">
+    <!-- ==========================================
+         1. HOME REITER (BEVEL DASHBOARD)
+         ========================================== -->
+    <div id="view-home" class="view active">
         <div class="page-header">
             <div>
-                <div class="subtitle-date">Dashboard</div>
+                <div class="subtitle-date" id="current-date-label">HEUTE</div>
                 <h1>Guten Tag, Marlii</h1>
             </div>
         </div>
+
         <div class="container">
-            <div class="category-card">
-                <h3 style="margin-top:0;">Dein Überblick</h3>
-                <p style="color: var(--text-muted); font-size: 14px; line-height: 1.5; margin-bottom:0;">
-                    Wechsle unten auf den Reiter <b>Fitness</b>, um deine Kategorien und Übungen im neuen Design zu verwalten.
-                </p>
+            <!-- BENTO SCORE RINGS: DAILY FOCUS & WEEKLY CONSISTENCY -->
+            <div class="bento-grid">
+                <!-- Daily Focus -->
+                <div class="bento-card">
+                    <div class="bento-header">
+                        <span class="bento-title">Daily Focus</span>
+                        <span class="material-symbols-rounded" style="font-size:18px; color:var(--accent-blue);">bolt</span>
+                    </div>
+                    <div class="ring-wrapper">
+                        <svg class="ring-svg" viewBox="0 0 100 100">
+                            <circle class="ring-bg" cx="50" cy="50" r="44"></circle>
+                            <circle id="ring-daily" class="ring-progress" cx="50" cy="50" r="44" stroke="var(--accent-blue)"></circle>
+                        </svg>
+                        <div class="ring-center">
+                            <span class="ring-value" id="daily-score-val">0%</span>
+                            <span class="ring-sub">Heute</span>
+                        </div>
+                    </div>
+                    <div class="bento-footer" id="daily-score-sub">0 von 0 erledigt</div>
+                </div>
+
+                <!-- Weekly Consistency -->
+                <div class="bento-card">
+                    <div class="bento-header">
+                        <span class="bento-title">Consistency</span>
+                        <span class="material-symbols-rounded" style="font-size:18px; color:var(--accent-green);">local_fire_department</span>
+                    </div>
+                    <div class="ring-wrapper">
+                        <svg class="ring-svg" viewBox="0 0 100 100">
+                            <circle class="ring-bg" cx="50" cy="50" r="44"></circle>
+                            <circle id="ring-weekly" class="ring-progress" cx="50" cy="50" r="44" stroke="var(--accent-green)"></circle>
+                        </svg>
+                        <div class="ring-center">
+                            <span class="ring-value" id="weekly-score-val">0%</span>
+                            <span class="ring-sub">7 Tage</span>
+                        </div>
+                    </div>
+                    <div class="bento-footer" id="weekly-score-sub">0 Check-ins</div>
+                </div>
+            </div>
+
+            <!-- 7-TAGE MATRIX -->
+            <div class="bevel-card">
+                <div class="card-title-row">
+                    <div>
+                        <h3>7-Tage Matrix</h3>
+                        <span class="card-subtitle">Tippe auf ein Feld zum Abhaken</span>
+                    </div>
+                    <span class="material-symbols-rounded" style="color:var(--text-muted);">calendar_view_week</span>
+                </div>
+                <div id="matrix-container"></div>
             </div>
         </div>
     </div>
 
-    <!-- 2. FITNESS REITER (Jetzt als Standard aktiv zum direkten Testen) -->
-    <div id="view-fitness" class="view active">
+    <!-- ==========================================
+         2. FITNESS REITER
+         ========================================== -->
+    <div id="view-fitness" class="view">
         <div class="page-header">
             <div>
                 <div class="subtitle-date">Training & Split</div>
                 <h1>Fitness</h1>
             </div>
-            <!-- Oben rechts: Plus für neue Kategorie -->
-            <button class="icon-btn-top" onclick="openCategoryModal()" title="Neue Kategorie">
+            <button class="icon-btn-top" onclick="openFitnessCategoryModal()" title="Neue Kategorie">
                 <span class="material-symbols-rounded">add</span>
             </button>
         </div>
 
-        <!-- Hier werden alle Kategorien (Brust, Arme, etc.) dynamisch reingeladen -->
         <div class="container" id="fitness-categories-container"></div>
     </div>
 
-    <!-- 3. HABITS REITER -->
+    <!-- ==========================================
+         3. HABITS REITER (ZIELE & ROUTINEN)
+         ========================================== -->
     <div id="view-habits" class="view">
         <div class="page-header">
             <div>
-                <div class="subtitle-date">Tägliche Routine</div>
+                <div class="subtitle-date">Tägliche Ziele & Routinen</div>
                 <h1>Habits</h1>
             </div>
         </div>
+
         <div class="container">
-            <div class="category-card">
-                <p style="color: var(--text-muted); font-size: 14px; margin:0;">
-                    Den Habits-Bereich bauen wir als Nächstes im gleichen Stil aus.
-                </p>
+            <!-- Buttons für Kategorie & Neues Ziel -->
+            <div class="action-bar">
+                <button class="action-btn" onclick="openHabitCategoryModal()">
+                    <span class="material-symbols-rounded" style="font-size:19px;">create_new_folder</span>
+                    + Kategorie
+                </button>
+                <button class="action-btn primary-tint" onclick="openNewHabitModal()">
+                    <span class="material-symbols-rounded" style="font-size:19px;">add_task</span>
+                    + Neues Ziel
+                </button>
             </div>
+
+            <!-- Hier werden die Habit-Kategorien samt Zielen gerendert -->
+            <div id="habits-categories-container"></div>
         </div>
     </div>
 
-    <!-- POPUP 1: NEUE KATEGORIE HINZUFÜGEN -->
-    <div id="modal-category" class="modal-overlay" onclick="closeModals(event)">
+    <!-- ==========================================
+         MODALS FÜR FITNESS & HABITS
+         ========================================== -->
+
+    <!-- Modal 1: Fitness-Kategorie -->
+    <div id="modal-fit-category" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
-            <h3 class="sheet-title">Neue Kategorie</h3>
+            <h3 class="sheet-title">Neue Muskelgruppe</h3>
             <div class="form-field">
-                <label>Name der Muskelgruppe / Kategorie</label>
-                <input type="text" id="input-cat-name" class="form-input" placeholder="z.B. Brust, Arme, Push, Beine...">
+                <label>Name der Kategorie</label>
+                <input type="text" id="input-fit-cat-name" class="form-input" placeholder="z.B. Brust, Arme, Rücken, Beine...">
             </div>
             <div class="sheet-actions">
                 <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
-                <button class="btn-primary" onclick="saveCategory()">Erstellen</button>
+                <button class="btn-primary" onclick="saveFitnessCategory()">Erstellen</button>
             </div>
         </div>
     </div>
 
-    <!-- POPUP 2: NEUE ÜBUNG HINZUFÜGEN -->
-    <div id="modal-exercise" class="modal-overlay" onclick="closeModals(event)">
+    <!-- Modal 2: Fitness-Übung -->
+    <div id="modal-fit-exercise" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
             <h3 class="sheet-title">Übung hinzufügen</h3>
@@ -497,18 +863,66 @@
             </div>
             <div class="sheet-actions">
                 <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
-                <button class="btn-primary" onclick="saveExercise()">Speichern</button>
+                <button class="btn-primary" onclick="saveFitnessExercise()">Speichern</button>
             </div>
         </div>
     </div>
 
-    <!-- SCHWEBENDE NAVIGATION UNTEN (Floating Dock) -->
+    <!-- Modal 3: Neue Habit-Kategorie -->
+    <div id="modal-habit-category" class="modal-overlay" onclick="closeModals()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Neue Ziel-Kategorie</h3>
+            <div class="form-field">
+                <label>Name der Kategorie</label>
+                <input type="text" id="input-habit-cat-name" class="form-input" placeholder="z.B. Supplements, Skincare, Coding...">
+            </div>
+            <div class="form-field">
+                <label>Akzentfarbe</label>
+                <div class="color-picker-row" id="habit-color-picker">
+                    <div class="color-swatch selected" data-color="#0a84ff" style="background:#0a84ff;" onclick="selectColor(this)"></div>
+                    <div class="color-swatch" data-color="#30d158" style="background:#30d158;" onclick="selectColor(this)"></div>
+                    <div class="color-swatch" data-color="#bf5af2" style="background:#bf5af2;" onclick="selectColor(this)"></div>
+                    <div class="color-swatch" data-color="#ff9f0a" style="background:#ff9f0a;" onclick="selectColor(this)"></div>
+                    <div class="color-swatch" data-color="#ff375f" style="background:#ff375f;" onclick="selectColor(this)"></div>
+                </div>
+            </div>
+            <div class="sheet-actions">
+                <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
+                <button class="btn-primary" onclick="saveHabitCategory()">Erstellen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Neues Ziel / Habit -->
+    <div id="modal-habit-item" class="modal-overlay" onclick="closeModals()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Neues tägliches Ziel</h3>
+            <div class="form-field">
+                <label>Name des Ziels / der Routine</label>
+                <input type="text" id="input-habit-name" class="form-input" placeholder="z.B. Creatin (5g), Gua Sha, 1h Coding...">
+            </div>
+            <div class="form-field">
+                <label>Kategorie auswählen</label>
+                <select id="select-habit-cat" class="form-select"></select>
+            </div>
+            <div class="sheet-actions">
+                <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
+                <button class="btn-primary" onclick="saveNewHabit()">Hinzufügen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         FLOATING BOTTOM DOCK
+         ========================================== -->
     <nav class="bottom-nav">
-        <div class="nav-item" onclick="switchTab('home', this)">
+        <div class="nav-item active" onclick="switchTab('home', this)">
             <span class="material-symbols-rounded">space_dashboard</span>
             <span class="label">Home</span>
         </div>
-        <div class="nav-item active" onclick="switchTab('fitness', this)">
+        <div class="nav-item" onclick="switchTab('fitness', this)">
             <span class="material-symbols-rounded">fitness_center</span>
             <span class="label">Fitness</span>
         </div>
@@ -519,7 +933,50 @@
     </nav>
 
     <script>
-        // Standard-Daten beim ersten Start (falls noch nichts gespeichert wurde)
+        /* --- HILFSFUNKTIONEN FÜR DATUM --- */
+        function getDateKey(dateObj) {
+            const y = dateObj.getFullYear();
+            const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const d = String(dateObj.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        function getLast7Days() {
+            const days = [];
+            const dayNames = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                days.push({
+                    key: getDateKey(d),
+                    dayName: dayNames[d.getDay()],
+                    dayNum: d.getDate(),
+                    isToday: i === 0
+                });
+            }
+            return days;
+        }
+
+        // Datum im Header setzen
+        const now = new Date();
+        const options = { weekday: 'long', day: 'numeric', month: 'short' };
+        document.getElementById('current-date-label').innerText = now.toLocaleDateString('de-DE', options);
+
+        /* --- DATEN LADEN (MIT SINNVOLLEN STARTWERTE) --- */
+        const todayKey = getDateKey(new Date());
+
+        let habitCategories = JSON.parse(localStorage.getItem('marlii_habit_cats')) || [
+            { id: 'hcat_1', name: 'Supplements', color: '#0a84ff' },
+            { id: 'hcat_2', name: 'Daily Routine & Focus', color: '#30d158' }
+        ];
+
+        let habitsList = JSON.parse(localStorage.getItem('marlii_habits_list')) || [
+            { id: 'hab_1', catId: 'hcat_1', name: 'Creatin (5g)', history: { [todayKey]: true } },
+            { id: 'hab_2', catId: 'hcat_1', name: 'Magnesium & Omega-3', history: {} },
+            { id: 'hab_3', catId: 'hcat_2', name: 'Morning Care / Ice Roller', history: { [todayKey]: true } },
+            { id: 'hab_4', catId: 'hcat_2', name: 'Fokus-Session / Projekt', history: {} }
+        ];
+
         let fitnessData = JSON.parse(localStorage.getItem('marlii_fitness_data')) || [
             {
                 id: 'cat_1',
@@ -539,29 +996,270 @@
             }
         ];
 
-        let currentCategoryId = null;
+        let currentFitCategoryId = null;
+        let selectedCatColor = '#0a84ff';
 
-        // Daten dauerhaft im Browser speichern
-        function saveData() {
+        function saveAll() {
+            localStorage.setItem('marlii_habit_cats', JSON.stringify(habitCategories));
+            localStorage.setItem('marlii_habits_list', JSON.stringify(habitsList));
             localStorage.setItem('marlii_fitness_data', JSON.stringify(fitnessData));
         }
 
-        // Fitness-Kategorien und Übungen aufbauen
+        /* --- STREAK BERECHNEN --- */
+        function calculateStreak(habit) {
+            let streak = 0;
+            let d = new Date();
+            // Wenn heute noch nicht erledigt, prüfen ob gestern erledigt war
+            if (!habit.history[getDateKey(d)]) {
+                d.setDate(d.getDate() - 1);
+            }
+            while (habit.history[getDateKey(d)]) {
+                streak++;
+                d.setDate(d.getDate() - 1);
+            }
+            return streak;
+        }
+
+        /* --- 1. HOME DASHBOARD RENDERN (RINGE + 7-TAGE MATRIX) --- */
+        function renderHome() {
+            const last7 = getLast7Days();
+            const tKey = last7[6].key; // Heute
+            const totalHabits = habitsList.length;
+
+            // Daily Focus berechnen
+            let doneToday = 0;
+            habitsList.forEach(h => {
+                if (h.history && h.history[tKey]) doneToday++;
+            });
+            const dailyPct = totalHabits > 0 ? Math.round((doneToday / totalHabits) * 100) : 0;
+
+            // Weekly Consistency berechnen
+            let totalPossibleWeek = totalHabits * 7;
+            let doneWeek = 0;
+            habitsList.forEach(h => {
+                last7.forEach(d => {
+                    if (h.history && h.history[d.key]) doneWeek++;
+                });
+            });
+            const weeklyPct = totalPossibleWeek > 0 ? Math.round((doneWeek / totalPossibleWeek) * 100) : 0;
+
+            // Ringe animieren (Umfang = 2 * PI * 44 = 276.46)
+            const circumference = 276.46;
+            document.getElementById('ring-daily').style.strokeDashoffset = circumference - (dailyPct / 100) * circumference;
+            document.getElementById('daily-score-val').innerText = `${dailyPct}%`;
+            document.getElementById('daily-score-sub').innerText = `${doneToday} von ${totalHabits} erledigt`;
+
+            document.getElementById('ring-weekly').style.strokeDashoffset = circumference - (weeklyPct / 100) * circumference;
+            document.getElementById('weekly-score-val').innerText = `${weeklyPct}%`;
+            document.getElementById('weekly-score-sub').innerText = `${doneWeek} Check-ins`;
+
+            // 7-Tage Matrix bauen
+            const matrixContainer = document.getElementById('matrix-container');
+            if (habitsList.length === 0) {
+                matrixContainer.innerHTML = `<p class="empty-hint">Noch keine Ziele im Reiter „Habits“ angelegt.</p>`;
+                return;
+            }
+
+            let tableHTML = `<table class="matrix-table"><thead><tr><th></th>`;
+            last7.forEach(d => {
+                tableHTML += `
+                    <th class="matrix-header-day ${d.isToday ? 'is-today' : ''}">
+                        ${d.dayName}
+                        <span class="matrix-day-num">${d.dayNum}</span>
+                    </th>`;
+            });
+            tableHTML += `</tr></thead><tbody>`;
+
+            habitsList.forEach(h => {
+                const cat = habitCategories.find(c => c.id === h.catId);
+                const dotColor = cat ? cat.color : '#8e8e93';
+
+                tableHTML += `
+                    <tr class="matrix-row">
+                        <td>
+                            <div class="matrix-habit-name">
+                                <span class="cat-dot" style="background:${dotColor};"></span>
+                                <span>${h.name}</span>
+                            </div>
+                        </td>`;
+
+                last7.forEach(d => {
+                    const isDone = h.history && h.history[d.key];
+                    tableHTML += `
+                        <td class="matrix-cell">
+                            <button class="matrix-dot-btn ${isDone ? 'done' : ''}" onclick="toggleHabitDate('${h.id}', '${d.key}')">
+                                <span class="material-symbols-rounded" style="font-size:16px;">check</span>
+                            </button>
+                        </td>`;
+                });
+
+                tableHTML += `</tr>`;
+            });
+
+            tableHTML += `</tbody></table>`;
+            matrixContainer.innerHTML = tableHTML;
+        }
+
+        /* --- 2. HABITS REITER RENDERN --- */
+        function renderHabits() {
+            const container = document.getElementById('habits-categories-container');
+            container.innerHTML = '';
+            const tKey = getDateKey(new Date());
+
+            if (habitCategories.length === 0) {
+                container.innerHTML = `<div class="bevel-card"><p class="empty-hint">Erstelle oben zuerst eine Kategorie.</p></div>`;
+                return;
+            }
+
+            habitCategories.forEach(cat => {
+                const catHabits = habitsList.filter(h => h.catId === cat.id);
+                const doneCount = catHabits.filter(h => h.history && h.history[tKey]).length;
+
+                let itemsHTML = '';
+                if (catHabits.length === 0) {
+                    itemsHTML = `<p class="empty-hint">Noch keine Ziele in dieser Kategorie</p>`;
+                } else {
+                    catHabits.forEach(h => {
+                        const isDone = h.history && h.history[tKey];
+                        const streak = calculateStreak(h);
+                        itemsHTML += `
+                        <div class="habit-item-row ${isDone ? 'completed' : ''}">
+                            <div class="habit-left" onclick="toggleHabitDate('${h.id}', '${tKey}')">
+                                <div class="check-circle">
+                                    ${isDone ? '<span class="material-symbols-rounded" style="font-size:16px; color:#000; font-weight:bold;">check</span>' : ''}
+                                </div>
+                                <span class="habit-title">${h.name}</span>
+                            </div>
+                            <div class="habit-right">
+                                ${streak > 0 ? `<span class="streak-pill">🔥 ${streak}d</span>` : ''}
+                                <button class="btn-delete-icon" onclick="deleteHabit('${h.id}')" title="Ziel löschen">
+                                    <span class="material-symbols-rounded" style="font-size:18px;">close</span>
+                                </button>
+                            </div>
+                        </div>`;
+                    });
+                }
+
+                container.innerHTML += `
+                <div class="bevel-card">
+                    <div class="category-header">
+                        <div class="category-title-group">
+                            <span class="cat-dot" style="background:${cat.color}; width:10px; height:10px;"></span>
+                            <h2 class="category-title">${cat.name}</h2>
+                            <span class="badge-count">${doneCount}/${catHabits.length}</span>
+                        </div>
+                        <button class="btn-delete-icon" onclick="deleteHabitCategory('${cat.id}')" title="Kategorie löschen">
+                            <span class="material-symbols-rounded" style="font-size:19px;">delete</span>
+                        </button>
+                    </div>
+                    <div>${itemsHTML}</div>
+                </div>`;
+            });
+        }
+
+        function toggleHabitDate(habitId, dateKey) {
+            const habit = habitsList.find(h => h.id === habitId);
+            if (!habit) return;
+            if (!habit.history) habit.history = {};
+
+            if (habit.history[dateKey]) {
+                delete habit.history[dateKey];
+            } else {
+                habit.history[dateKey] = true;
+            }
+            saveAll();
+            renderHome();
+            renderHabits();
+        }
+
+        function selectColor(el) {
+            document.querySelectorAll('#habit-color-picker .color-swatch').forEach(s => s.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedCatColor = el.getAttribute('data-color');
+        }
+
+        function openHabitCategoryModal() {
+            document.getElementById('input-habit-cat-name').value = '';
+            document.getElementById('modal-habit-category').classList.add('open');
+            setTimeout(() => document.getElementById('input-habit-cat-name').focus(), 100);
+        }
+
+        function saveHabitCategory() {
+            const name = document.getElementById('input-habit-cat-name').value.trim();
+            if (!name) return;
+            habitCategories.push({
+                id: 'hcat_' + Date.now(),
+                name: name,
+                color: selectedCatColor
+            });
+            saveAll();
+            renderHabits();
+            renderHome();
+            closeModals();
+        }
+
+        function deleteHabitCategory(catId) {
+            habitCategories = habitCategories.filter(c => c.id !== catId);
+            habitsList = habitsList.filter(h => h.catId !== catId);
+            saveAll();
+            renderHabits();
+            renderHome();
+        }
+
+        function openNewHabitModal() {
+            if (habitCategories.length === 0) {
+                openHabitCategoryModal();
+                return;
+            }
+            document.getElementById('input-habit-name').value = '';
+            const select = document.getElementById('select-habit-cat');
+            select.innerHTML = '';
+            habitCategories.forEach(c => {
+                select.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+            });
+            document.getElementById('modal-habit-item').classList.add('open');
+            setTimeout(() => document.getElementById('input-habit-name').focus(), 100);
+        }
+
+        function saveNewHabit() {
+            const name = document.getElementById('input-habit-name').value.trim();
+            const catId = document.getElementById('select-habit-cat').value;
+            if (!name || !catId) return;
+
+            habitsList.push({
+                id: 'hab_' + Date.now(),
+                catId: catId,
+                name: name,
+                history: {}
+            });
+            saveAll();
+            renderHabits();
+            renderHome();
+            closeModals();
+        }
+
+        function deleteHabit(habitId) {
+            habitsList = habitsList.filter(h => h.id !== habitId);
+            saveAll();
+            renderHabits();
+            renderHome();
+        }
+
+        /* --- 3. FITNESS REITER RENDERN --- */
         function renderFitness() {
             const container = document.getElementById('fitness-categories-container');
             container.innerHTML = '';
 
             if (fitnessData.length === 0) {
                 container.innerHTML = `
-                    <div class="category-card" style="text-align:center; padding: 40px 20px;">
-                        <p class="empty-hint">Noch keine Kategorien vorhanden.<br>Tippe oben rechts auf das <b>+</b>, um z.B. „Brust“ oder „Arme“ anzulegen.</p>
+                    <div class="bevel-card" style="text-align:center; padding: 35px 20px;">
+                        <p class="empty-hint">Noch keine Muskelgruppen vorhanden.<br>Tippe oben rechts auf das <b>+</b>.</p>
                     </div>`;
                 return;
             }
 
             fitnessData.forEach(cat => {
                 let exercisesHTML = '';
-
                 if (cat.exercises.length === 0) {
                     exercisesHTML = `<p class="empty-hint">Keine Übungen eingetragen</p>`;
                 } else {
@@ -570,7 +1268,7 @@
                         <div class="exercise-item">
                             <div class="exercise-top">
                                 <span class="exercise-name">${ex.name}</span>
-                                <button class="btn-delete-icon" onclick="deleteExercise('${cat.id}', '${ex.id}')" title="Übung löschen">
+                                <button class="btn-delete-icon" onclick="deleteFitnessExercise('${cat.id}', '${ex.id}')">
                                     <span class="material-symbols-rounded" style="font-size:18px;">close</span>
                                 </button>
                             </div>
@@ -578,17 +1276,17 @@
                                 <div class="metric-box">
                                     <span class="metric-label">Sätze</span>
                                     <input type="number" class="metric-input" value="${ex.sets}" 
-                                        onchange="updateMetric('${cat.id}', '${ex.id}', 'sets', this.value)">
+                                        onchange="updateFitnessMetric('${cat.id}', '${ex.id}', 'sets', this.value)">
                                 </div>
                                 <div class="metric-box">
                                     <span class="metric-label">Wdh.</span>
                                     <input type="number" class="metric-input" value="${ex.reps}" 
-                                        onchange="updateMetric('${cat.id}', '${ex.id}', 'reps', this.value)">
+                                        onchange="updateFitnessMetric('${cat.id}', '${ex.id}', 'reps', this.value)">
                                 </div>
                                 <div class="metric-box">
                                     <span class="metric-label">Gewicht (kg)</span>
                                     <input type="number" step="0.5" class="metric-input" value="${ex.weight}" 
-                                        onchange="updateMetric('${cat.id}', '${ex.id}', 'weight', this.value)">
+                                        onchange="updateFitnessMetric('${cat.id}', '${ex.id}', 'weight', this.value)">
                                 </div>
                             </div>
                         </div>`;
@@ -596,18 +1294,18 @@
                 }
 
                 container.innerHTML += `
-                <div class="category-card">
+                <div class="bevel-card">
                     <div class="category-header">
                         <div class="category-title-group">
                             <h2 class="category-title">${cat.name}</h2>
                             <span class="badge-count">${cat.exercises.length}</span>
                         </div>
                         <div class="category-actions">
-                            <button class="btn-pill" onclick="openExerciseModal('${cat.id}')">
-                                <span class="material-symbols-rounded" style="font-size:16px;">add</span> Übung
+                            <button class="btn-pill" onclick="openFitnessExerciseModal('${cat.id}')">
+                                <span class="material-symbols-rounded" style="font-size:15px;">add</span> Übung
                             </button>
-                            <button class="btn-delete-icon" onclick="deleteCategory('${cat.id}')" title="Kategorie löschen">
-                                <span class="material-symbols-rounded" style="font-size:20px;">delete</span>
+                            <button class="btn-delete-icon" onclick="deleteFitnessCategory('${cat.id}')">
+                                <span class="material-symbols-rounded" style="font-size:19px;">delete</span>
                             </button>
                         </div>
                     </div>
@@ -616,91 +1314,75 @@
             });
         }
 
-        // Werte (Sätze, Wdh, Gewicht) sofort beim Ändern speichern
-        function updateMetric(catId, exId, field, newValue) {
+        function updateFitnessMetric(catId, exId, field, newValue) {
             const category = fitnessData.find(c => c.id === catId);
             if (!category) return;
             const exercise = category.exercises.find(e => e.id === exId);
             if (!exercise) return;
-
             exercise[field] = parseFloat(newValue) || 0;
-            saveData();
+            saveAll();
         }
 
-        // Kategorie-Modal öffnen & speichern
-        function openCategoryModal() {
-            document.getElementById('input-cat-name').value = '';
-            document.getElementById('modal-category').classList.add('open');
-            setTimeout(() => document.getElementById('input-cat-name').focus(), 100);
+        function openFitnessCategoryModal() {
+            document.getElementById('input-fit-cat-name').value = '';
+            document.getElementById('modal-fit-category').classList.add('open');
+            setTimeout(() => document.getElementById('input-fit-cat-name').focus(), 100);
         }
 
-        function saveCategory() {
-            const name = document.getElementById('input-cat-name').value.trim();
+        function saveFitnessCategory() {
+            const name = document.getElementById('input-fit-cat-name').value.trim();
             if (!name) return;
-
-            fitnessData.push({
-                id: 'cat_' + Date.now(),
-                name: name,
-                exercises: []
-            });
-            saveData();
+            fitnessData.push({ id: 'cat_' + Date.now(), name: name, exercises: [] });
+            saveAll();
             renderFitness();
             closeModals();
         }
 
-        function deleteCategory(catId) {
+        function deleteFitnessCategory(catId) {
             fitnessData = fitnessData.filter(c => c.id !== catId);
-            saveData();
+            saveAll();
             renderFitness();
         }
 
-        // Übungs-Modal öffnen & speichern
-        function openExerciseModal(catId) {
-            currentCategoryId = catId;
+        function openFitnessExerciseModal(catId) {
+            currentFitCategoryId = catId;
             document.getElementById('input-ex-name').value = '';
             document.getElementById('input-ex-sets').value = '3';
             document.getElementById('input-ex-reps').value = '10';
             document.getElementById('input-ex-weight').value = '50';
-            document.getElementById('modal-exercise').classList.add('open');
+            document.getElementById('modal-fit-exercise').classList.add('open');
             setTimeout(() => document.getElementById('input-ex-name').focus(), 100);
         }
 
-        function saveExercise() {
+        function saveFitnessExercise() {
             const name = document.getElementById('input-ex-name').value.trim();
             const sets = parseFloat(document.getElementById('input-ex-sets').value) || 0;
             const reps = parseFloat(document.getElementById('input-ex-reps').value) || 0;
             const weight = parseFloat(document.getElementById('input-ex-weight').value) || 0;
+            if (!name || !currentFitCategoryId) return;
 
-            if (!name || !currentCategoryId) return;
-
-            const category = fitnessData.find(c => c.id === currentCategoryId);
+            const category = fitnessData.find(c => c.id === currentFitCategoryId);
             if (category) {
-                category.exercises.push({
-                    id: 'ex_' + Date.now(),
-                    name: name,
-                    sets: sets,
-                    reps: reps,
-                    weight: weight
-                });
-                saveData();
+                category.exercises.push({ id: 'ex_' + Date.now(), name, sets, reps, weight });
+                saveAll();
                 renderFitness();
             }
             closeModals();
         }
 
-        function deleteExercise(catId, exId) {
+        function deleteFitnessExercise(catId, exId) {
             const category = fitnessData.find(c => c.id === catId);
             if (!category) return;
             category.exercises = category.exercises.filter(e => e.id !== exId);
-            saveData();
+            saveAll();
             renderFitness();
         }
 
+        /* --- NAVIGATION & MODALS SCHLIESSEN --- */
         function closeModals() {
             document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
         }
 
-        // Reiter wechseln
         function switchTab(tabId, element) {
             document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
             document.getElementById('view-' + tabId).classList.add('active');
@@ -709,8 +1391,10 @@
             element.classList.add('active');
         }
 
-        // Beim Start direkt laden
+        // Initialer Start
+        renderHome();
         renderFitness();
+        renderHabits();
     </script>
 </body>
 </html>
