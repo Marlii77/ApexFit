@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Marlii – Level, Fitness & Habits</title>
-    
-    <!-- App-Icon für iPhone & iPad -->
-<link rel="apple-touch-icon" href="icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="icon.png">
+    <title>ApexFit</title>
 
-<!-- Verknüpfung für Android & PWA -->
-<link rel="manifest" href="manifest.json">
+    <!-- App-Icon für iPhone & iPad (Beachtet Großschreibung Icon.png) -->
+    <link rel="apple-touch-icon" href="Icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="Icon.png">
+    <link rel="manifest" href="manifest.json">
     
     <!-- Icons & Inter Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0" />
@@ -20,24 +18,24 @@
 
     <style>
         :root {
-            /* Helleres Charcoal-Grau wie in Bild 3 + Weinrot-Atmosphäre */
-            --bg-main: #1b1c21;
-            --bg-secondary: #22242a;
-            --card-bg: rgba(43, 45, 53, 0.78);
-            --card-inner: rgba(31, 32, 38, 0.85);
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-top-glow: rgba(255, 255, 255, 0.16);
+            /* Edles Grau / Dark Slate Design ohne Rotstich */
+            --bg-main: #131418;
+            --bg-secondary: #1b1d24;
+            --card-bg: rgba(32, 34, 42, 0.82);
+            --card-inner: rgba(22, 24, 30, 0.88);
+            --border-subtle: rgba(255, 255, 255, 0.07);
+            --border-top-glow: rgba(255, 255, 255, 0.14);
             
-            /* Weinrot / Dunkelrot Palette */
-            --wine-main: #9e1b32;
-            --wine-bright: #c81e3c;
-            --wine-glow: #e11d48;
-            --wine-soft: rgba(158, 27, 50, 0.22);
-            --wine-gradient: linear-gradient(135deg, #b81d38 0%, #7c1124 100%);
+            /* Individuelle Akzentfarben */
+            --accent-blue: #0a84ff;
+            --accent-green: #30d158;
+            --accent-indigo: #5e5ce6;
+            --accent-orange: #ff9f0a;
+            --accent-gold: #ffd60a;
+            --danger: #ff453a;
             
             --text-main: #f5f5f7;
-            --text-muted: #9496a1;
-            --danger: #ff453a;
+            --text-muted: #8e909e;
         }
 
         * {
@@ -49,11 +47,10 @@
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
             background-color: var(--bg-main);
-            /* Warmer Weinrot-Glow von oben links/mitte wie im 3. Referenzbild */
             background-image: 
-                radial-gradient(circle at 25% -5%, rgba(168, 28, 52, 0.42), transparent 52%),
-                radial-gradient(circle at 85% 15%, rgba(120, 18, 38, 0.22), transparent 45%),
-                linear-gradient(180deg, #1e1f25 0%, #17181c 100%);
+                radial-gradient(circle at 20% -10%, rgba(94, 92, 230, 0.18), transparent 50%),
+                radial-gradient(circle at 85% 10%, rgba(10, 132, 255, 0.12), transparent 45%),
+                linear-gradient(180deg, #16181e 0%, #101115 100%);
             background-attachment: fixed;
             color: var(--text-main); 
             margin: 0; 
@@ -66,25 +63,28 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 42px 22px 16px 22px;
+            padding: 42px 20px 16px 20px;
             position: sticky;
             top: 0;
             z-index: 10;
-            background: rgba(27, 28, 33, 0.72);
+            background: rgba(19, 20, 24, 0.75);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
 
         .page-header h1 {
-            font-size: 27px;
+            font-size: 26px;
             font-weight: 700;
             margin: 0;
             letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .subtitle-date {
             font-size: 11px;
-            color: #d48794;
+            color: var(--accent-blue);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.9px;
@@ -95,26 +95,32 @@
             width: 42px;
             height: 42px;
             border-radius: 50%;
-            background: var(--wine-gradient);
-            border: 1px solid rgba(255, 160, 175, 0.35);
-            box-shadow: 0 6px 18px rgba(158, 27, 50, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-top-glow);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             color: var(--text-main);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.15s ease;
+            transition: transform 0.15s ease, background 0.2s ease;
+        }
+
+        .icon-btn-top.primary-glow {
+            background: linear-gradient(135deg, #0a84ff 0%, #005bb5 100%);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 18px rgba(10, 132, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
         }
 
         .icon-btn-top:active { transform: scale(0.92); }
 
         .container {
-            padding: 0 20px;
+            padding: 0 18px;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        /* --- PREMIUM CARDS (BILD 1 & 3 MIX) --- */
+        /* --- PREMIUM CARDS (OHNE GRAUE PUNKTE OBEN RECHTS) --- */
         .bevel-card {
             position: relative;
             overflow: hidden;
@@ -124,39 +130,25 @@
             padding: 20px;
             margin-bottom: 16px;
             box-shadow: 
-                0 14px 34px rgba(0, 0, 0, 0.32), 
+                0 14px 34px rgba(0, 0, 0, 0.35), 
                 inset 0 1px 0 var(--border-top-glow);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
         }
 
-        /* Dezentes Dot-Matrix Muster oben rechts wie in Bild 1 */
-        .bevel-card::before, .bento-card::before {
-            content: "";
-            position: absolute;
-            top: 12px;
-            right: 14px;
-            width: 54px;
-            height: 36px;
-            background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-            background-size: 9px 9px;
-            pointer-events: none;
-            opacity: 0.7;
-        }
-
-        /* --- LEVEL HERO CARD (WIE TOP-BEREICH IN BILD 3 & BILD 1) --- */
+        /* --- LEVEL HERO CARD (BIS LEVEL 75) --- */
         .level-hero-card {
             position: relative;
             overflow: hidden;
-            background: linear-gradient(145deg, rgba(58, 30, 38, 0.88) 0%, rgba(36, 37, 44, 0.92) 100%);
-            border: 1px solid rgba(225, 29, 72, 0.25);
+            background: linear-gradient(145deg, rgba(38, 40, 56, 0.9) 0%, rgba(26, 28, 36, 0.95) 100%);
+            border: 1px solid rgba(94, 92, 230, 0.32);
             border-radius: 26px;
-            padding: 22px;
+            padding: 20px 22px;
             margin-bottom: 16px;
             box-shadow: 
-                0 16px 36px rgba(0, 0, 0, 0.38),
-                0 0 25px rgba(158, 27, 50, 0.18),
-                inset 0 1px 0 rgba(255, 200, 210, 0.22);
+                0 16px 36px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(94, 92, 230, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.18);
         }
 
         .level-top-row {
@@ -164,12 +156,14 @@
             justify-content: space-between;
             align-items: flex-end;
             margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .level-big-number {
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 800;
-            letter-spacing: -1px;
+            letter-spacing: -0.8px;
             line-height: 1;
             display: flex;
             align-items: baseline;
@@ -177,26 +171,25 @@
         }
 
         .level-big-number span.lvl-rank {
-            font-size: 15px;
-            font-weight: 500;
-            color: #e2a0ad;
+            font-size: 14px;
+            font-weight: 600;
+            color: #a5a4ff;
             letter-spacing: 0;
         }
 
         .xp-badge-pill {
-            background: rgba(158, 27, 50, 0.35);
-            border: 1px solid rgba(225, 29, 72, 0.4);
-            color: #ffb3c1;
+            background: rgba(94, 92, 230, 0.22);
+            border: 1px solid rgba(94, 92, 230, 0.45);
+            color: #c7c6ff;
             font-size: 12px;
             font-weight: 700;
             padding: 5px 11px;
             border-radius: 20px;
         }
 
-        /* Dünne, leuchtende Fortschrittslinie wie in Bild 3 ("36% used") */
         .level-progress-track {
             width: 100%;
-            height: 7px;
+            height: 8px;
             background: rgba(255, 255, 255, 0.08);
             border-radius: 10px;
             overflow: hidden;
@@ -206,9 +199,9 @@
         .level-progress-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #9e1b32 0%, #ff2a55 100%);
+            background: linear-gradient(90deg, #5e5ce6 0%, #0a84ff 100%);
             border-radius: 10px;
-            box-shadow: 0 0 12px rgba(225, 29, 72, 0.8);
+            box-shadow: 0 0 12px rgba(10, 132, 255, 0.7);
             transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
@@ -220,7 +213,7 @@
             font-weight: 500;
         }
 
-        /* --- BENTO GRID & RINGS --- */
+        /* --- BENTO GRID & RINGS (MIT EIGENEN FARBEN) --- */
         .bento-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -239,7 +232,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 var(--border-top-glow);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32), inset 0 1px 0 var(--border-top-glow);
         }
 
         .bento-header {
@@ -248,7 +241,6 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
-            z-index: 1;
         }
 
         .bento-title {
@@ -267,15 +259,14 @@
             margin: 4px 0 10px 0;
         }
 
-        /* Innerer leuchtender Kreis wie in Bild 1 ("58 GB Storage Available") */
         .ring-inner-sphere {
             position: absolute;
             width: 76px;
             height: 76px;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, rgba(158, 27, 50, 0.38), rgba(25, 26, 32, 0.92));
+            background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.08), rgba(18, 19, 24, 0.95));
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.06);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -302,7 +293,16 @@
             stroke-dasharray: 276.46;
             stroke-dashoffset: 276.46;
             transition: stroke-dashoffset 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-            filter: drop-shadow(0 0 6px rgba(200, 30, 60, 0.55));
+        }
+
+        .ring-blue {
+            stroke: var(--accent-blue);
+            filter: drop-shadow(0 0 6px rgba(10, 132, 255, 0.45));
+        }
+
+        .ring-green {
+            stroke: var(--accent-green);
+            filter: drop-shadow(0 0 6px rgba(48, 209, 88, 0.45));
         }
 
         .ring-value {
@@ -314,7 +314,7 @@
         .ring-sub {
             font-size: 9px;
             font-weight: 700;
-            color: #d48794;
+            color: var(--text-muted);
             text-transform: uppercase;
             margin-top: 2px;
         }
@@ -325,12 +325,12 @@
             color: var(--text-muted);
         }
 
-        /* --- 7-TAGE MATRIX --- */
+        /* --- 7-TAGE MATRIX (OPTIMIERTE TEXTANZEIGE) --- */
         .card-title-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .card-title-row h3 {
@@ -348,43 +348,59 @@
         .matrix-table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .matrix-col-habit {
+            width: 38%;
+        }
+
+        .matrix-col-day {
+            width: 8.85%;
         }
 
         .matrix-header-day {
             text-align: center;
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             font-weight: 600;
             padding-bottom: 10px;
         }
 
         .matrix-header-day.is-today {
-            color: #ff6b85;
-            font-weight: 700;
+            color: var(--accent-blue);
+            font-weight: 800;
         }
 
         .matrix-day-num {
             display: block;
-            font-size: 10px;
-            opacity: 0.65;
+            font-size: 9px;
+            opacity: 0.7;
             margin-top: 2px;
         }
 
         .matrix-row {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .matrix-habit-name {
-            padding: 12px 6px 12px 0;
-            font-size: 13px;
-            font-weight: 500;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 115px;
+            padding: 10px 6px 10px 0;
             display: flex;
-            align-items: center;
-            gap: 7px;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .matrix-habit-text {
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.25;
+            color: var(--text-main);
+            white-space: normal;
+            word-break: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .cat-dot {
@@ -392,36 +408,35 @@
             height: 8px;
             border-radius: 50%;
             flex-shrink: 0;
+            margin-top: 3px;
         }
 
         .matrix-cell {
             text-align: center;
-            padding: 6px 2px;
+            padding: 5px 1px;
         }
 
         .matrix-dot-btn {
-            width: 26px;
-            height: 26px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.06);
+            width: 24px;
+            height: 24px;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             color: transparent;
+            padding: 0;
             transition: all 0.18s ease;
         }
 
-        /* Weinrote Check-Boxen wie die orangen Häkchen in Bild 3 */
         .matrix-dot-btn.done {
-            background: var(--wine-gradient);
-            border-color: #ff4d6d;
             color: #fff;
-            box-shadow: 0 0 10px rgba(200, 30, 60, 0.55);
+            border-color: rgba(255, 255, 255, 0.35);
         }
 
-        /* --- WEINROTE GLOW BUTTONS (WIE "CLEAN NOW" IN BILD 3 & BILD 1) --- */
+        /* --- ACTION BAR & BUTTONS --- */
         .action-bar {
             display: flex;
             gap: 12px;
@@ -446,18 +461,18 @@
             transition: all 0.15s ease;
         }
 
-        .action-btn.wine-glow-btn {
-            background: var(--wine-gradient);
-            border: 1px solid rgba(255, 160, 175, 0.35);
+        .action-btn.blue-glow-btn {
+            background: linear-gradient(135deg, #0a84ff 0%, #005bb5 100%);
+            border: 1px solid rgba(255, 255, 255, 0.28);
             box-shadow: 
-                0 8px 22px rgba(158, 27, 50, 0.5), 
-                inset 0 1.5px 1px rgba(255, 220, 225, 0.45);
+                0 8px 22px rgba(10, 132, 255, 0.35), 
+                inset 0 1.5px 1px rgba(255, 255, 255, 0.35);
             color: #ffffff;
         }
 
         .action-btn:active { transform: scale(0.97); }
 
-        /* --- HABIT ITEMS (WIE DIE KARTEN IN BILD 3) --- */
+        /* --- HABIT ITEMS --- */
         .habit-item-row {
             background: var(--card-inner);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -479,24 +494,17 @@
             flex: 1;
         }
 
-        /* Runder Check-Button wie in Bild 3 oben rechts in den Boxen */
         .check-circle {
             width: 26px;
             height: 26px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(255, 255, 255, 0.22);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s ease;
             flex-shrink: 0;
-        }
-
-        .habit-item-row.completed .check-circle {
-            background: var(--wine-gradient);
-            border-color: #ff6b85;
-            box-shadow: 0 0 12px rgba(200, 30, 60, 0.65);
         }
 
         .habit-item-row.completed .habit-title {
@@ -518,9 +526,9 @@
         .xp-pill {
             font-size: 11px;
             font-weight: 700;
-            background: rgba(158, 27, 50, 0.28);
-            border: 1px solid rgba(225, 29, 72, 0.35);
-            color: #ff9ebb;
+            background: rgba(94, 92, 230, 0.18);
+            border: 1px solid rgba(94, 92, 230, 0.38);
+            color: #b5b4ff;
             padding: 4px 9px;
             border-radius: 12px;
         }
@@ -528,13 +536,13 @@
         .streak-pill {
             font-size: 11px;
             font-weight: 600;
-            background: rgba(255, 255, 255, 0.07);
-            color: #d1d1d6;
+            background: rgba(255, 159, 10, 0.14);
+            color: var(--accent-orange);
             padding: 4px 8px;
             border-radius: 12px;
         }
 
-        /* --- FITNESS REITER --- */
+        /* --- FITNESS REITER MIT ICONS & FARBEN --- */
         .category-header {
             display: flex;
             justify-content: space-between;
@@ -545,7 +553,18 @@
         .category-title-group {
             display: flex;
             align-items: center;
-            gap: 9px;
+            gap: 10px;
+        }
+
+        .cat-icon-box {
+            width: 34px;
+            height: 34px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            flex-shrink: 0;
         }
 
         .category-title {
@@ -570,8 +589,7 @@
         }
 
         .btn-pill {
-            background: var(--wine-gradient);
-            border: 1px solid rgba(255, 160, 175, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.22);
             color: #fff;
             font-size: 12px;
             font-weight: 600;
@@ -581,7 +599,6 @@
             align-items: center;
             gap: 4px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(158, 27, 50, 0.35);
         }
 
         .btn-delete-icon {
@@ -623,7 +640,7 @@
         }
 
         .metric-box {
-            background: rgba(0, 0, 0, 0.28);
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 12px;
             padding: 8px 10px;
@@ -633,8 +650,8 @@
         }
 
         .metric-box:focus-within {
-            border-color: var(--wine-bright);
-            background: rgba(158, 27, 50, 0.15);
+            border-color: var(--accent-blue);
+            background: rgba(10, 132, 255, 0.12);
         }
 
         .metric-label {
@@ -671,7 +688,80 @@
             margin: 0;
         }
 
-        /* --- MODALS & XP AUSWAHL (10-100 XP) --- */
+        /* --- LEADERBOARD REITER --- */
+        .leaderboard-row {
+            background: var(--card-inner);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .leaderboard-row.is-me {
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.16) 0%, rgba(94, 92, 230, 0.16) 100%);
+            border-color: rgba(10, 132, 255, 0.45);
+        }
+
+        .lb-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .lb-rank-badge {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .lb-rank-1 { background: linear-gradient(135deg, #ffd60a, #ff9f0a); color: #000; box-shadow: 0 0 12px rgba(255, 214, 10, 0.4); }
+        .lb-rank-2 { background: linear-gradient(135deg, #e5e5ea, #8e8e93); color: #000; }
+        .lb-rank-3 { background: linear-gradient(135deg, #eca163, #a25b2a); color: #000; }
+
+        .lb-user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lb-name {
+            font-size: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .lb-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .lb-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: right;
+        }
+
+        .lb-xp-val {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--accent-blue);
+        }
+
+        /* --- MODALS, COLOR & ICON PICKER --- */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -686,12 +776,14 @@
         .modal-overlay.open { display: flex; }
 
         .bottom-sheet {
-            background: #23252c;
+            background: #20222a;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
             width: 100%;
             max-width: 500px;
             border-radius: 28px 28px 0 0;
             padding: 24px 22px 36px 22px;
+            max-height: 90vh;
+            overflow-y: auto;
             animation: slideUp 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
         }
 
@@ -729,20 +821,66 @@
             width: 100%;
             padding: 14px 16px;
             border-radius: 14px;
-            background: #191a20;
+            background: #15161c;
             border: 1px solid var(--border-subtle);
             color: white;
             font-size: 16px;
             font-family: inherit;
         }
 
-        /* XP Slider & Quick Buttons */
+        .color-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .color-swatch {
+            height: 36px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.15s ease;
+        }
+        .color-swatch.selected {
+            border-color: #fff;
+            transform: scale(1.08);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .icon-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .icon-option {
+            height: 44px;
+            border-radius: 12px;
+            background: #15161c;
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.15s ease;
+        }
+
+        .icon-option.selected {
+            background: rgba(10, 132, 255, 0.2);
+            border-color: var(--accent-blue);
+            color: #fff;
+        }
+
+        /* XP Slider */
         .xp-slider {
             -webkit-appearance: none;
             width: 100%;
             height: 8px;
             border-radius: 10px;
-            background: #191a20;
+            background: #15161c;
             outline: none;
             margin: 8px 0 12px 0;
         }
@@ -752,9 +890,9 @@
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            background: var(--wine-gradient);
+            background: var(--accent-blue);
             border: 2px solid #fff;
-            box-shadow: 0 0 10px rgba(225, 29, 72, 0.8);
+            box-shadow: 0 0 10px rgba(10, 132, 255, 0.8);
             cursor: pointer;
         }
 
@@ -766,7 +904,7 @@
 
         .xp-preset-btn {
             flex: 1;
-            background: #191a20;
+            background: #15161c;
             border: 1px solid var(--border-subtle);
             color: var(--text-muted);
             padding: 8px 0;
@@ -777,28 +915,9 @@
         }
 
         .xp-preset-btn.active {
-            background: var(--wine-soft);
-            border-color: var(--wine-bright);
+            background: rgba(10, 132, 255, 0.22);
+            border-color: var(--accent-blue);
             color: #fff;
-        }
-
-        .color-picker-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 6px;
-        }
-
-        .color-swatch {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: transform 0.15s ease;
-        }
-        .color-swatch.selected {
-            border-color: #fff;
-            transform: scale(1.12);
         }
 
         .form-row-3 {
@@ -815,9 +934,9 @@
 
         .btn-primary {
             flex: 1;
-            background: var(--wine-gradient);
-            border: 1px solid rgba(255, 160, 175, 0.35);
-            box-shadow: 0 8px 20px rgba(158, 27, 50, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            background: linear-gradient(135deg, #0a84ff 0%, #005bb5 100%);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            box-shadow: 0 8px 20px rgba(10, 132, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
             color: #fff;
             padding: 15px;
             border-radius: 16px;
@@ -827,7 +946,7 @@
         }
 
         .btn-secondary {
-            background: #191a20;
+            background: #15161c;
             color: var(--text-main);
             border: 1px solid var(--border-subtle);
             padding: 15px 20px;
@@ -837,46 +956,47 @@
             cursor: pointer;
         }
 
-        /* --- FLOATING DOCK UNTEN (WIE IN BILD 1) --- */
+        /* --- FLOATING DOCK UNTEN (4 REITER) --- */
         .bottom-nav {
             position: fixed;
             bottom: 18px;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 40px);
-            max-width: 400px;
+            width: calc(100% - 28px);
+            max-width: 440px;
             height: 70px;
-            background-color: rgba(30, 31, 38, 0.85);
+            background-color: rgba(26, 28, 35, 0.86);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 38px;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
-            padding: 0 6px;
+            padding: 0 8px;
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
             z-index: 50;
         }
 
         .nav-item {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             color: var(--text-muted);
             cursor: pointer;
-            padding: 9px 22px;
+            padding: 8px 6px;
             border-radius: 30px;
             transition: all 0.22s ease;
         }
 
         .nav-item.active { 
             color: #ffffff;
-            background: var(--wine-gradient);
-            box-shadow: 0 4px 16px rgba(158, 27, 50, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
         }
 
-        .nav-item span.material-symbols-rounded { font-size: 23px; margin-bottom: 2px; }
+        .nav-item span.material-symbols-rounded { font-size: 22px; margin-bottom: 2px; }
         .nav-item span.label { font-size: 10px; font-weight: 600; }
 
         .view { display: none; animation: fadeIn 0.25s ease; }
@@ -891,23 +1011,26 @@
 <body>
 
     <!-- ==========================================
-         1. HOME REITER (LEVEL + RINGS + MATRIX)
+         1. HOME REITER (APEXFIT DASHBOARD)
          ========================================== -->
     <div id="view-home" class="view active">
         <div class="page-header">
-            <div>
-                <div class="subtitle-date" id="current-date-label">HEUTE</div>
-                <h1>Guten Tag, Marlii</h1>
+            <div onclick="openProfileModal()" style="cursor:pointer;">
+                <div class="subtitle-date" id="current-date-label">APEXFIT • HEUTE</div>
+                <h1>Guten Tag, <span id="display-username">Marlii</span></h1>
             </div>
+            <button class="icon-btn-top" onclick="openProfileModal()" title="Namen ändern">
+                <span class="material-symbols-rounded" style="font-size:20px;">edit</span>
+            </button>
         </div>
 
         <div class="container">
-            <!-- NEU: LEVEL SYSTEM HERO CARD (GANZ OBEN) -->
+            <!-- LEVEL SYSTEM HERO CARD (BIS LEVEL 75) -->
             <div class="level-hero-card">
                 <div class="level-top-row">
                     <div class="level-big-number">
                         <span id="lvl-number">Level 1</span>
-                        <span class="lvl-rank" id="lvl-rank-title">Rookie</span>
+                        <span class="lvl-rank" id="lvl-rank-title">• Rookie</span>
                     </div>
                     <div class="xp-badge-pill" id="total-xp-badge">0 XP Gesamt</div>
                 </div>
@@ -915,7 +1038,7 @@
                     <div class="level-progress-fill" id="lvl-progress-bar"></div>
                 </div>
                 <div class="level-sub-info">
-                    <span id="lvl-progress-text">0 / 250 XP im aktuellen Level</span>
+                    <span id="lvl-progress-text">0 / 250 XP</span>
                     <span id="lvl-next-hint">Noch 250 XP bis Level 2</span>
                 </div>
             </div>
@@ -926,7 +1049,7 @@
                 <div class="bento-card">
                     <div class="bento-header">
                         <span class="bento-title">Daily Focus</span>
-                        <span class="material-symbols-rounded" style="font-size:18px; color:#ff4d6d;">bolt</span>
+                        <span class="material-symbols-rounded" style="font-size:18px; color:var(--accent-blue);">bolt</span>
                     </div>
                     <div class="ring-wrapper">
                         <div class="ring-inner-sphere">
@@ -935,7 +1058,7 @@
                         </div>
                         <svg class="ring-svg" viewBox="0 0 100 100">
                             <circle class="ring-bg" cx="50" cy="50" r="44"></circle>
-                            <circle id="ring-daily" class="ring-progress" cx="50" cy="50" r="44" stroke="#e11d48"></circle>
+                            <circle id="ring-daily" class="ring-progress ring-blue" cx="50" cy="50" r="44"></circle>
                         </svg>
                     </div>
                     <div class="bento-footer" id="daily-score-sub">0 von 0 erledigt</div>
@@ -945,7 +1068,7 @@
                 <div class="bento-card">
                     <div class="bento-header">
                         <span class="bento-title">Consistency</span>
-                        <span class="material-symbols-rounded" style="font-size:18px; color:#ff8fa3;">local_fire_department</span>
+                        <span class="material-symbols-rounded" style="font-size:18px; color:var(--accent-green);">local_fire_department</span>
                     </div>
                     <div class="ring-wrapper">
                         <div class="ring-inner-sphere">
@@ -954,7 +1077,7 @@
                         </div>
                         <svg class="ring-svg" viewBox="0 0 100 100">
                             <circle class="ring-bg" cx="50" cy="50" r="44"></circle>
-                            <circle id="ring-weekly" class="ring-progress" cx="50" cy="50" r="44" stroke="#fb7185"></circle>
+                            <circle id="ring-weekly" class="ring-progress ring-green" cx="50" cy="50" r="44"></circle>
                         </svg>
                     </div>
                     <div class="bento-footer" id="weekly-score-sub">0 Check-ins</div>
@@ -968,7 +1091,7 @@
                         <h3>7-Tage Matrix</h3>
                         <span class="card-subtitle">Jeder Haken bringt dir direkt XP</span>
                     </div>
-                    <span class="material-symbols-rounded" style="color:#d48794;">calendar_view_week</span>
+                    <span class="material-symbols-rounded" style="color:var(--accent-blue);">calendar_view_week</span>
                 </div>
                 <div id="matrix-container"></div>
             </div>
@@ -981,10 +1104,10 @@
     <div id="view-fitness" class="view">
         <div class="page-header">
             <div>
-                <div class="subtitle-date">Training & Split</div>
+                <div class="subtitle-date">ApexFit • Training</div>
                 <h1>Fitness</h1>
             </div>
-            <button class="icon-btn-top" onclick="openFitnessCategoryModal()" title="Neue Kategorie">
+            <button class="icon-btn-top primary-glow" onclick="openFitnessCategoryModal()" title="Neue Muskelgruppe">
                 <span class="material-symbols-rounded">add</span>
             </button>
         </div>
@@ -993,7 +1116,7 @@
     </div>
 
     <!-- ==========================================
-         3. HABITS REITER (MIT 10-100 XP SYSTEM)
+         3. HABITS REITER
          ========================================== -->
     <div id="view-habits" class="view">
         <div class="page-header">
@@ -1009,7 +1132,7 @@
                     <span class="material-symbols-rounded" style="font-size:19px;">create_new_folder</span>
                     + Kategorie
                 </button>
-                <button class="action-btn wine-glow-btn" onclick="openNewHabitModal()">
+                <button class="action-btn blue-glow-btn" onclick="openNewHabitModal()">
                     <span class="material-symbols-rounded" style="font-size:19px;">add_task</span>
                     + Neues Ziel
                 </button>
@@ -1020,10 +1143,62 @@
     </div>
 
     <!-- ==========================================
+         4. LEADERBOARD REITER (NEU!)
+         ========================================== -->
+    <div id="view-leaderboard" class="view">
+        <div class="page-header">
+            <div>
+                <div class="subtitle-date">ApexFit • Wettkampf</div>
+                <h1>Leaderboard</h1>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="action-bar">
+                <button class="action-btn" onclick="copyMySyncCode()">
+                    <span class="material-symbols-rounded" style="font-size:19px;">share</span>
+                    Mein Code
+                </button>
+                <button class="action-btn blue-glow-btn" onclick="openFriendModal()">
+                    <span class="material-symbols-rounded" style="font-size:19px;">person_add</span>
+                    + Freund / Code
+                </button>
+            </div>
+
+            <div class="bevel-card">
+                <div class="card-title-row">
+                    <div>
+                        <h3>Top Athleten (Max Lvl 75)</h3>
+                        <span class="card-subtitle">Sortiert nach Gesamt-XP & Level</span>
+                    </div>
+                    <span class="material-symbols-rounded" style="color:var(--accent-gold);">emoji_events</span>
+                </div>
+                <div id="leaderboard-list-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
          MODALS
          ========================================== -->
 
-    <!-- Modal 1: Fitness-Kategorie -->
+    <!-- Modal: Namen anpassen -->
+    <div id="modal-profile" class="modal-overlay" onclick="closeModals()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Profil anpassen</h3>
+            <div class="form-field">
+                <label>Dein Name in ApexFit</label>
+                <input type="text" id="input-username" class="form-input" placeholder="Dein Name...">
+            </div>
+            <div class="sheet-actions">
+                <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
+                <button class="btn-primary" onclick="saveUsername()">Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Fitness-Kategorie (MIT ICON & FARBAUSWAHL) -->
     <div id="modal-fit-category" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
@@ -1032,6 +1207,36 @@
                 <label>Name der Kategorie</label>
                 <input type="text" id="input-fit-cat-name" class="form-input" placeholder="z.B. Brust, Arme, Rücken, Beine...">
             </div>
+            <div class="form-field">
+                <label>Passendes Icon wählen</label>
+                <div class="icon-picker-grid" id="fit-icon-picker">
+                    <div class="icon-option selected" data-icon="fitness_center" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">fitness_center</span></div>
+                    <div class="icon-option" data-icon="exercise" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">exercise</span></div>
+                    <div class="icon-option" data-icon="directions_run" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">directions_run</span></div>
+                    <div class="icon-option" data-icon="bolt" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">bolt</span></div>
+                    <div class="icon-option" data-icon="local_fire_department" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">local_fire_department</span></div>
+                    <div class="icon-option" data-icon="favorite" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">favorite</span></div>
+                    <div class="icon-option" data-icon="timer" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">timer</span></div>
+                    <div class="icon-option" data-icon="shield" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">shield</span></div>
+                    <div class="icon-option" data-icon="sports_gymnastics" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">sports_gymnastics</span></div>
+                    <div class="icon-option" data-icon="self_improvement" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">self_improvement</span></div>
+                </div>
+            </div>
+            <div class="form-field">
+                <label>Akzentfarbe</label>
+                <div class="color-picker-grid" id="fit-color-picker">
+                    <div class="color-swatch selected" data-color="#0a84ff" style="background:#0a84ff;" onclick="selectFitColor(this)"></div>
+                    <div class="color-swatch" data-color="#30d158" style="background:#30d158;" onclick="selectFitColor(this)"></div>
+                    <div class="color-swatch" data-color="#5e5ce6" style="background:#5e5ce6;" onclick="selectFitColor(this)"></div>
+                    <div class="color-swatch" data-color="#ff9f0a" style="background:#ff9f0a;" onclick="selectFitColor(this)"></div>
+                    <div class="color-swatch" data-color="#ff375f" style="background:#ff375f;" onclick="selectFitColor(this)"></div>
+                    <div class="color-swatch" data-color="#64d2ff" style="background:#64d2ff;" onclick="selectFitColor(this)"></div>
+                    <div class="color-swatch" data-color="#bf5af2" style="background:#bf5af2;" onclick="selectFitColor(this)"></div>
+                    <div class="color-swatch" data-color="#ffd60a" style="background:#ffd60a;" onclick="selectFitColor(this)"></div>
+                    <div class="color-swatch" data-color="#10b981" style="background:#10b981;" onclick="selectFitColor(this)"></div>
+                    <div class="color-swatch" data-color="#f43f5e" style="background:#f43f5e;" onclick="selectFitColor(this)"></div>
+                </div>
+            </div>
             <div class="sheet-actions">
                 <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
                 <button class="btn-primary" onclick="saveFitnessCategory()">Erstellen</button>
@@ -1039,7 +1244,7 @@
         </div>
     </div>
 
-    <!-- Modal 2: Fitness-Übung -->
+    <!-- Modal: Fitness-Übung -->
     <div id="modal-fit-exercise" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
@@ -1069,7 +1274,7 @@
         </div>
     </div>
 
-    <!-- Modal 3: Neue Habit-Kategorie -->
+    <!-- Modal: Neue Habit-Kategorie (10 AKZENTFARBEN) -->
     <div id="modal-habit-category" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
@@ -1079,13 +1284,18 @@
                 <input type="text" id="input-habit-cat-name" class="form-input" placeholder="z.B. Supplements, Morning Routine, Coding...">
             </div>
             <div class="form-field">
-                <label>Akzentfarbe</label>
-                <div class="color-picker-row" id="habit-color-picker">
-                    <div class="color-swatch selected" data-color="#e11d48" style="background:#e11d48;" onclick="selectColor(this)"></div>
-                    <div class="color-swatch" data-color="#9e1b32" style="background:#9e1b32;" onclick="selectColor(this)"></div>
-                    <div class="color-swatch" data-color="#fb7185" style="background:#fb7185;" onclick="selectColor(this)"></div>
-                    <div class="color-swatch" data-color="#f59e0b" style="background:#f59e0b;" onclick="selectColor(this)"></div>
-                    <div class="color-swatch" data-color="#a855f7" style="background:#a855f7;" onclick="selectColor(this)"></div>
+                <label>Akzentfarbe (10 Farben)</label>
+                <div class="color-picker-grid" id="habit-color-picker">
+                    <div class="color-swatch selected" data-color="#0a84ff" style="background:#0a84ff;" onclick="selectHabitColor(this)"></div>
+                    <div class="color-swatch" data-color="#30d158" style="background:#30d158;" onclick="selectHabitColor(this)"></div>
+                    <div class="color-swatch" data-color="#5e5ce6" style="background:#5e5ce6;" onclick="selectHabitColor(this)"></div>
+                    <div class="color-swatch" data-color="#ff9f0a" style="background:#ff9f0a;" onclick="selectHabitColor(this)"></div>
+                    <div class="color-swatch" data-color="#ff375f" style="background:#ff375f;" onclick="selectHabitColor(this)"></div>
+                    <div class="color-swatch" data-color="#64d2ff" style="background:#64d2ff;" onclick="selectHabitColor(this)"></div>
+                    <div class="color-swatch" data-color="#bf5af2" style="background:#bf5af2;" onclick="selectHabitColor(this)"></div>
+                    <div class="color-swatch" data-color="#ffd60a" style="background:#ffd60a;" onclick="selectHabitColor(this)"></div>
+                    <div class="color-swatch" data-color="#10b981" style="background:#10b981;" onclick="selectHabitColor(this)"></div>
+                    <div class="color-swatch" data-color="#f43f5e" style="background:#f43f5e;" onclick="selectHabitColor(this)"></div>
                 </div>
             </div>
             <div class="sheet-actions">
@@ -1095,7 +1305,7 @@
         </div>
     </div>
 
-    <!-- Modal 4: Neues Ziel / Habit (MIT 10-100 XP AUSWAHL) -->
+    <!-- Modal: Neues Ziel / Habit (10-100 XP) -->
     <div id="modal-habit-item" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
@@ -1111,7 +1321,7 @@
             <div class="form-field">
                 <label>
                     <span>XP-Belohnung (10 – 100 XP)</span>
-                    <span id="xp-slider-label" style="color:#ff6b85; font-weight:800; font-size:13px;">50 XP</span>
+                    <span id="xp-slider-label" style="color:var(--accent-blue); font-weight:800; font-size:13px;">50 XP</span>
                 </label>
                 <input type="range" id="input-habit-xp" class="xp-slider" min="10" max="100" step="5" value="50" oninput="updateXpPreview(this.value)">
                 <div class="xp-presets">
@@ -1129,8 +1339,33 @@
         </div>
     </div>
 
+    <!-- Modal: Freund zum Leaderboard hinzufügen -->
+    <div id="modal-friend" class="modal-overlay" onclick="closeModals()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Freund hinzufügen / aktualisieren</h3>
+            <div class="form-field">
+                <label>Option 1: Apex-Code vom Freund einfügen</label>
+                <input type="text" id="input-friend-code" class="form-input" placeholder="z.B. APEX:Nicko:1450">
+            </div>
+            <div style="text-align:center; color:var(--text-muted); font-size:12px; margin: 10px 0;">— ODER MANUELL EINTRAGEN —</div>
+            <div class="form-field">
+                <label>Name des Freundes</label>
+                <input type="text" id="input-friend-name" class="form-input" placeholder="z.B. Nicko">
+            </div>
+            <div class="form-field">
+                <label>Gesamt-XP des Freundes</label>
+                <input type="number" id="input-friend-xp" class="form-input" placeholder="z.B. 1200">
+            </div>
+            <div class="sheet-actions">
+                <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
+                <button class="btn-primary" onclick="saveFriendToLeaderboard()">Speichern</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ==========================================
-         FLOATING BOTTOM DOCK
+         FLOATING BOTTOM DOCK (4 REITER)
          ========================================== -->
     <nav class="bottom-nav">
         <div class="nav-item active" onclick="switchTab('home', this)">
@@ -1144,6 +1379,10 @@
         <div class="nav-item" onclick="switchTab('habits', this)">
             <span class="material-symbols-rounded">check_circle</span>
             <span class="label">Habits</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('leaderboard', this)">
+            <span class="material-symbols-rounded">emoji_events</span>
+            <span class="label">Ranking</span>
         </div>
     </nav>
 
@@ -1173,15 +1412,18 @@
         }
 
         const now = new Date();
-        const options = { weekday: 'long', day: 'numeric', month: 'short' };
-        document.getElementById('current-date-label').innerText = now.toLocaleDateString('de-DE', options);
+        const options = { weekday: 'short', day: 'numeric', month: 'short' };
+        document.getElementById('current-date-label').innerText = 'APEXFIT • ' + now.toLocaleDateString('de-DE', options);
 
-        /* --- DATEN LADEN --- */
+        /* --- BENUTZERNAME & DATEN LADEN --- */
         const todayKey = getDateKey(new Date());
 
+        let userName = localStorage.getItem('apexfit_username') || 'Marlii';
+        document.getElementById('display-username').innerText = userName;
+
         let habitCategories = JSON.parse(localStorage.getItem('marlii_habit_cats')) || [
-            { id: 'hcat_1', name: 'Supplements', color: '#e11d48' },
-            { id: 'hcat_2', name: 'Daily Routine & Focus', color: '#fb7185' }
+            { id: 'hcat_1', name: 'Supplements', color: '#0a84ff' },
+            { id: 'hcat_2', name: 'Daily Routine & Focus', color: '#30d158' }
         ];
 
         let habitsList = JSON.parse(localStorage.getItem('marlii_habits_list')) || [
@@ -1191,15 +1433,14 @@
             { id: 'hab_4', catId: 'hcat_2', name: 'Fokus-Session / Projekt', xp: 80, history: {} }
         ];
 
-        // Sicherstellen, dass auch ältere gespeicherte Habits einen XP-Wert (Standard: 40) besitzen
-        habitsList.forEach(h => {
-            if (!h.xp) h.xp = 40;
-        });
+        habitsList.forEach(h => { if (!h.xp) h.xp = 40; });
 
         let fitnessData = JSON.parse(localStorage.getItem('marlii_fitness_data')) || [
             {
                 id: 'cat_1',
                 name: 'Brust',
+                icon: 'fitness_center',
+                color: '#0a84ff',
                 exercises: [
                     { id: 'ex_1', name: 'Bankdrücken', sets: 4, reps: 8, weight: 70 },
                     { id: 'ex_2', name: 'Butterfly (Kabel)', sets: 3, reps: 12, weight: 25 }
@@ -1208,6 +1449,8 @@
             {
                 id: 'cat_2',
                 name: 'Arme',
+                icon: 'bolt',
+                color: '#5e5ce6',
                 exercises: [
                     { id: 'ex_3', name: 'Kurzhantel Curls', sets: 3, reps: 10, weight: 16 },
                     { id: 'ex_4', name: 'Trizepsdrücken Seil', sets: 3, reps: 12, weight: 27.5 }
@@ -1215,22 +1458,54 @@
             }
         ];
 
+        fitnessData.forEach(c => {
+            if (!c.icon) c.icon = 'fitness_center';
+            if (!c.color) c.color = '#0a84ff';
+        });
+
+        let leaderboardFriends = JSON.parse(localStorage.getItem('apexfit_friends')) || [
+            { id: 'fr_1', name: 'Nicko', xp: 450 }
+        ];
+
         let currentFitCategoryId = null;
-        let selectedCatColor = '#e11d48';
+        let selectedHabitColor = '#0a84ff';
+        let selectedFitColor = '#0a84ff';
+        let selectedFitIcon = 'fitness_center';
 
         function saveAll() {
+            localStorage.setItem('apexfit_username', userName);
             localStorage.setItem('marlii_habit_cats', JSON.stringify(habitCategories));
             localStorage.setItem('marlii_habits_list', JSON.stringify(habitsList));
             localStorage.setItem('marlii_fitness_data', JSON.stringify(fitnessData));
+            localStorage.setItem('apexfit_friends', JSON.stringify(leaderboardFriends));
         }
 
-        /* --- LEVEL & XP BERECHNUNG --- */
+        /* --- LEVEL SYSTEM BIS LEVEL 75 (ALLE 5 LEVEL NEUER RANG) --- */
+        const XP_PER_LEVEL = 250;
+        const MAX_LEVEL = 75;
+
+        function getLevelFromXP(xp) {
+            const rawLvl = Math.floor(xp / XP_PER_LEVEL) + 1;
+            return Math.min(MAX_LEVEL, rawLvl);
+        }
+
         function getRankTitle(level) {
-            if (level < 2) return 'Rookie';
-            if (level < 4) return 'Challenger';
-            if (level < 7) return 'Vanguard';
-            if (level < 10) return 'Elite';
-            return 'Apex Master';
+            if (level >= 75) return 'Apex Legend';
+            if (level >= 70) return 'Olympian';
+            if (level >= 65) return 'Immortal';
+            if (level >= 60) return 'Titan';
+            if (level >= 55) return 'Grandmaster';
+            if (level >= 50) return 'Master';
+            if (level >= 45) return 'Commander';
+            if (level >= 40) return 'Gladiator';
+            if (level >= 35) return 'Spartan';
+            if (level >= 30) return 'Vanguard';
+            if (level >= 25) return 'Warrior';
+            if (level >= 20) return 'Hustler';
+            if (level >= 15) return 'Challenger';
+            if (level >= 10) return 'Striver';
+            if (level >= 5)  return 'Starter';
+            return 'Rookie';
         }
 
         function calculateTotalXP() {
@@ -1247,18 +1522,45 @@
 
         function renderLevelCard() {
             const totalXP = calculateTotalXP();
-            const xpPerLevel = 250; // Alle 250 XP ein Level-Up
-            const currentLevel = Math.floor(totalXP / xpPerLevel) + 1;
-            const xpIntoLevel = totalXP % xpPerLevel;
-            const xpMissing = xpPerLevel - xpIntoLevel;
-            const pct = Math.round((xpIntoLevel / xpPerLevel) * 100);
+            const currentLevel = getLevelFromXP(totalXP);
+            const rankName = getRankTitle(currentLevel);
 
             document.getElementById('lvl-number').innerText = `Level ${currentLevel}`;
-            document.getElementById('lvl-rank-title').innerText = `• ${getRankTitle(currentLevel)}`;
+            document.getElementById('lvl-rank-title').innerText = `• ${rankName}`;
             document.getElementById('total-xp-badge').innerText = `${totalXP} XP Gesamt`;
-            document.getElementById('lvl-progress-bar').style.width = `${pct}%`;
-            document.getElementById('lvl-progress-text').innerText = `${xpIntoLevel} / ${xpPerLevel} XP (${pct}%)`;
-            document.getElementById('lvl-next-hint').innerText = `Noch ${xpMissing} XP bis Level ${currentLevel + 1}`;
+
+            if (currentLevel >= MAX_LEVEL) {
+                document.getElementById('lvl-progress-bar').style.width = '100%';
+                document.getElementById('lvl-progress-text').innerText = 'MAX LEVEL 75 ERREICHT';
+                document.getElementById('lvl-next-hint').innerText = 'Apex Legend Status';
+            } else {
+                const xpIntoLevel = totalXP % XP_PER_LEVEL;
+                const xpMissing = XP_PER_LEVEL - xpIntoLevel;
+                const pct = Math.round((xpIntoLevel / XP_PER_LEVEL) * 100);
+                const nextMilestoneLvl = Math.floor(currentLevel / 5) * 5 + 5;
+
+                document.getElementById('lvl-progress-bar').style.width = `${pct}%`;
+                document.getElementById('lvl-progress-text').innerText = `${xpIntoLevel} / ${XP_PER_LEVEL} XP (${pct}%)`;
+                document.getElementById('lvl-next-hint').innerText = `Noch ${xpMissing} XP bis Lvl ${currentLevel + 1} (Nächster Rang: Lvl ${nextMilestoneLvl})`;
+            }
+        }
+
+        /* --- PROFIL / BENUTZERNAME --- */
+        function openProfileModal() {
+            document.getElementById('input-username').value = userName;
+            document.getElementById('modal-profile').classList.add('open');
+            setTimeout(() => document.getElementById('input-username').focus(), 100);
+        }
+
+        function saveUsername() {
+            const val = document.getElementById('input-username').value.trim();
+            if (val) {
+                userName = val;
+                document.getElementById('display-username').innerText = userName;
+                saveAll();
+                renderLeaderboard();
+            }
+            closeModals();
         }
 
         /* --- STREAK BERECHNEN --- */
@@ -1309,14 +1611,21 @@
             document.getElementById('weekly-score-val').innerText = `${weeklyPct}%`;
             document.getElementById('weekly-score-sub').innerText = `${doneWeek} Check-ins`;
 
-            // 7-Tage Matrix
+            // 7-Tage Matrix mit optimiertem Text-Umbruch
             const matrixContainer = document.getElementById('matrix-container');
             if (habitsList.length === 0) {
                 matrixContainer.innerHTML = `<p class="empty-hint">Noch keine Ziele im Reiter „Habits“ angelegt.</p>`;
                 return;
             }
 
-            let tableHTML = `<table class="matrix-table"><thead><tr><th></th>`;
+            let tableHTML = `
+                <table class="matrix-table">
+                    <colgroup>
+                        <col class="matrix-col-habit">
+                        <col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day">
+                        <col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day">
+                    </colgroup>
+                    <thead><tr><th></th>`;
             last7.forEach(d => {
                 tableHTML += `
                     <th class="matrix-header-day ${d.isToday ? 'is-today' : ''}">
@@ -1328,23 +1637,24 @@
 
             habitsList.forEach(h => {
                 const cat = habitCategories.find(c => c.id === h.catId);
-                const dotColor = cat ? cat.color : '#e11d48';
+                const dotColor = cat ? cat.color : '#0a84ff';
 
                 tableHTML += `
                     <tr class="matrix-row">
                         <td>
                             <div class="matrix-habit-name">
                                 <span class="cat-dot" style="background:${dotColor};"></span>
-                                <span>${h.name}</span>
+                                <span class="matrix-habit-text">${h.name}</span>
                             </div>
                         </td>`;
 
                 last7.forEach(d => {
                     const isDone = h.history && h.history[d.key];
+                    const doneStyle = isDone ? `background:${dotColor}; box-shadow: 0 0 8px ${dotColor}66;` : '';
                     tableHTML += `
                         <td class="matrix-cell">
-                            <button class="matrix-dot-btn ${isDone ? 'done' : ''}" onclick="toggleHabitDate('${h.id}', '${d.key}')">
-                                <span class="material-symbols-rounded" style="font-size:16px;">check</span>
+                            <button class="matrix-dot-btn ${isDone ? 'done' : ''}" style="${doneStyle}" onclick="toggleHabitDate('${h.id}', '${d.key}')">
+                                <span class="material-symbols-rounded" style="font-size:15px;">check</span>
                             </button>
                         </td>`;
                 });
@@ -1379,10 +1689,12 @@
                         const isDone = h.history && h.history[tKey];
                         const streak = calculateStreak(h);
                         const xpVal = h.xp || 40;
+                        const circleStyle = isDone ? `background:${cat.color}; border-color:${cat.color}; box-shadow: 0 0 12px ${cat.color}80;` : '';
+
                         itemsHTML += `
                         <div class="habit-item-row ${isDone ? 'completed' : ''}">
                             <div class="habit-left" onclick="toggleHabitDate('${h.id}', '${tKey}')">
-                                <div class="check-circle">
+                                <div class="check-circle" style="${circleStyle}">
                                     ${isDone ? '<span class="material-symbols-rounded" style="font-size:16px; color:#fff; font-weight:bold;">check</span>' : ''}
                                 </div>
                                 <span class="habit-title">${h.name}</span>
@@ -1402,7 +1714,7 @@
                 <div class="bevel-card">
                     <div class="category-header">
                         <div class="category-title-group">
-                            <span class="cat-dot" style="background:${cat.color}; width:10px; height:10px;"></span>
+                            <span class="cat-dot" style="background:${cat.color}; width:10px; height:10px; margin:0;"></span>
                             <h2 class="category-title">${cat.name}</h2>
                             <span class="badge-count">${doneCount}/${catHabits.length}</span>
                         </div>
@@ -1428,9 +1740,10 @@
             saveAll();
             renderHome();
             renderHabits();
+            renderLeaderboard();
         }
 
-        /* --- XP SLIDER LOGIK (10 - 100 XP) --- */
+        /* --- XP SLIDER & HABIT MODALS --- */
         function updateXpPreview(val) {
             document.getElementById('xp-slider-label').innerText = `${val} XP`;
             document.querySelectorAll('.xp-preset-btn').forEach(btn => {
@@ -1443,10 +1756,10 @@
             updateXpPreview(val);
         }
 
-        function selectColor(el) {
+        function selectHabitColor(el) {
             document.querySelectorAll('#habit-color-picker .color-swatch').forEach(s => s.classList.remove('selected'));
             el.classList.add('selected');
-            selectedCatColor = el.getAttribute('data-color');
+            selectedHabitColor = el.getAttribute('data-color');
         }
 
         function openHabitCategoryModal() {
@@ -1461,7 +1774,7 @@
             habitCategories.push({
                 id: 'hcat_' + Date.now(),
                 name: name,
-                color: selectedCatColor
+                color: selectedHabitColor
             });
             saveAll();
             renderHabits();
@@ -1475,6 +1788,7 @@
             saveAll();
             renderHabits();
             renderHome();
+            renderLeaderboard();
         }
 
         function openNewHabitModal() {
@@ -1517,9 +1831,22 @@
             saveAll();
             renderHabits();
             renderHome();
+            renderLeaderboard();
         }
 
-        /* --- 3. FITNESS REITER RENDERN --- */
+        /* --- 3. FITNESS REITER RENDERN (MIT ICON & AKZENTFARBE) --- */
+        function selectFitIcon(el) {
+            document.querySelectorAll('#fit-icon-picker .icon-option').forEach(i => i.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedFitIcon = el.getAttribute('data-icon');
+        }
+
+        function selectFitColor(el) {
+            document.querySelectorAll('#fit-color-picker .color-swatch').forEach(s => s.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedFitColor = el.getAttribute('data-color');
+        }
+
         function renderFitness() {
             const container = document.getElementById('fitness-categories-container');
             container.innerHTML = '';
@@ -1533,6 +1860,9 @@
             }
 
             fitnessData.forEach(cat => {
+                const cColor = cat.color || '#0a84ff';
+                const cIcon = cat.icon || 'fitness_center';
+
                 let exercisesHTML = '';
                 if (cat.exercises.length === 0) {
                     exercisesHTML = `<p class="empty-hint">Keine Übungen eingetragen</p>`;
@@ -1571,11 +1901,14 @@
                 <div class="bevel-card">
                     <div class="category-header">
                         <div class="category-title-group">
+                            <div class="cat-icon-box" style="background:${cColor}28; border:1px solid ${cColor}66; color:${cColor};">
+                                <span class="material-symbols-rounded" style="font-size:20px;">${cIcon}</span>
+                            </div>
                             <h2 class="category-title">${cat.name}</h2>
                             <span class="badge-count">${cat.exercises.length}</span>
                         </div>
                         <div class="category-actions">
-                            <button class="btn-pill" onclick="openFitnessExerciseModal('${cat.id}')">
+                            <button class="btn-pill" style="background:${cColor}; box-shadow: 0 4px 12px ${cColor}44;" onclick="openFitnessExerciseModal('${cat.id}')">
                                 <span class="material-symbols-rounded" style="font-size:15px;">add</span> Übung
                             </button>
                             <button class="btn-delete-icon" onclick="deleteFitnessCategory('${cat.id}')">
@@ -1606,7 +1939,13 @@
         function saveFitnessCategory() {
             const name = document.getElementById('input-fit-cat-name').value.trim();
             if (!name) return;
-            fitnessData.push({ id: 'cat_' + Date.now(), name: name, exercises: [] });
+            fitnessData.push({
+                id: 'cat_' + Date.now(),
+                name: name,
+                icon: selectedFitIcon,
+                color: selectedFitColor,
+                exercises: []
+            });
             saveAll();
             renderFitness();
             closeModals();
@@ -1652,6 +1991,106 @@
             renderFitness();
         }
 
+        /* --- 4. LEADERBOARD RENDERN & FREUNDE-CODE --- */
+        function renderLeaderboard() {
+            const container = document.getElementById('leaderboard-list-container');
+            const myXP = calculateTotalXP();
+
+            const allPlayers = [
+                { id: 'me', name: userName, xp: myXP, isMe: true },
+                ...leaderboardFriends.map(f => ({ ...f, isMe: false }))
+            ];
+
+            allPlayers.sort((a, b) => b.xp - a.xp);
+
+            let html = '';
+            allPlayers.forEach((p, idx) => {
+                const rankNum = idx + 1;
+                const lvl = getLevelFromXP(p.xp);
+                const rankTitle = getRankTitle(lvl);
+                let badgeClass = '';
+                if (rankNum === 1) badgeClass = 'lb-rank-1';
+                else if (rankNum === 2) badgeClass = 'lb-rank-2';
+                else if (rankNum === 3) badgeClass = 'lb-rank-3';
+
+                html += `
+                <div class="leaderboard-row ${p.isMe ? 'is-me' : ''}">
+                    <div class="lb-left">
+                        <div class="lb-rank-badge ${badgeClass}">${rankNum}</div>
+                        <div class="lb-user-info">
+                            <div class="lb-name">
+                                <span>${p.name}</span>
+                                ${p.isMe ? '<span style="font-size:10px; background:var(--accent-blue); color:#fff; padding:2px 6px; border-radius:8px;">DU</span>' : ''}
+                            </div>
+                            <div class="lb-sub">Level ${lvl} • ${rankTitle}</div>
+                        </div>
+                    </div>
+                    <div class="lb-right">
+                        <span class="lb-xp-val">${p.xp} XP</span>
+                        ${!p.isMe ? `<button class="btn-delete-icon" onclick="deleteFriend('${p.id}')"><span class="material-symbols-rounded" style="font-size:18px;">close</span></button>` : ''}
+                    </div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function copyMySyncCode() {
+            const myXP = calculateTotalXP();
+            const code = `APEX:${userName}:${myXP}`;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(code);
+                alert(`Dein Apex-Code wurde kopiert:\n${code}\n\nSchicke ihn deinen Freunden für das Leaderboard!`);
+            } else {
+                prompt('Kopiere deinen Apex-Code für Freunde:', code);
+            }
+        }
+
+        function openFriendModal() {
+            document.getElementById('input-friend-code').value = '';
+            document.getElementById('input-friend-name').value = '';
+            document.getElementById('input-friend-xp').value = '';
+            document.getElementById('modal-friend').classList.add('open');
+        }
+
+        function saveFriendToLeaderboard() {
+            const codeInput = document.getElementById('input-friend-code').value.trim();
+            let fName = document.getElementById('input-friend-name').value.trim();
+            let fXP = parseInt(document.getElementById('input-friend-xp').value) || 0;
+
+            if (codeInput.toUpperCase().startsWith('APEX:')) {
+                const parts = codeInput.split(':');
+                if (parts.length >= 3) {
+                    fName = parts[1].trim();
+                    fXP = parseInt(parts[2]) || 0;
+                }
+            }
+
+            if (!fName) return;
+
+            const existing = leaderboardFriends.find(f => f.name.toLowerCase() === fName.toLowerCase());
+            if (existing) {
+                existing.xp = fXP;
+                existing.name = fName;
+            } else {
+                leaderboardFriends.push({
+                    id: 'fr_' + Date.now(),
+                    name: fName,
+                    xp: fXP
+                });
+            }
+
+            saveAll();
+            renderLeaderboard();
+            closeModals();
+        }
+
+        function deleteFriend(friendId) {
+            leaderboardFriends = leaderboardFriends.filter(f => f.id !== friendId);
+            saveAll();
+            renderLeaderboard();
+        }
+
         /* --- NAVIGATION & MODALS SCHLIESSEN --- */
         function closeModals() {
             document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
@@ -1669,6 +2108,7 @@
         renderHome();
         renderFitness();
         renderHabits();
+        renderLeaderboard();
     </script>
 </body>
 </html>
