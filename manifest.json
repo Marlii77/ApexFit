@@ -1,18 +1,18 @@
 {
-  "name": "ApexFit Fitness",
-  "short_name": "ApexFit App",
+  "name": "ApexFit",
+  "short_name": "ApexFit",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#1b1c21",
-  "theme_color": "#9e1b32",
+  "background_color": "#131418",
+  "theme_color": "#0a84ff",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "Icon.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon.png",
+      "src": "Icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
