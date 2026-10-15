@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>ApexFit</title>
 
-    <!-- App-Icon für iPhone & iPad (Beachtet Großschreibung Icon.png) -->
+    <!-- App-Icon für iPhone & iPad -->
     <link rel="apple-touch-icon" href="Icon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="Icon.png">
     <link rel="manifest" href="manifest.json">
@@ -18,15 +18,13 @@
 
     <style>
         :root {
-            /* Edles Grau / Dark Slate Design ohne Rotstich */
             --bg-main: #131418;
             --bg-secondary: #1b1d24;
-            --card-bg: rgba(32, 34, 42, 0.82);
-            --card-inner: rgba(22, 24, 30, 0.88);
-            --border-subtle: rgba(255, 255, 255, 0.07);
+            --card-bg: rgba(32, 34, 42, 0.84);
+            --card-inner: rgba(22, 24, 30, 0.9);
+            --border-subtle: rgba(255, 255, 255, 0.08);
             --border-top-glow: rgba(255, 255, 255, 0.14);
             
-            /* Individuelle Akzentfarben */
             --accent-blue: #0a84ff;
             --accent-green: #30d158;
             --accent-indigo: #5e5ce6;
@@ -48,7 +46,7 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
             background-color: var(--bg-main);
             background-image: 
-                radial-gradient(circle at 20% -10%, rgba(94, 92, 230, 0.18), transparent 50%),
+                radial-gradient(circle at 20% -10%, rgba(94, 92, 230, 0.16), transparent 50%),
                 radial-gradient(circle at 85% 10%, rgba(10, 132, 255, 0.12), transparent 45%),
                 linear-gradient(180deg, #16181e 0%, #101115 100%);
             background-attachment: fixed;
@@ -63,17 +61,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 42px 20px 16px 20px;
+            padding: 42px 18px 16px 18px;
             position: sticky;
             top: 0;
             z-index: 10;
-            background: rgba(19, 20, 24, 0.75);
+            background: rgba(19, 20, 24, 0.78);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
 
         .page-header h1 {
-            font-size: 26px;
+            font-size: 25px;
             font-weight: 700;
             margin: 0;
             letter-spacing: -0.5px;
@@ -91,9 +89,34 @@
             margin-bottom: 4px;
         }
 
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-start-workout-top {
+            background: linear-gradient(135deg, #30d158 0%, #1f9d3d 100%);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            box-shadow: 0 6px 18px rgba(48, 209, 88, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            color: #fff;
+            height: 40px;
+            padding: 0 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .btn-start-workout-top:active { transform: scale(0.95); }
+
         .icon-btn-top {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid var(--border-top-glow);
@@ -103,7 +126,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.15s ease, background 0.2s ease;
+            transition: transform 0.15s ease;
         }
 
         .icon-btn-top.primary-glow {
@@ -120,7 +143,7 @@
             margin: 0 auto;
         }
 
-        /* --- PREMIUM CARDS (OHNE GRAUE PUNKTE OBEN RECHTS) --- */
+        /* --- PREMIUM CARDS --- */
         .bevel-card {
             position: relative;
             overflow: hidden;
@@ -136,7 +159,7 @@
             -webkit-backdrop-filter: blur(24px);
         }
 
-        /* --- LEVEL HERO CARD (BIS LEVEL 75) --- */
+        /* --- LEVEL HERO CARD --- */
         .level-hero-card {
             position: relative;
             overflow: hidden;
@@ -208,12 +231,12 @@
         .level-sub-info {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11.5px;
             color: var(--text-muted);
             font-weight: 500;
         }
 
-        /* --- BENTO GRID & RINGS (MIT EIGENEN FARBEN) --- */
+        /* --- BENTO GRID & RINGS --- */
         .bento-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -325,7 +348,7 @@
             color: var(--text-muted);
         }
 
-        /* --- 7-TAGE MATRIX (OPTIMIERTE TEXTANZEIGE) --- */
+        /* --- 7-TAGE MATRIX --- */
         .card-title-row {
             display: flex;
             justify-content: space-between;
@@ -351,13 +374,8 @@
             table-layout: fixed;
         }
 
-        .matrix-col-habit {
-            width: 38%;
-        }
-
-        .matrix-col-day {
-            width: 8.85%;
-        }
+        .matrix-col-habit { width: 38%; }
+        .matrix-col-day { width: 8.85%; }
 
         .matrix-header-day {
             text-align: center;
@@ -431,11 +449,6 @@
             transition: all 0.18s ease;
         }
 
-        .matrix-dot-btn.done {
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.35);
-        }
-
         /* --- ACTION BAR & BUTTONS --- */
         .action-bar {
             display: flex;
@@ -449,9 +462,9 @@
             border: 1px solid var(--border-subtle);
             box-shadow: inset 0 1px 0 var(--border-top-glow);
             color: var(--text-main);
-            padding: 14px 14px;
+            padding: 14px 12px;
             border-radius: 18px;
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -542,7 +555,7 @@
             border-radius: 12px;
         }
 
-        /* --- FITNESS REITER MIT ICONS & FARBEN --- */
+        /* --- FITNESS REITER & LIVE WORKOUT MODUS --- */
         .category-header {
             display: flex;
             justify-content: space-between;
@@ -557,13 +570,12 @@
         }
 
         .cat-icon-box {
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 11px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
             flex-shrink: 0;
         }
 
@@ -590,9 +602,8 @@
 
         .btn-pill {
             border: 1px solid rgba(255, 255, 255, 0.22);
-            color: #fff;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             padding: 6px 13px;
             border-radius: 20px;
             display: flex;
@@ -674,6 +685,209 @@
             padding: 0;
         }
 
+        /* LIVE WORKOUT SESSION STYLES */
+        .active-workout-banner {
+            background: linear-gradient(145deg, rgba(48, 209, 88, 0.16) 0%, rgba(24, 26, 34, 0.95) 100%);
+            border: 1px solid rgba(48, 209, 88, 0.4);
+            border-radius: 26px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 16px 38px rgba(0, 0, 0, 0.45);
+        }
+
+        .workout-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .timer-pill {
+            background: rgba(48, 209, 88, 0.2);
+            border: 1px solid rgba(48, 209, 88, 0.45);
+            color: #4ade80;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .set-row {
+            display: grid;
+            grid-template-columns: 38px 52px 1fr 1fr;
+            gap: 8px;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .set-row.set-done {
+            background: rgba(48, 209, 88, 0.12);
+            border-color: rgba(48, 209, 88, 0.38);
+        }
+
+        .set-check-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1.5px solid rgba(255, 255, 255, 0.22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: transparent;
+            transition: all 0.18s ease;
+        }
+
+        .set-row.set-done .set-check-btn {
+            background: var(--accent-green);
+            border-color: var(--accent-green);
+            color: #000;
+            box-shadow: 0 0 10px rgba(48, 209, 88, 0.45);
+        }
+
+        .set-num-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .set-inline-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 5px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .set-inline-input {
+            width: 55%;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: inherit;
+        }
+
+        .set-inline-unit {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* --- JOURNAL REITER --- */
+        .filter-scroll-bar {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 10px;
+            scrollbar-width: none;
+        }
+        .filter-scroll-bar::-webkit-scrollbar { display: none; }
+
+        .filter-chip {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .filter-chip.active {
+            background: var(--accent-blue);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(10, 132, 255, 0.35);
+        }
+
+        .journal-stats-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .journal-stat-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            padding: 12px 10px;
+            text-align: center;
+        }
+
+        .journal-stat-val {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .journal-stat-lbl {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+
+        .journal-entry-exercises {
+            margin-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 12px;
+        }
+
+        .journal-ex-block {
+            background: var(--card-inner);
+            border-radius: 14px;
+            padding: 11px 14px;
+            margin-bottom: 8px;
+        }
+        .journal-ex-block:last-child { margin-bottom: 0; }
+
+        .journal-ex-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .journal-set-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .journal-set-tag {
+            font-size: 11.5px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4px 9px;
+            border-radius: 8px;
+            color: #d1d1d6;
+        }
+
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -684,8 +898,9 @@
             color: var(--text-muted);
             font-size: 13px;
             text-align: center;
-            padding: 10px 0;
+            padding: 12px 0;
             margin: 0;
+            line-height: 1.5;
         }
 
         /* --- LEADERBOARD REITER --- */
@@ -761,6 +976,15 @@
             color: var(--accent-blue);
         }
 
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            box-shadow: 0 0 8px var(--accent-green);
+            display: inline-block;
+        }
+
         /* --- MODALS, COLOR & ICON PICKER --- */
         .modal-overlay {
             position: fixed;
@@ -828,35 +1052,37 @@
             font-family: inherit;
         }
 
+        /* 16 Akzentfarben (inkl. Weiß & Schwarz) */
         .color-picker-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
             margin-top: 6px;
         }
 
         .color-swatch {
-            height: 36px;
-            border-radius: 12px;
+            height: 34px;
+            border-radius: 10px;
             cursor: pointer;
-            border: 2px solid transparent;
+            border: 2px solid rgba(255, 255, 255, 0.15);
             transition: transform 0.15s ease;
         }
         .color-swatch.selected {
-            border-color: #fff;
-            transform: scale(1.08);
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+            border-color: var(--accent-blue);
+            transform: scale(1.12);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
         }
 
+        /* 20 Icons für Fitness */
         .icon-picker-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
+            gap: 8px;
             margin-top: 6px;
         }
 
         .icon-option {
-            height: 44px;
+            height: 42px;
             border-radius: 12px;
             background: #15161c;
             border: 1px solid var(--border-subtle);
@@ -869,9 +1095,27 @@
         }
 
         .icon-option.selected {
-            background: rgba(10, 132, 255, 0.2);
+            background: rgba(10, 132, 255, 0.22);
             border-color: var(--accent-blue);
             color: #fff;
+        }
+
+        /* Auswahl-Liste für "Training starten" */
+        .workout-select-item {
+            background: #15161c;
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+        }
+        .workout-select-item:active {
+            transform: scale(0.98);
+            border-color: var(--accent-blue);
         }
 
         /* XP Slider */
@@ -940,7 +1184,7 @@
             color: #fff;
             padding: 15px;
             border-radius: 16px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
         }
@@ -949,32 +1193,51 @@
             background: #15161c;
             color: var(--text-main);
             border: 1px solid var(--border-subtle);
-            padding: 15px 20px;
+            padding: 15px 18px;
             border-radius: 16px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
         }
 
-        /* --- FLOATING DOCK UNTEN (4 REITER) --- */
+        .invite-box {
+            background: #15161c;
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .invite-code-big {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--accent-blue);
+        }
+
+        /* --- FLOATING DOCK UNTEN (5 REITER) --- */
         .bottom-nav {
             position: fixed;
-            bottom: 18px;
+            bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 28px);
-            max-width: 440px;
-            height: 70px;
-            background-color: rgba(26, 28, 35, 0.86);
+            width: calc(100% - 20px);
+            max-width: 480px;
+            height: 68px;
+            background-color: rgba(24, 26, 33, 0.88);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 38px;
+            border-radius: 36px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 8px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+            padding: 0 6px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
             z-index: 50;
         }
 
@@ -985,19 +1248,19 @@
             align-items: center;
             color: var(--text-muted);
             cursor: pointer;
-            padding: 8px 6px;
-            border-radius: 30px;
-            transition: all 0.22s ease;
+            padding: 7px 4px;
+            border-radius: 28px;
+            transition: all 0.2s ease;
         }
 
         .nav-item.active { 
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.11);
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
         }
 
-        .nav-item span.material-symbols-rounded { font-size: 22px; margin-bottom: 2px; }
-        .nav-item span.label { font-size: 10px; font-weight: 600; }
+        .nav-item span.material-symbols-rounded { font-size: 21px; margin-bottom: 2px; }
+        .nav-item span.label { font-size: 9.5px; font-weight: 600; }
 
         .view { display: none; animation: fadeIn 0.25s ease; }
         .view.active { display: block; }
@@ -1045,7 +1308,6 @@
 
             <!-- BENTO SCORE RINGS: DAILY FOCUS & WEEKLY CONSISTENCY -->
             <div class="bento-grid">
-                <!-- Daily Focus -->
                 <div class="bento-card">
                     <div class="bento-header">
                         <span class="bento-title">Daily Focus</span>
@@ -1064,7 +1326,6 @@
                     <div class="bento-footer" id="daily-score-sub">0 von 0 erledigt</div>
                 </div>
 
-                <!-- Weekly Consistency -->
                 <div class="bento-card">
                     <div class="bento-header">
                         <span class="bento-title">Consistency</span>
@@ -1099,7 +1360,7 @@
     </div>
 
     <!-- ==========================================
-         2. FITNESS REITER
+         2. FITNESS REITER (INKL. TRAINING STARTEN)
          ========================================== -->
     <div id="view-fitness" class="view">
         <div class="page-header">
@@ -1107,12 +1368,24 @@
                 <div class="subtitle-date">ApexFit • Training</div>
                 <h1>Fitness</h1>
             </div>
-            <button class="icon-btn-top primary-glow" onclick="openFitnessCategoryModal()" title="Neue Muskelgruppe">
-                <span class="material-symbols-rounded">add</span>
-            </button>
+            <div class="header-actions">
+                <button class="btn-start-workout-top" onclick="openStartWorkoutModal()">
+                    <span class="material-symbols-rounded" style="font-size:18px;">play_arrow</span>
+                    Training starten
+                </button>
+                <button class="icon-btn-top primary-glow" onclick="openFitnessCategoryModal()" title="Neue Muskelgruppe">
+                    <span class="material-symbols-rounded">add</span>
+                </button>
+            </div>
         </div>
 
-        <div class="container" id="fitness-categories-container"></div>
+        <div class="container">
+            <!-- BEREICH FÜR LAUFENDES LIVE-TRAINING -->
+            <div id="active-workout-container"></div>
+
+            <!-- REGULÄRE MUSKELGRUPPEN & ÜBUNGEN -->
+            <div id="fitness-categories-container"></div>
+        </div>
     </div>
 
     <!-- ==========================================
@@ -1143,33 +1416,62 @@
     </div>
 
     <!-- ==========================================
-         4. LEADERBOARD REITER (NEU!)
+         4. JOURNAL REITER (NEU!)
          ========================================== -->
-    <div id="view-leaderboard" class="view">
+    <div id="view-journal" class="view">
         <div class="page-header">
             <div>
-                <div class="subtitle-date">ApexFit • Wettkampf</div>
-                <h1>Leaderboard</h1>
+                <div class="subtitle-date">Fortschritt & Historie</div>
+                <h1>Journal</h1>
             </div>
         </div>
 
         <div class="container">
+            <!-- Filter nach Muskelgruppen -->
+            <div class="filter-scroll-bar" id="journal-filter-bar"></div>
+
+            <!-- Fortschritts-Kurzstatistik -->
+            <div class="journal-stats-strip" id="journal-stats-container"></div>
+
+            <!-- Gespeicherte Workouts -->
+            <div id="journal-entries-container"></div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         5. LEADERBOARD / RANKING REITER (LIVE FIREBASE)
+         ========================================== -->
+    <div id="view-leaderboard" class="view">
+        <div class="page-header">
+            <div>
+                <div class="subtitle-date">Live Cloud-Synchronisation</div>
+                <h1>Ranking</h1>
+            </div>
+            <button class="icon-btn-top" onclick="syncAndLoadLeaderboard(true)" title="Jetzt aktualisieren">
+                <span class="material-symbols-rounded" style="font-size:20px;">sync</span>
+            </button>
+        </div>
+
+        <div class="container">
             <div class="action-bar">
-                <button class="action-btn" onclick="copyMySyncCode()">
+                <button class="action-btn" onclick="openInviteModal()">
                     <span class="material-symbols-rounded" style="font-size:19px;">share</span>
-                    Mein Code
+                    Einladen (Link/Code)
                 </button>
-                <button class="action-btn blue-glow-btn" onclick="openFriendModal()">
+                <button class="action-btn blue-glow-btn" onclick="openAddFriendModal()">
                     <span class="material-symbols-rounded" style="font-size:19px;">person_add</span>
-                    + Freund / Code
+                    + Freundes-Code
                 </button>
             </div>
 
             <div class="bevel-card">
                 <div class="card-title-row">
                     <div>
-                        <h3>Top Athleten (Max Lvl 75)</h3>
-                        <span class="card-subtitle">Sortiert nach Gesamt-XP & Level</span>
+                        <h3 style="display:flex; align-items:center; gap:8px;">
+                            <span>Live Leaderboard</span>
+                            <span class="live-dot" title="Verbunden mit Firebase"></span>
+                        </h3>
+                        <span class="card-subtitle" id="lb-sync-status">Punkte aktualisieren sich automatisch</span>
                     </div>
                     <span class="material-symbols-rounded" style="color:var(--accent-gold);">emoji_events</span>
                 </div>
@@ -1198,44 +1500,53 @@
         </div>
     </div>
 
-    <!-- Modal: Fitness-Kategorie (MIT ICON & FARBAUSWAHL) -->
+    <!-- Modal: Training starten (Muskelgruppe auswählen) -->
+    <div id="modal-start-workout" class="modal-overlay" onclick="closeModals()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Training starten</h3>
+            <p style="color:var(--text-muted); font-size:13px; margin:-10px 0 16px 0;">
+                Wähle die Muskelgruppe aus, die du heute im Gym trainierst:
+            </p>
+            <div id="start-workout-cat-list"></div>
+            <div class="sheet-actions">
+                <button class="btn-secondary" style="width:100%;" onclick="closeModals()">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Training beenden & Dauer eingeben -->
+    <div id="modal-finish-workout" class="modal-overlay" onclick="closeModals()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Training abschließen</h3>
+            <div class="form-field">
+                <label>Dauer des Trainings (in Minuten)</label>
+                <input type="number" id="input-workout-duration" class="form-input" value="45" placeholder="z.B. 60">
+            </div>
+            <div class="sheet-actions">
+                <button class="btn-secondary" onclick="closeModals()">Zurück</button>
+                <button class="btn-primary" onclick="confirmSaveWorkoutToJournal()">Im Journal speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Fitness-Kategorie (20 ICONS & 16 FARBEN) -->
     <div id="modal-fit-category" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
             <h3 class="sheet-title">Neue Muskelgruppe</h3>
             <div class="form-field">
-                <label>Name der Kategorie</label>
+                <label>Name der Muskelgruppe</label>
                 <input type="text" id="input-fit-cat-name" class="form-input" placeholder="z.B. Brust, Arme, Rücken, Beine...">
             </div>
             <div class="form-field">
-                <label>Passendes Icon wählen</label>
-                <div class="icon-picker-grid" id="fit-icon-picker">
-                    <div class="icon-option selected" data-icon="fitness_center" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">fitness_center</span></div>
-                    <div class="icon-option" data-icon="exercise" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">exercise</span></div>
-                    <div class="icon-option" data-icon="directions_run" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">directions_run</span></div>
-                    <div class="icon-option" data-icon="bolt" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">bolt</span></div>
-                    <div class="icon-option" data-icon="local_fire_department" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">local_fire_department</span></div>
-                    <div class="icon-option" data-icon="favorite" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">favorite</span></div>
-                    <div class="icon-option" data-icon="timer" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">timer</span></div>
-                    <div class="icon-option" data-icon="shield" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">shield</span></div>
-                    <div class="icon-option" data-icon="sports_gymnastics" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">sports_gymnastics</span></div>
-                    <div class="icon-option" data-icon="self_improvement" onclick="selectFitIcon(this)"><span class="material-symbols-rounded">self_improvement</span></div>
-                </div>
+                <label>Icon wählen (20 Icons)</label>
+                <div class="icon-picker-grid" id="fit-icon-picker"></div>
             </div>
             <div class="form-field">
-                <label>Akzentfarbe</label>
-                <div class="color-picker-grid" id="fit-color-picker">
-                    <div class="color-swatch selected" data-color="#0a84ff" style="background:#0a84ff;" onclick="selectFitColor(this)"></div>
-                    <div class="color-swatch" data-color="#30d158" style="background:#30d158;" onclick="selectFitColor(this)"></div>
-                    <div class="color-swatch" data-color="#5e5ce6" style="background:#5e5ce6;" onclick="selectFitColor(this)"></div>
-                    <div class="color-swatch" data-color="#ff9f0a" style="background:#ff9f0a;" onclick="selectFitColor(this)"></div>
-                    <div class="color-swatch" data-color="#ff375f" style="background:#ff375f;" onclick="selectFitColor(this)"></div>
-                    <div class="color-swatch" data-color="#64d2ff" style="background:#64d2ff;" onclick="selectFitColor(this)"></div>
-                    <div class="color-swatch" data-color="#bf5af2" style="background:#bf5af2;" onclick="selectFitColor(this)"></div>
-                    <div class="color-swatch" data-color="#ffd60a" style="background:#ffd60a;" onclick="selectFitColor(this)"></div>
-                    <div class="color-swatch" data-color="#10b981" style="background:#10b981;" onclick="selectFitColor(this)"></div>
-                    <div class="color-swatch" data-color="#f43f5e" style="background:#f43f5e;" onclick="selectFitColor(this)"></div>
-                </div>
+                <label>Akzentfarbe (inkl. Weiß & Schwarz)</label>
+                <div class="color-picker-grid" id="fit-color-picker"></div>
             </div>
             <div class="sheet-actions">
                 <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
@@ -1263,7 +1574,7 @@
                     <input type="number" id="input-ex-reps" class="form-input" value="10">
                 </div>
                 <div class="form-field">
-                    <label>Gewicht (kg)</label>
+                    <label>kg</label>
                     <input type="number" step="0.5" id="input-ex-weight" class="form-input" value="60">
                 </div>
             </div>
@@ -1274,7 +1585,7 @@
         </div>
     </div>
 
-    <!-- Modal: Neue Habit-Kategorie (10 AKZENTFARBEN) -->
+    <!-- Modal: Neue Habit-Kategorie (16 FARBEN) -->
     <div id="modal-habit-category" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
@@ -1284,19 +1595,8 @@
                 <input type="text" id="input-habit-cat-name" class="form-input" placeholder="z.B. Supplements, Morning Routine, Coding...">
             </div>
             <div class="form-field">
-                <label>Akzentfarbe (10 Farben)</label>
-                <div class="color-picker-grid" id="habit-color-picker">
-                    <div class="color-swatch selected" data-color="#0a84ff" style="background:#0a84ff;" onclick="selectHabitColor(this)"></div>
-                    <div class="color-swatch" data-color="#30d158" style="background:#30d158;" onclick="selectHabitColor(this)"></div>
-                    <div class="color-swatch" data-color="#5e5ce6" style="background:#5e5ce6;" onclick="selectHabitColor(this)"></div>
-                    <div class="color-swatch" data-color="#ff9f0a" style="background:#ff9f0a;" onclick="selectHabitColor(this)"></div>
-                    <div class="color-swatch" data-color="#ff375f" style="background:#ff375f;" onclick="selectHabitColor(this)"></div>
-                    <div class="color-swatch" data-color="#64d2ff" style="background:#64d2ff;" onclick="selectHabitColor(this)"></div>
-                    <div class="color-swatch" data-color="#bf5af2" style="background:#bf5af2;" onclick="selectHabitColor(this)"></div>
-                    <div class="color-swatch" data-color="#ffd60a" style="background:#ffd60a;" onclick="selectHabitColor(this)"></div>
-                    <div class="color-swatch" data-color="#10b981" style="background:#10b981;" onclick="selectHabitColor(this)"></div>
-                    <div class="color-swatch" data-color="#f43f5e" style="background:#f43f5e;" onclick="selectHabitColor(this)"></div>
-                </div>
+                <label>Akzentfarbe (inkl. Weiß & Schwarz)</label>
+                <div class="color-picker-grid" id="habit-color-picker"></div>
             </div>
             <div class="sheet-actions">
                 <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
@@ -1339,54 +1639,113 @@
         </div>
     </div>
 
-    <!-- Modal: Freund zum Leaderboard hinzufügen -->
-    <div id="modal-friend" class="modal-overlay" onclick="closeModals()">
+    <!-- Modal: Freunde einladen (Code & Link) -->
+    <div id="modal-invite" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
-            <h3 class="sheet-title">Freund hinzufügen / aktualisieren</h3>
+            <h3 class="sheet-title">Freunde ins Ranking einladen</h3>
+            <p style="color:var(--text-muted); font-size:13px; margin:-8px 0 16px 0; line-height:1.4;">
+                Teile deinen persönlichen Link oder Freundes-Code. Eure XP und Level synchronisieren sich danach vollautomatisch in Echtzeit!
+            </p>
             <div class="form-field">
-                <label>Option 1: Apex-Code vom Freund einfügen</label>
-                <input type="text" id="input-friend-code" class="form-input" placeholder="z.B. APEX:Nicko:1450">
+                <label>Dein persönlicher Freundes-Code</label>
+                <div class="invite-box">
+                    <span class="invite-code-big" id="my-friend-code-display">AF-XXXXX</span>
+                    <button class="btn-pill" style="background:var(--accent-blue); color:#fff; border:none; padding:8px 14px;" onclick="copyFriendCode()">
+                        <span class="material-symbols-rounded" style="font-size:16px;">content_copy</span> Code kopieren
+                    </button>
+                </div>
             </div>
-            <div style="text-align:center; color:var(--text-muted); font-size:12px; margin: 10px 0;">— ODER MANUELL EINTRAGEN —</div>
             <div class="form-field">
-                <label>Name des Freundes</label>
-                <input type="text" id="input-friend-name" class="form-input" placeholder="z.B. Nicko">
+                <label>Direkter Einladungs-Link</label>
+                <button class="btn-primary" style="width:100%; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="shareInviteLink()">
+                    <span class="material-symbols-rounded">link</span>
+                    Einladungs-Link teilen / kopieren
+                </button>
             </div>
+            <div class="sheet-actions">
+                <button class="btn-secondary" style="width:100%;" onclick="closeModals()">Fertig</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Freund per Code/Link hinzufügen -->
+    <div id="modal-add-friend" class="modal-overlay" onclick="closeModals()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Freund verbinden</h3>
             <div class="form-field">
-                <label>Gesamt-XP des Freundes</label>
-                <input type="number" id="input-friend-xp" class="form-input" placeholder="z.B. 1200">
+                <label>Freundes-Code oder Einladungs-Link einfügen</label>
+                <input type="text" id="input-friend-code" class="form-input" placeholder="z.B. AF-8K4M2 oder Link...">
             </div>
             <div class="sheet-actions">
                 <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
-                <button class="btn-primary" onclick="saveFriendToLeaderboard()">Speichern</button>
+                <button class="btn-primary" onclick="addFriendByCodeInput()">Verbinden</button>
             </div>
         </div>
     </div>
 
     <!-- ==========================================
-         FLOATING BOTTOM DOCK (4 REITER)
+         FLOATING BOTTOM DOCK (5 REITER)
          ========================================== -->
     <nav class="bottom-nav">
-        <div class="nav-item active" onclick="switchTab('home', this)">
+        <div class="nav-item active" id="nav-home" onclick="switchTab('home', this)">
             <span class="material-symbols-rounded">space_dashboard</span>
             <span class="label">Home</span>
         </div>
-        <div class="nav-item" onclick="switchTab('fitness', this)">
+        <div class="nav-item" id="nav-fitness" onclick="switchTab('fitness', this)">
             <span class="material-symbols-rounded">fitness_center</span>
             <span class="label">Fitness</span>
         </div>
-        <div class="nav-item" onclick="switchTab('habits', this)">
+        <div class="nav-item" id="nav-habits" onclick="switchTab('habits', this)">
             <span class="material-symbols-rounded">check_circle</span>
             <span class="label">Habits</span>
         </div>
-        <div class="nav-item" onclick="switchTab('leaderboard', this)">
+        <div class="nav-item" id="nav-journal" onclick="switchTab('journal', this)">
+            <span class="material-symbols-rounded">menu_book</span>
+            <span class="label">Journal</span>
+        </div>
+        <div class="nav-item" id="nav-leaderboard" onclick="switchTab('leaderboard', this)">
             <span class="material-symbols-rounded">emoji_events</span>
             <span class="label">Ranking</span>
         </div>
     </nav>
 
     <script>
+        /* --- FIREBASE LIVE-DATENBANK KONFIGURATION --- */
+        const FIREBASE_DB_URL = "https://apexfit-4c49a-default-rtdb.europe-west1.firebasedatabase.app";
+
+        /* --- FARBEN & ICONS PALETTEN (INKL. WEISS & SCHWARZ) --- */
+        const ACCENT_COLORS = [
+            '#0a84ff', '#30d158', '#5e5ce6', '#ff9f0a',
+            '#ff375f', '#64d2ff', '#bf5af2', '#ffd60a',
+            '#10b981', '#f43f5e', '#8b5cf6', '#14b8a6',
+            '#f97316', '#8e8e93', '#ffffff', '#111216'
+        ];
+
+        const FITNESS_ICONS = [
+            'fitness_center', 'exercise', 'bolt', 'local_fire_department', 'directions_run',
+            'favorite', 'shield', 'accessibility_new', 'sports_gymnastics', 'self_improvement',
+            'sports_mma', 'front_hand', 'footprint', 'timer', 'monitoring',
+            'trophy', 'pedal_bike', 'pool', 'hiking', 'vital_signs'
+        ];
+
+        // Kontrast-Helfer für Weiß (#ffffff), Gelb (#ffd60a) und Schwarz (#111216)
+        function getContrastText(hex) {
+            if (!hex) return '#ffffff';
+            const c = hex.toLowerCase();
+            if (c === '#ffffff' || c === '#ffd60a' || c === '#64d2ff') return '#000000';
+            return '#ffffff';
+        }
+
+        function getBorderForColor(hex) {
+            if (!hex) return 'transparent';
+            if (hex.toLowerCase() === '#111216' || hex.toLowerCase() === '#000000') {
+                return 'rgba(255, 255, 255, 0.45)';
+            }
+            return hex;
+        }
+
         /* --- HILFSFUNKTIONEN FÜR DATUM --- */
         function getDateKey(dateObj) {
             const y = dateObj.getFullYear();
@@ -1415,8 +1774,17 @@
         const options = { weekday: 'short', day: 'numeric', month: 'short' };
         document.getElementById('current-date-label').innerText = 'APEXFIT • ' + now.toLocaleDateString('de-DE', options);
 
-        /* --- BENUTZERNAME & DATEN LADEN --- */
+        /* --- EINDEUTIGE USER-ID & DATEN INITIALISIEREN --- */
         const todayKey = getDateKey(new Date());
+
+        let myUserId = localStorage.getItem('apexfit_uid');
+        if (!myUserId) {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = 'AF-';
+            for (let i = 0; i < 5; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+            myUserId = code;
+            localStorage.setItem('apexfit_uid', myUserId);
+        }
 
         let userName = localStorage.getItem('apexfit_username') || 'Marlii';
         document.getElementById('display-username').innerText = userName;
@@ -1432,7 +1800,6 @@
             { id: 'hab_3', catId: 'hcat_2', name: 'Morning Care / Ice Roller', xp: 40, history: { [todayKey]: true } },
             { id: 'hab_4', catId: 'hcat_2', name: 'Fokus-Session / Projekt', xp: 80, history: {} }
         ];
-
         habitsList.forEach(h => { if (!h.xp) h.xp = 40; });
 
         let fitnessData = JSON.parse(localStorage.getItem('marlii_fitness_data')) || [
@@ -1457,30 +1824,60 @@
                 ]
             }
         ];
-
         fitnessData.forEach(c => {
             if (!c.icon) c.icon = 'fitness_center';
             if (!c.color) c.color = '#0a84ff';
         });
 
-        let leaderboardFriends = JSON.parse(localStorage.getItem('apexfit_friends')) || [
-            { id: 'fr_1', name: 'Nicko', xp: 450 }
-        ];
+        let journalData = JSON.parse(localStorage.getItem('apexfit_journal')) || [];
+        let friendIds = JSON.parse(localStorage.getItem('apexfit_friend_ids')) || [];
 
         let currentFitCategoryId = null;
         let selectedHabitColor = '#0a84ff';
         let selectedFitColor = '#0a84ff';
         let selectedFitIcon = 'fitness_center';
+        let selectedJournalFilter = 'ALL';
+
+        // Live-Workout Status
+        let activeWorkout = null;
+        let workoutTimerInterval = null;
 
         function saveAll() {
             localStorage.setItem('apexfit_username', userName);
             localStorage.setItem('marlii_habit_cats', JSON.stringify(habitCategories));
             localStorage.setItem('marlii_habits_list', JSON.stringify(habitsList));
             localStorage.setItem('marlii_fitness_data', JSON.stringify(fitnessData));
-            localStorage.setItem('apexfit_friends', JSON.stringify(leaderboardFriends));
+            localStorage.setItem('apexfit_journal', JSON.stringify(journalData));
+            localStorage.setItem('apexfit_friend_ids', JSON.stringify(friendIds));
+            syncMyProfileToFirebase();
         }
 
-        /* --- LEVEL SYSTEM BIS LEVEL 75 (ALLE 5 LEVEL NEUER RANG) --- */
+        /* --- FARB- & ICON-PICKER AUFBAUEN --- */
+        function initPickers() {
+            const fitIconContainer = document.getElementById('fit-icon-picker');
+            fitIconContainer.innerHTML = '';
+            FITNESS_ICONS.forEach((ic, idx) => {
+                fitIconContainer.innerHTML += `
+                    <div class="icon-option ${idx === 0 ? 'selected' : ''}" data-icon="${ic}" onclick="selectFitIcon(this)">
+                        <span class="material-symbols-rounded">${ic}</span>
+                    </div>`;
+            });
+
+            const fitColorContainer = document.getElementById('fit-color-picker');
+            const habitColorContainer = document.getElementById('habit-color-picker');
+            fitColorContainer.innerHTML = '';
+            habitColorContainer.innerHTML = '';
+
+            ACCENT_COLORS.forEach((col, idx) => {
+                const extraBorder = col === '#111216' ? 'border-color: rgba(255,255,255,0.4);' : '';
+                fitColorContainer.innerHTML += `
+                    <div class="color-swatch ${idx === 0 ? 'selected' : ''}" data-color="${col}" style="background:${col}; ${extraBorder}" onclick="selectFitColor(this)"></div>`;
+                habitColorContainer.innerHTML += `
+                    <div class="color-swatch ${idx === 0 ? 'selected' : ''}" data-color="${col}" style="background:${col}; ${extraBorder}" onclick="selectHabitColor(this)"></div>`;
+            });
+        }
+
+        /* --- LEVEL SYSTEM BIS LEVEL 75 --- */
         const XP_PER_LEVEL = 250;
         const MAX_LEVEL = 75;
 
@@ -1541,7 +1938,7 @@
 
                 document.getElementById('lvl-progress-bar').style.width = `${pct}%`;
                 document.getElementById('lvl-progress-text').innerText = `${xpIntoLevel} / ${XP_PER_LEVEL} XP (${pct}%)`;
-                document.getElementById('lvl-next-hint').innerText = `Noch ${xpMissing} XP bis Lvl ${currentLevel + 1} (Nächster Rang: Lvl ${nextMilestoneLvl})`;
+                document.getElementById('lvl-next-hint').innerText = `Noch ${xpMissing} XP bis Lvl ${currentLevel + 1} (Rang: Lvl ${nextMilestoneLvl})`;
             }
         }
 
@@ -1558,7 +1955,7 @@
                 userName = val;
                 document.getElementById('display-username').innerText = userName;
                 saveAll();
-                renderLeaderboard();
+                syncAndLoadLeaderboard();
             }
             closeModals();
         }
@@ -1585,14 +1982,12 @@
             const tKey = last7[6].key;
             const totalHabits = habitsList.length;
 
-            // Daily Focus
             let doneToday = 0;
             habitsList.forEach(h => {
                 if (h.history && h.history[tKey]) doneToday++;
             });
             const dailyPct = totalHabits > 0 ? Math.round((doneToday / totalHabits) * 100) : 0;
 
-            // Weekly Consistency
             let totalPossibleWeek = totalHabits * 7;
             let doneWeek = 0;
             habitsList.forEach(h => {
@@ -1611,7 +2006,6 @@
             document.getElementById('weekly-score-val').innerText = `${weeklyPct}%`;
             document.getElementById('weekly-score-sub').innerText = `${doneWeek} Check-ins`;
 
-            // 7-Tage Matrix mit optimiertem Text-Umbruch
             const matrixContainer = document.getElementById('matrix-container');
             if (habitsList.length === 0) {
                 matrixContainer.innerHTML = `<p class="empty-hint">Noch keine Ziele im Reiter „Habits“ angelegt.</p>`;
@@ -1638,23 +2032,25 @@
             habitsList.forEach(h => {
                 const cat = habitCategories.find(c => c.id === h.catId);
                 const dotColor = cat ? cat.color : '#0a84ff';
+                const dotBorder = getBorderForColor(dotColor);
+                const checkTextColor = getContrastText(dotColor);
 
                 tableHTML += `
                     <tr class="matrix-row">
                         <td>
                             <div class="matrix-habit-name">
-                                <span class="cat-dot" style="background:${dotColor};"></span>
+                                <span class="cat-dot" style="background:${dotColor}; border:1px solid ${dotBorder};"></span>
                                 <span class="matrix-habit-text">${h.name}</span>
                             </div>
                         </td>`;
 
                 last7.forEach(d => {
                     const isDone = h.history && h.history[d.key];
-                    const doneStyle = isDone ? `background:${dotColor}; box-shadow: 0 0 8px ${dotColor}66;` : '';
+                    const doneStyle = isDone ? `background:${dotColor}; border-color:${dotBorder}; color:${checkTextColor}; box-shadow: 0 0 8px ${dotColor}55;` : '';
                     tableHTML += `
                         <td class="matrix-cell">
                             <button class="matrix-dot-btn ${isDone ? 'done' : ''}" style="${doneStyle}" onclick="toggleHabitDate('${h.id}', '${d.key}')">
-                                <span class="material-symbols-rounded" style="font-size:15px;">check</span>
+                                <span class="material-symbols-rounded" style="font-size:15px; font-weight:bold;">check</span>
                             </button>
                         </td>`;
                 });
@@ -1680,6 +2076,8 @@
             habitCategories.forEach(cat => {
                 const catHabits = habitsList.filter(h => h.catId === cat.id);
                 const doneCount = catHabits.filter(h => h.history && h.history[tKey]).length;
+                const dotBorder = getBorderForColor(cat.color);
+                const checkColor = getContrastText(cat.color);
 
                 let itemsHTML = '';
                 if (catHabits.length === 0) {
@@ -1689,13 +2087,13 @@
                         const isDone = h.history && h.history[tKey];
                         const streak = calculateStreak(h);
                         const xpVal = h.xp || 40;
-                        const circleStyle = isDone ? `background:${cat.color}; border-color:${cat.color}; box-shadow: 0 0 12px ${cat.color}80;` : '';
+                        const circleStyle = isDone ? `background:${cat.color}; border-color:${dotBorder}; box-shadow: 0 0 12px ${cat.color}66;` : '';
 
                         itemsHTML += `
                         <div class="habit-item-row ${isDone ? 'completed' : ''}">
                             <div class="habit-left" onclick="toggleHabitDate('${h.id}', '${tKey}')">
                                 <div class="check-circle" style="${circleStyle}">
-                                    ${isDone ? '<span class="material-symbols-rounded" style="font-size:16px; color:#fff; font-weight:bold;">check</span>' : ''}
+                                    ${isDone ? `<span class="material-symbols-rounded" style="font-size:16px; color:${checkColor}; font-weight:bold;">check</span>` : ''}
                                 </div>
                                 <span class="habit-title">${h.name}</span>
                             </div>
@@ -1714,7 +2112,7 @@
                 <div class="bevel-card">
                     <div class="category-header">
                         <div class="category-title-group">
-                            <span class="cat-dot" style="background:${cat.color}; width:10px; height:10px; margin:0;"></span>
+                            <span class="cat-dot" style="background:${cat.color}; border:1px solid ${dotBorder}; width:11px; height:11px; margin:0;"></span>
                             <h2 class="category-title">${cat.name}</h2>
                             <span class="badge-count">${doneCount}/${catHabits.length}</span>
                         </div>
@@ -1740,10 +2138,8 @@
             saveAll();
             renderHome();
             renderHabits();
-            renderLeaderboard();
         }
 
-        /* --- XP SLIDER & HABIT MODALS --- */
         function updateXpPreview(val) {
             document.getElementById('xp-slider-label').innerText = `${val} XP`;
             document.querySelectorAll('.xp-preset-btn').forEach(btn => {
@@ -1788,7 +2184,6 @@
             saveAll();
             renderHabits();
             renderHome();
-            renderLeaderboard();
         }
 
         function openNewHabitModal() {
@@ -1831,10 +2226,9 @@
             saveAll();
             renderHabits();
             renderHome();
-            renderLeaderboard();
         }
 
-        /* --- 3. FITNESS REITER RENDERN (MIT ICON & AKZENTFARBE) --- */
+        /* --- 3. FITNESS REITER & LIVE WORKOUT SYSTEM --- */
         function selectFitIcon(el) {
             document.querySelectorAll('#fit-icon-picker .icon-option').forEach(i => i.classList.remove('selected'));
             el.classList.add('selected');
@@ -1848,6 +2242,8 @@
         }
 
         function renderFitness() {
+            renderActiveWorkoutBanner();
+
             const container = document.getElementById('fitness-categories-container');
             container.innerHTML = '';
 
@@ -1862,6 +2258,9 @@
             fitnessData.forEach(cat => {
                 const cColor = cat.color || '#0a84ff';
                 const cIcon = cat.icon || 'fitness_center';
+                const cText = getContrastText(cColor);
+                const cBorder = getBorderForColor(cColor);
+                const iconColor = cColor === '#111216' ? '#ffffff' : cColor;
 
                 let exercisesHTML = '';
                 if (cat.exercises.length === 0) {
@@ -1888,7 +2287,7 @@
                                         onchange="updateFitnessMetric('${cat.id}', '${ex.id}', 'reps', this.value)">
                                 </div>
                                 <div class="metric-box">
-                                    <span class="metric-label">Gewicht (kg)</span>
+                                    <span class="metric-label">kg</span>
                                     <input type="number" step="0.5" class="metric-input" value="${ex.weight}" 
                                         onchange="updateFitnessMetric('${cat.id}', '${ex.id}', 'weight', this.value)">
                                 </div>
@@ -1901,14 +2300,14 @@
                 <div class="bevel-card">
                     <div class="category-header">
                         <div class="category-title-group">
-                            <div class="cat-icon-box" style="background:${cColor}28; border:1px solid ${cColor}66; color:${cColor};">
+                            <div class="cat-icon-box" style="background:${cColor}28; border:1px solid ${cBorder}; color:${iconColor};">
                                 <span class="material-symbols-rounded" style="font-size:20px;">${cIcon}</span>
                             </div>
                             <h2 class="category-title">${cat.name}</h2>
                             <span class="badge-count">${cat.exercises.length}</span>
                         </div>
                         <div class="category-actions">
-                            <button class="btn-pill" style="background:${cColor}; box-shadow: 0 4px 12px ${cColor}44;" onclick="openFitnessExerciseModal('${cat.id}')">
+                            <button class="btn-pill" style="background:${cColor}; color:${cText}; border-color:${cBorder};" onclick="openFitnessExerciseModal('${cat.id}')">
                                 <span class="material-symbols-rounded" style="font-size:15px;">add</span> Übung
                             </button>
                             <button class="btn-delete-icon" onclick="deleteFitnessCategory('${cat.id}')">
@@ -1919,6 +2318,230 @@
                     <div>${exercisesHTML}</div>
                 </div>`;
             });
+        }
+
+        /* --- LIVE WORKOUT STARTEN & SÄTZE ABHAKEN --- */
+        function openStartWorkoutModal() {
+            const listEl = document.getElementById('start-workout-cat-list');
+            listEl.innerHTML = '';
+
+            if (fitnessData.length === 0) {
+                listEl.innerHTML = `<p class="empty-hint">Bitte erstelle zuerst mit dem <b>+</b> eine Muskelgruppe und Übungen.</p>`;
+            } else {
+                fitnessData.forEach(cat => {
+                    const iconColor = cat.color === '#111216' ? '#ffffff' : cat.color;
+                    listEl.innerHTML += `
+                    <div class="workout-select-item" onclick="startLiveWorkout('${cat.id}')">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <div class="cat-icon-box" style="background:${cat.color}28; border:1px solid ${getBorderForColor(cat.color)}; color:${iconColor};">
+                                <span class="material-symbols-rounded">${cat.icon || 'fitness_center'}</span>
+                            </div>
+                            <div>
+                                <div style="font-size:16px; font-weight:700;">${cat.name}</div>
+                                <div style="font-size:12px; color:var(--text-muted);">${cat.exercises.length} Übungen bereit</div>
+                            </div>
+                        </div>
+                        <span class="material-symbols-rounded" style="color:var(--accent-green);">play_circle</span>
+                    </div>`;
+                });
+            }
+            document.getElementById('modal-start-workout').classList.add('open');
+        }
+
+        function startLiveWorkout(catId) {
+            const cat = fitnessData.find(c => c.id === catId);
+            if (!cat) return;
+
+            const sessionExercises = cat.exercises.map(ex => {
+                const count = Math.max(1, parseInt(ex.sets) || 3);
+                const setsArr = [];
+                for (let i = 0; i < count; i++) {
+                    setsArr.push({
+                        setNum: i + 1,
+                        weight: ex.weight,
+                        reps: ex.reps,
+                        done: false
+                    });
+                }
+                return {
+                    exId: ex.id,
+                    name: ex.name,
+                    sets: setsArr
+                };
+            });
+
+            activeWorkout = {
+                catId: cat.id,
+                catName: cat.name,
+                catIcon: cat.icon || 'fitness_center',
+                catColor: cat.color || '#0a84ff',
+                startTime: Date.now(),
+                exercises: sessionExercises
+            };
+
+            closeModals();
+            renderFitness();
+            startWorkoutStopwatch();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function startWorkoutStopwatch() {
+            if (workoutTimerInterval) clearInterval(workoutTimerInterval);
+            workoutTimerInterval = setInterval(() => {
+                const timerEl = document.getElementById('live-workout-timer');
+                if (!activeWorkout || !timerEl) return;
+                const diffSec = Math.floor((Date.now() - activeWorkout.startTime) / 1000);
+                const mins = String(Math.floor(diffSec / 60)).padStart(2, '0');
+                const secs = String(diffSec % 60).padStart(2, '0');
+                timerEl.innerText = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function renderActiveWorkoutBanner() {
+            const container = document.getElementById('active-workout-container');
+            if (!activeWorkout) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let exBlocksHTML = '';
+            if (activeWorkout.exercises.length === 0) {
+                exBlocksHTML = `<p class="empty-hint">Keine Übungen in dieser Muskelgruppe vorhanden.</p>`;
+            } else {
+                activeWorkout.exercises.forEach((ex, exIdx) => {
+                    let setsHTML = '';
+                    ex.sets.forEach((s, setIdx) => {
+                        setsHTML += `
+                        <div class="set-row ${s.done ? 'set-done' : ''}">
+                            <button class="set-check-btn" onclick="toggleWorkoutSet(${exIdx}, ${setIdx})">
+                                <span class="material-symbols-rounded" style="font-size:18px; font-weight:bold;">check</span>
+                            </button>
+                            <span class="set-num-label">${s.setNum}. Satz</span>
+                            <div class="set-inline-box">
+                                <input type="number" step="0.5" class="set-inline-input" value="${s.weight}" 
+                                    onchange="updateWorkoutSetValue(${exIdx}, ${setIdx}, 'weight', this.value)">
+                                <span class="set-inline-unit">kg</span>
+                            </div>
+                            <div class="set-inline-box">
+                                <input type="number" class="set-inline-input" value="${s.reps}" 
+                                    onchange="updateWorkoutSetValue(${exIdx}, ${setIdx}, 'reps', this.value)">
+                                <span class="set-inline-unit">Wdh</span>
+                            </div>
+                        </div>`;
+                    });
+
+                    exBlocksHTML += `
+                    <div class="exercise-item" style="margin-bottom:14px;">
+                        <div class="exercise-top">
+                            <span class="exercise-name">${ex.name}</span>
+                            <button class="btn-pill" style="background:rgba(255,255,255,0.08); color:#fff; font-size:11px; padding:4px 10px;" onclick="addExtraWorkoutSet(${exIdx})">
+                                + Satz
+                            </button>
+                        </div>
+                        <div>${setsHTML}</div>
+                    </div>`;
+                });
+            }
+
+            container.innerHTML = `
+            <div class="active-workout-banner">
+                <div class="workout-top-bar">
+                    <div>
+                        <div style="font-size:11px; color:#4ade80; font-weight:700; text-transform:uppercase;">AKTIVES TRAINING</div>
+                        <h2 style="margin:2px 0 0 0; font-size:21px;">${activeWorkout.catName}</h2>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="timer-pill">
+                            <span class="material-symbols-rounded" style="font-size:16px;">timer</span>
+                            <span id="live-workout-timer">00:00</span>
+                        </div>
+                        <button class="btn-delete-icon" onclick="cancelActiveWorkout()" title="Training abbrechen">
+                            <span class="material-symbols-rounded" style="color:var(--danger);">close</span>
+                        </button>
+                    </div>
+                </div>
+                <div>${exBlocksHTML}</div>
+                <button class="btn-primary" style="width:100%; margin-top:12px; background:linear-gradient(135deg, #30d158 0%, #1f9d3d 100%); box-shadow: 0 8px 20px rgba(48, 209, 88, 0.35);" onclick="openFinishWorkoutModal()">
+                    Training beenden & ins Journal speichern
+                </button>
+            </div>`;
+        }
+
+        function toggleWorkoutSet(exIdx, setIdx) {
+            if (!activeWorkout) return;
+            const s = activeWorkout.exercises[exIdx].sets[setIdx];
+            s.done = !s.done;
+            renderActiveWorkoutBanner();
+        }
+
+        function updateWorkoutSetValue(exIdx, setIdx, field, val) {
+            if (!activeWorkout) return;
+            activeWorkout.exercises[exIdx].sets[setIdx][field] = parseFloat(val) || 0;
+        }
+
+        function addExtraWorkoutSet(exIdx) {
+            if (!activeWorkout) return;
+            const setsArr = activeWorkout.exercises[exIdx].sets;
+            const lastSet = setsArr[setsArr.length - 1] || { weight: 50, reps: 10 };
+            setsArr.push({
+                setNum: setsArr.length + 1,
+                weight: lastSet.weight,
+                reps: lastSet.reps,
+                done: false
+            });
+            renderActiveWorkoutBanner();
+        }
+
+        function cancelActiveWorkout() {
+            if (confirm('Aktuelles Training wirklich ohne Speichern beenden?')) {
+                activeWorkout = null;
+                if (workoutTimerInterval) clearInterval(workoutTimerInterval);
+                renderActiveWorkoutBanner();
+            }
+        }
+
+        function openFinishWorkoutModal() {
+            if (!activeWorkout) return;
+            const elapsedMinutes = Math.max(1, Math.round((Date.now() - activeWorkout.startTime) / 60000));
+            document.getElementById('input-workout-duration').value = elapsedMinutes;
+            document.getElementById('modal-finish-workout').classList.add('open');
+        }
+
+        function confirmSaveWorkoutToJournal() {
+            if (!activeWorkout) return;
+            const durationMins = parseInt(document.getElementById('input-workout-duration').value) || 45;
+
+            // Nur Übungen speichern, bei denen mindestens 1 Satz abgehakt wurde (oder falls keiner abgehakt wurde, alle)
+            let anyChecked = false;
+            activeWorkout.exercises.forEach(ex => {
+                if (ex.sets.some(s => s.done)) anyChecked = true;
+            });
+
+            const loggedExercises = activeWorkout.exercises.map(ex => ({
+                name: ex.name,
+                sets: anyChecked ? ex.sets.filter(s => s.done) : ex.sets
+            })).filter(ex => ex.sets.length > 0);
+
+            journalData.unshift({
+                id: 'j_' + Date.now(),
+                dateISO: new Date().toISOString(),
+                dateFormatted: new Date().toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric' }),
+                catId: activeWorkout.catId,
+                catName: activeWorkout.catName,
+                catIcon: activeWorkout.catIcon,
+                catColor: activeWorkout.catColor,
+                duration: durationMins,
+                exercises: loggedExercises
+            });
+
+            activeWorkout = null;
+            if (workoutTimerInterval) clearInterval(workoutTimerInterval);
+
+            saveAll();
+            closeModals();
+            renderFitness();
+            renderJournal();
+            switchTab('journal', document.getElementById('nav-journal'));
         }
 
         function updateFitnessMetric(catId, exId, field, newValue) {
@@ -1948,6 +2571,7 @@
             });
             saveAll();
             renderFitness();
+            renderJournal();
             closeModals();
         }
 
@@ -1955,6 +2579,7 @@
             fitnessData = fitnessData.filter(c => c.id !== catId);
             saveAll();
             renderFitness();
+            renderJournal();
         }
 
         function openFitnessExerciseModal(catId) {
@@ -1991,20 +2616,234 @@
             renderFitness();
         }
 
-        /* --- 4. LEADERBOARD RENDERN & FREUNDE-CODE --- */
-        function renderLeaderboard() {
-            const container = document.getElementById('leaderboard-list-container');
-            const myXP = calculateTotalXP();
+        /* --- 4. JOURNAL REITER RENDERN (INKL. MUSKELGRUPPEN-FILTER) --- */
+        function setJournalFilter(filterName) {
+            selectedJournalFilter = filterName;
+            renderJournal();
+        }
 
-            const allPlayers = [
-                { id: 'me', name: userName, xp: myXP, isMe: true },
-                ...leaderboardFriends.map(f => ({ ...f, isMe: false }))
-            ];
+        function renderJournal() {
+            const filterBar = document.getElementById('journal-filter-bar');
+            const statsContainer = document.getElementById('journal-stats-container');
+            const entriesContainer = document.getElementById('journal-entries-container');
 
-            allPlayers.sort((a, b) => b.xp - a.xp);
+            // Alle verfügbaren Muskelgruppen sammeln
+            const muscleNames = new Set();
+            fitnessData.forEach(c => muscleNames.add(c.name));
+            journalData.forEach(j => muscleNames.add(j.catName));
+
+            let filterHTML = `<div class="filter-chip ${selectedJournalFilter === 'ALL' ? 'active' : ''}" onclick="setJournalFilter('ALL')">Alle Workouts</div>`;
+            muscleNames.forEach(mName => {
+                const isAct = selectedJournalFilter === mName;
+                filterHTML += `<div class="filter-chip ${isAct ? 'active' : ''}" onclick="setJournalFilter('${mName}')">${mName}</div>`;
+            });
+            filterBar.innerHTML = filterHTML;
+
+            // Einträge nach gewählter Muskelgruppe filtern
+            const filtered = selectedJournalFilter === 'ALL'
+                ? journalData
+                : journalData.filter(j => j.catName === selectedJournalFilter);
+
+            // Fortschritts-Statistik berechnen
+            let totalSessions = filtered.length;
+            let maxWeight = 0;
+            let totalVolume = 0;
+
+            filtered.forEach(entry => {
+                entry.exercises.forEach(ex => {
+                    ex.sets.forEach(s => {
+                        const w = parseFloat(s.weight) || 0;
+                        const r = parseFloat(s.reps) || 0;
+                        if (w > maxWeight) maxWeight = w;
+                        totalVolume += (w * r);
+                    });
+                });
+            });
+
+            statsContainer.innerHTML = `
+                <div class="journal-stat-box">
+                    <div class="journal-stat-val">${totalSessions}</div>
+                    <div class="journal-stat-lbl">Workouts</div>
+                </div>
+                <div class="journal-stat-box">
+                    <div class="journal-stat-val">${maxWeight} kg</div>
+                    <div class="journal-stat-lbl">Max Gewicht</div>
+                </div>
+                <div class="journal-stat-box">
+                    <div class="journal-stat-val">${Math.round(totalVolume)} kg</div>
+                    <div class="journal-stat-lbl">Gesamt-Volumen</div>
+                </div>
+            `;
+
+            if (filtered.length === 0) {
+                entriesContainer.innerHTML = `
+                    <div class="bevel-card">
+                        <p class="empty-hint">
+                            Noch keine abgeschlossenen Workouts ${selectedJournalFilter !== 'ALL' ? 'für <b>' + selectedJournalFilter + '</b>' : ''} im Journal.<br>
+                            Starte dein nächstes Training oben im Reiter <b>Fitness</b>!
+                        </p>
+                    </div>`;
+                return;
+            }
 
             let html = '';
-            allPlayers.forEach((p, idx) => {
+            filtered.forEach(entry => {
+                const cColor = entry.catColor || '#0a84ff';
+                const iconColor = cColor === '#111216' ? '#ffffff' : cColor;
+
+                let exListHTML = '';
+                entry.exercises.forEach(ex => {
+                    let setsPills = '';
+                    ex.sets.forEach((s, idx) => {
+                        setsPills += `<span class="journal-set-tag">${idx + 1}. ${s.weight} kg × ${s.reps}</span>`;
+                    });
+                    exListHTML += `
+                        <div class="journal-ex-block">
+                            <div class="journal-ex-title">${ex.name}</div>
+                            <div class="journal-set-pills">${setsPills}</div>
+                        </div>`;
+                });
+
+                html += `
+                <div class="bevel-card">
+                    <div class="category-header" style="margin-bottom:8px;">
+                        <div class="category-title-group">
+                            <div class="cat-icon-box" style="background:${cColor}28; border:1px solid ${getBorderForColor(cColor)}; color:${iconColor};">
+                                <span class="material-symbols-rounded" style="font-size:20px;">${entry.catIcon || 'fitness_center'}</span>
+                            </div>
+                            <div>
+                                <h2 class="category-title">${entry.catName}</h2>
+                                <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
+                                    ${entry.dateFormatted} • ⏱ ${entry.duration} Min.
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-delete-icon" onclick="deleteJournalEntry('${entry.id}')" title="Eintrag löschen">
+                            <span class="material-symbols-rounded" style="font-size:19px;">delete</span>
+                        </button>
+                    </div>
+                    <div class="journal-entry-exercises">${exListHTML}</div>
+                </div>`;
+            });
+
+            entriesContainer.innerHTML = html;
+        }
+
+        function deleteJournalEntry(entryId) {
+            journalData = journalData.filter(j => j.id !== entryId);
+            saveAll();
+            renderJournal();
+        }
+
+        /* --- 5. LIVE FIREBASE RANKING & NEUES INVITE SYSTEM --- */
+        async function syncMyProfileToFirebase() {
+            const myXP = calculateTotalXP();
+            const myLvl = getLevelFromXP(myXP);
+            const payload = {
+                id: myUserId,
+                name: userName,
+                xp: myXP,
+                level: myLvl,
+                rank: getRankTitle(myLvl),
+                updatedAt: Date.now()
+            };
+            try {
+                await fetch(`${FIREBASE_DB_URL}/users/${myUserId}/profile.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (e) {
+                console.warn('Firebase Sync Hinweis:', e);
+            }
+        }
+
+        async function linkFriendsInFirebase(friendCode) {
+            if (!friendCode || friendCode === myUserId) return;
+            if (!friendIds.includes(friendCode)) {
+                friendIds.push(friendCode);
+                localStorage.setItem('apexfit_friend_ids', JSON.stringify(friendIds));
+            }
+            try {
+                // Gegenseitige Freundschaft in Firebase hinterlegen, damit BEIDE sich sofort sehen
+                await fetch(`${FIREBASE_DB_URL}/users/${myUserId}/friends/${friendCode}.json`, {
+                    method: 'PUT',
+                    body: JSON.stringify(true)
+                });
+                await fetch(`${FIREBASE_DB_URL}/users/${friendCode}/friends/${myUserId}.json`, {
+                    method: 'PUT',
+                    body: JSON.stringify(true)
+                });
+            } catch (e) {
+                console.warn('Friend Link Fehler:', e);
+            }
+        }
+
+        async function syncAndLoadLeaderboard(showSpinner = false) {
+            const statusEl = document.getElementById('lb-sync-status');
+            if (showSpinner && statusEl) statusEl.innerText = 'Aktualisiere Live-Daten...';
+
+            await syncMyProfileToFirebase();
+
+            try {
+                // 1. Eigene Freundesliste aus Firebase abrufen (falls uns jemand per Link hinzugefügt hat)
+                const friendsRes = await fetch(`${FIREBASE_DB_URL}/users/${myUserId}/friends.json`);
+                const remoteFriendsObj = await friendsRes.json();
+                if (remoteFriendsObj && typeof remoteFriendsObj === 'object') {
+                    Object.keys(remoteFriendsObj).forEach(fCode => {
+                        if (remoteFriendsObj[fCode] && !friendIds.includes(fCode) && fCode !== myUserId) {
+                            friendIds.push(fCode);
+                        }
+                    });
+                    localStorage.setItem('apexfit_friend_ids', JSON.stringify(friendIds));
+                }
+
+                // 2. Live-Profile aller Freunde aus Firebase laden
+                const players = [
+                    {
+                        id: myUserId,
+                        name: userName,
+                        xp: calculateTotalXP(),
+                        isMe: true
+                    }
+                ];
+
+                const fetchPromises = friendIds.map(async (fId) => {
+                    try {
+                        const res = await fetch(`${FIREBASE_DB_URL}/users/${fId}/profile.json`);
+                        const pData = await res.json();
+                        if (pData && pData.name) {
+                            players.push({
+                                id: fId,
+                                name: pData.name,
+                                xp: Number(pData.xp) || 0,
+                                isMe: false
+                            });
+                        }
+                    } catch (err) {}
+                });
+
+                await Promise.all(fetchPromises);
+                renderLeaderboardDOM(players);
+
+                if (statusEl) {
+                    const timeStr = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    statusEl.innerText = `Live synchronisiert (${timeStr} Uhr)`;
+                }
+            } catch (err) {
+                renderLeaderboardDOM([
+                    { id: myUserId, name: userName, xp: calculateTotalXP(), isMe: true }
+                ]);
+                if (statusEl) statusEl.innerText = 'Offline-Ansicht';
+            }
+        }
+
+        function renderLeaderboardDOM(players) {
+            const container = document.getElementById('leaderboard-list-container');
+            players.sort((a, b) => b.xp - a.xp);
+
+            let html = '';
+            players.forEach((p, idx) => {
                 const rankNum = idx + 1;
                 const lvl = getLevelFromXP(p.xp);
                 const rankTitle = getRankTitle(lvl);
@@ -2027,68 +2866,110 @@
                     </div>
                     <div class="lb-right">
                         <span class="lb-xp-val">${p.xp} XP</span>
-                        ${!p.isMe ? `<button class="btn-delete-icon" onclick="deleteFriend('${p.id}')"><span class="material-symbols-rounded" style="font-size:18px;">close</span></button>` : ''}
+                        ${!p.isMe ? `<button class="btn-delete-icon" onclick="removeFriendFromLeaderboard('${p.id}')" title="Freund entfernen"><span class="material-symbols-rounded" style="font-size:18px;">close</span></button>` : ''}
                     </div>
                 </div>`;
             });
 
+            if (players.length === 1) {
+                html += `<p class="empty-hint" style="margin-top:10px;">Tippe oben auf <b>„Einladen (Link/Code)“</b>, um Freunde ins Live-Ranking zu holen!</p>`;
+            }
+
             container.innerHTML = html;
         }
 
-        function copyMySyncCode() {
-            const myXP = calculateTotalXP();
-            const code = `APEX:${userName}:${myXP}`;
+        /* --- INVITE MODAL (CODE & LINK) --- */
+        function openInviteModal() {
+            document.getElementById('my-friend-code-display').innerText = myUserId;
+            document.getElementById('modal-invite').classList.add('open');
+        }
+
+        function getMyInviteUrl() {
+            const baseUrl = window.location.origin + window.location.pathname;
+            return `${baseUrl}?invite=${encodeURIComponent(myUserId)}`;
+        }
+
+        function copyFriendCode() {
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(code);
-                alert(`Dein Apex-Code wurde kopiert:\n${code}\n\nSchicke ihn deinen Freunden für das Leaderboard!`);
+                navigator.clipboard.writeText(myUserId);
+                alert(`Dein Freundes-Code wurde kopiert:\n${myUserId}`);
             } else {
-                prompt('Kopiere deinen Apex-Code für Freunde:', code);
+                prompt('Kopiere deinen Freundes-Code:', myUserId);
             }
         }
 
-        function openFriendModal() {
-            document.getElementById('input-friend-code').value = '';
-            document.getElementById('input-friend-name').value = '';
-            document.getElementById('input-friend-xp').value = '';
-            document.getElementById('modal-friend').classList.add('open');
+        function shareInviteLink() {
+            const inviteUrl = getMyInviteUrl();
+            if (navigator.share) {
+                navigator.share({
+                    title: 'ApexFit Live-Ranking',
+                    text: `Füge mich bei ApexFit zum Live-Leaderboard hinzu! Mein Code: ${myUserId}`,
+                    url: inviteUrl
+                }).catch(() => {});
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(inviteUrl);
+                alert(`Einladungs-Link kopiert!\nSchicke ihn deinen Freunden:\n${inviteUrl}`);
+            } else {
+                prompt('Kopiere deinen Einladungs-Link:', inviteUrl);
+            }
         }
 
-        function saveFriendToLeaderboard() {
-            const codeInput = document.getElementById('input-friend-code').value.trim();
-            let fName = document.getElementById('input-friend-name').value.trim();
-            let fXP = parseInt(document.getElementById('input-friend-xp').value) || 0;
+        function openAddFriendModal() {
+            document.getElementById('input-friend-code').value = '';
+            document.getElementById('modal-add-friend').classList.add('open');
+            setTimeout(() => document.getElementById('input-friend-code').focus(), 100);
+        }
 
-            if (codeInput.toUpperCase().startsWith('APEX:')) {
-                const parts = codeInput.split(':');
-                if (parts.length >= 3) {
-                    fName = parts[1].trim();
-                    fXP = parseInt(parts[2]) || 0;
+        function extractFriendCode(rawInput) {
+            const trimmed = rawInput.trim();
+            if (trimmed.includes('invite=')) {
+                try {
+                    const url = new URL(trimmed);
+                    const p = url.searchParams.get('invite');
+                    if (p) return p.toUpperCase().trim();
+                } catch (e) {
+                    const parts = trimmed.split('invite=');
+                    if (parts[1]) return parts[1].split('&')[0].toUpperCase().trim();
                 }
             }
-
-            if (!fName) return;
-
-            const existing = leaderboardFriends.find(f => f.name.toLowerCase() === fName.toLowerCase());
-            if (existing) {
-                existing.xp = fXP;
-                existing.name = fName;
-            } else {
-                leaderboardFriends.push({
-                    id: 'fr_' + Date.now(),
-                    name: fName,
-                    xp: fXP
-                });
-            }
-
-            saveAll();
-            renderLeaderboard();
-            closeModals();
+            return trimmed.toUpperCase();
         }
 
-        function deleteFriend(friendId) {
-            leaderboardFriends = leaderboardFriends.filter(f => f.id !== friendId);
-            saveAll();
-            renderLeaderboard();
+        async function addFriendByCodeInput() {
+            const raw = document.getElementById('input-friend-code').value;
+            const code = extractFriendCode(raw);
+            if (!code || code === myUserId) {
+                alert('Bitte gib einen gültigen Freundes-Code von einem Freund ein.');
+                return;
+            }
+            closeModals();
+            await linkFriendsInFirebase(code);
+            await syncAndLoadLeaderboard(true);
+        }
+
+        async function removeFriendFromLeaderboard(fId) {
+            friendIds = friendIds.filter(id => id !== fId);
+            localStorage.setItem('apexfit_friend_ids', JSON.stringify(friendIds));
+            try {
+                await fetch(`${FIREBASE_DB_URL}/users/${myUserId}/friends/${fId}.json`, { method: 'DELETE' });
+            } catch (e) {}
+            syncAndLoadLeaderboard(true);
+        }
+
+        // Prüfen, ob die App über einen Einladungs-Link (?invite=AF-XXXXX) geöffnet wurde
+        async function checkIncomingInviteLink() {
+            const params = new URLSearchParams(window.location.search);
+            const invitedBy = params.get('invite');
+            if (invitedBy) {
+                const cleanCode = invitedBy.toUpperCase().trim();
+                // URL oben im Browser wieder säubern
+                window.history.replaceState({}, document.title, window.location.pathname);
+                if (cleanCode && cleanCode !== myUserId) {
+                    await linkFriendsInFirebase(cleanCode);
+                    switchTab('leaderboard', document.getElementById('nav-leaderboard'));
+                    alert(`Erfolgreich mit Freund (${cleanCode}) im Live-Ranking verbunden!`);
+                }
+            }
         }
 
         /* --- NAVIGATION & MODALS SCHLIESSEN --- */
@@ -2101,14 +2982,30 @@
             document.getElementById('view-' + tabId).classList.add('active');
 
             document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            element.classList.add('active');
+            if (element) element.classList.add('active');
+
+            if (tabId === 'leaderboard') {
+                syncAndLoadLeaderboard(true);
+            } else if (tabId === 'journal') {
+                renderJournal();
+            }
         }
 
+        // Automatische Hintergrund-Aktualisierung für das Ranking alle 20 Sekunden
+        setInterval(() => {
+            if (document.getElementById('view-leaderboard').classList.contains('active')) {
+                syncAndLoadLeaderboard(false);
+            }
+        }, 20000);
+
         // Initialer Start
+        initPickers();
         renderHome();
         renderFitness();
         renderHabits();
-        renderLeaderboard();
+        renderJournal();
+        syncAndLoadLeaderboard(false);
+        checkIncomingInviteLink();
     </script>
 </body>
 </html>
