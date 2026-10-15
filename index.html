@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Fitness & Habits</title>
+    
+    <!-- Icons & Moderne Schriftart -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+
+    <style>
+        :root {
+            --bg-main: #09090b;
+            --card-bg: rgba(24, 24, 28, 0.85);
+            --card-inner: #222228;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --accent: #ffffff; /* Bevel nutzt oft starkes Weiß/Silber als edlen Akzent */
+            --accent-blue: #0a84ff;
+            --text-main: #f4f4f6;
+            --text-muted: #8e8e93;
+            --danger: #ff453a;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background-color: var(--bg-main);
+            /* Edler, subtiler Lichtschein oben wie bei Bevel */
+            background-image: radial-gradient(circle at 50% -10%, rgba(50, 60, 90, 0.28), transparent 60%);
+            background-attachment: fixed;
+            color: var(--text-main); 
+            margin: 0; 
+            padding: 0 0 110px 0; 
+            min-height: 100vh;
+        }
+
+        /* --- HEADER MIT PLUS-BUTTON --- */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 45px 22px 20px 22px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.6px;
+        }
+
+        .subtitle-date {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 4px;
+        }
+
+        .icon-btn-top {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s ease, background 0.2s ease;
+        }
+
+        .icon-btn-top:active {
+            transform: scale(0.92);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- KATEGORIEN & CARDS (BEVEL STYLE) --- */
+        .container {
+            padding: 0 20px;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(20px);
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .category-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-title {
+            font-size: 19px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            margin: 0;
+        }
+
+        .badge-count {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 20px;
+        }
+
+        .category-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-pill {
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 7px 13px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-pill:active { transform: scale(0.95); }
+
+        .btn-delete-icon {
+            background: transparent;
+            border: none;
+            color: #55555a;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .btn-delete-icon:hover { color: var(--danger); }
+
+        /* --- ÜBUNGS-ELEMENTE & DIREKT-EDITIERUNG --- */
+        .exercise-item {
+            background: var(--card-inner);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 18px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+        }
+        .exercise-item:last-child { margin-bottom: 0; }
+
+        .exercise-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .exercise-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .metric-box {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: border-color 0.2s ease;
+        }
+
+        .metric-box:focus-within {
+            border-color: var(--accent-blue);
+            background: rgba(10, 132, 255, 0.08);
+        }
+
+        .metric-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .metric-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 17px;
+            font-weight: 700;
+            text-align: center;
+            font-family: inherit;
+            padding: 0;
+        }
+
+        /* Entfernt Standard-Pfeile bei Zahlen-Inputs */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .empty-hint {
+            color: var(--text-muted);
+            font-size: 14px;
+            text-align: center;
+            padding: 12px 0;
+            margin: 0;
+        }
+
+        /* --- MODAL / BOTTOM SHEET (FÜR EINGABEN) --- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.open { display: flex; }
+
+        .bottom-sheet {
+            background: #18181c;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 28px 28px 0 0;
+            padding: 24px 22px 36px 22px;
+            animation: slideUp 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .sheet-handle {
+            width: 40px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin: -8px auto 18px auto;
+        }
+
+        .sheet-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 18px 0;
+        }
+
+        .form-field {
+            margin-bottom: 14px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: #25252b;
+            border: 1px solid var(--border-subtle);
+            color: white;
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .sheet-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: var(--text-main);
+            color: #000;
+            border: none;
+            padding: 15px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background: #25252b;
+            color: var(--text-main);
+            border: none;
+            padding: 15px 20px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* --- NAVIGATION UNTEN --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 400px;
+            height: 68px;
+            background-color: rgba(24, 24, 28, 0.8);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 35px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+            z-index: 50;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 8px 18px;
+            border-radius: 25px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item.active { 
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-item span.material-symbols-rounded { font-size: 24px; margin-bottom: 2px; }
+        .nav-item span.label { font-size: 10px; font-weight: 600; }
+
+        /* Ansichten */
+        .view { display: none; animation: fadeIn 0.25s ease; }
+        .view.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HOME REITER -->
+    <div id="view-home" class="view">
+        <div class="page-header">
+            <div>
+                <div class="subtitle-date">Dashboard</div>
+                <h1>Guten Tag, Marlii</h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="category-card">
+                <h3 style="margin-top:0;">Dein Überblick</h3>
+                <p style="color: var(--text-muted); font-size: 14px; line-height: 1.5; margin-bottom:0;">
+                    Wechsle unten auf den Reiter <b>Fitness</b>, um deine Kategorien und Übungen im neuen Design zu verwalten.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. FITNESS REITER (Jetzt als Standard aktiv zum direkten Testen) -->
+    <div id="view-fitness" class="view active">
+        <div class="page-header">
+            <div>
+                <div class="subtitle-date">Training & Split</div>
+                <h1>Fitness</h1>
+            </div>
+            <!-- Oben rechts: Plus für neue Kategorie -->
+            <button class="icon-btn-top" onclick="openCategoryModal()" title="Neue Kategorie">
+                <span class="material-symbols-rounded">add</span>
+            </button>
+        </div>
+
+        <!-- Hier werden alle Kategorien (Brust, Arme, etc.) dynamisch reingeladen -->
+        <div class="container" id="fitness-categories-container"></div>
+    </div>
+
+    <!-- 3. HABITS REITER -->
+    <div id="view-habits" class="view">
+        <div class="page-header">
+            <div>
+                <div class="subtitle-date">Tägliche Routine</div>
+                <h1>Habits</h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="category-card">
+                <p style="color: var(--text-muted); font-size: 14px; margin:0;">
+                    Den Habits-Bereich bauen wir als Nächstes im gleichen Stil aus.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP 1: NEUE KATEGORIE HINZUFÜGEN -->
+    <div id="modal-category" class="modal-overlay" onclick="closeModals(event)">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Neue Kategorie</h3>
+            <div class="form-field">
+                <label>Name der Muskelgruppe / Kategorie</label>
+                <input type="text" id="input-cat-name" class="form-input" placeholder="z.B. Brust, Arme, Push, Beine...">
+            </div>
+            <div class="sheet-actions">
+                <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
+                <button class="btn-primary" onclick="saveCategory()">Erstellen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP 2: NEUE ÜBUNG HINZUFÜGEN -->
+    <div id="modal-exercise" class="modal-overlay" onclick="closeModals(event)">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Übung hinzufügen</h3>
+            <div class="form-field">
+                <label>Übungsname</label>
+                <input type="text" id="input-ex-name" class="form-input" placeholder="z.B. Schrägbankdrücken">
+            </div>
+            <div class="form-row-3">
+                <div class="form-field">
+                    <label>Sätze</label>
+                    <input type="number" id="input-ex-sets" class="form-input" value="3">
+                </div>
+                <div class="form-field">
+                    <label>Wdh.</label>
+                    <input type="number" id="input-ex-reps" class="form-input" value="10">
+                </div>
+                <div class="form-field">
+                    <label>Gewicht (kg)</label>
+                    <input type="number" step="0.5" id="input-ex-weight" class="form-input" value="60">
+                </div>
+            </div>
+            <div class="sheet-actions">
+                <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
+                <button class="btn-primary" onclick="saveExercise()">Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCHWEBENDE NAVIGATION UNTEN (Floating Dock) -->
+    <nav class="bottom-nav">
+        <div class="nav-item" onclick="switchTab('home', this)">
+            <span class="material-symbols-rounded">space_dashboard</span>
+            <span class="label">Home</span>
+        </div>
+        <div class="nav-item active" onclick="switchTab('fitness', this)">
+            <span class="material-symbols-rounded">fitness_center</span>
+            <span class="label">Fitness</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('habits', this)">
+            <span class="material-symbols-rounded">check_circle</span>
+            <span class="label">Habits</span>
+        </div>
+    </nav>
+
+    <script>
+        // Standard-Daten beim ersten Start (falls noch nichts gespeichert wurde)
+        let fitnessData = JSON.parse(localStorage.getItem('marlii_fitness_data')) || [
+            {
+                id: 'cat_1',
+                name: 'Brust',
+                exercises: [
+                    { id: 'ex_1', name: 'Bankdrücken', sets: 4, reps: 8, weight: 70 },
+                    { id: 'ex_2', name: 'Butterfly (Kabel)', sets: 3, reps: 12, weight: 25 }
+                ]
+            },
+            {
+                id: 'cat_2',
+                name: 'Arme',
+                exercises: [
+                    { id: 'ex_3', name: 'Kurzhantel Curls', sets: 3, reps: 10, weight: 16 },
+                    { id: 'ex_4', name: 'Trizepsdrücken Seil', sets: 3, reps: 12, weight: 27.5 }
+                ]
+            }
+        ];
+
+        let currentCategoryId = null;
+
+        // Daten dauerhaft im Browser speichern
+        function saveData() {
+            localStorage.setItem('marlii_fitness_data', JSON.stringify(fitnessData));
+        }
+
+        // Fitness-Kategorien und Übungen aufbauen
+        function renderFitness() {
+            const container = document.getElementById('fitness-categories-container');
+            container.innerHTML = '';
+
+            if (fitnessData.length === 0) {
+                container.innerHTML = `
+                    <div class="category-card" style="text-align:center; padding: 40px 20px;">
+                        <p class="empty-hint">Noch keine Kategorien vorhanden.<br>Tippe oben rechts auf das <b>+</b>, um z.B. „Brust“ oder „Arme“ anzulegen.</p>
+                    </div>`;
+                return;
+            }
+
+            fitnessData.forEach(cat => {
+                let exercisesHTML = '';
+
+                if (cat.exercises.length === 0) {
+                    exercisesHTML = `<p class="empty-hint">Keine Übungen eingetragen</p>`;
+                } else {
+                    cat.exercises.forEach(ex => {
+                        exercisesHTML += `
+                        <div class="exercise-item">
+                            <div class="exercise-top">
+                                <span class="exercise-name">${ex.name}</span>
+                                <button class="btn-delete-icon" onclick="deleteExercise('${cat.id}', '${ex.id}')" title="Übung löschen">
+                                    <span class="material-symbols-rounded" style="font-size:18px;">close</span>
+                                </button>
+                            </div>
+                            <div class="metrics-grid">
+                                <div class="metric-box">
+                                    <span class="metric-label">Sätze</span>
+                                    <input type="number" class="metric-input" value="${ex.sets}" 
+                                        onchange="updateMetric('${cat.id}', '${ex.id}', 'sets', this.value)">
+                                </div>
+                                <div class="metric-box">
+                                    <span class="metric-label">Wdh.</span>
+                                    <input type="number" class="metric-input" value="${ex.reps}" 
+                                        onchange="updateMetric('${cat.id}', '${ex.id}', 'reps', this.value)">
+                                </div>
+                                <div class="metric-box">
+                                    <span class="metric-label">Gewicht (kg)</span>
+                                    <input type="number" step="0.5" class="metric-input" value="${ex.weight}" 
+                                        onchange="updateMetric('${cat.id}', '${ex.id}', 'weight', this.value)">
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                }
+
+                container.innerHTML += `
+                <div class="category-card">
+                    <div class="category-header">
+                        <div class="category-title-group">
+                            <h2 class="category-title">${cat.name}</h2>
+                            <span class="badge-count">${cat.exercises.length}</span>
+                        </div>
+                        <div class="category-actions">
+                            <button class="btn-pill" onclick="openExerciseModal('${cat.id}')">
+                                <span class="material-symbols-rounded" style="font-size:16px;">add</span> Übung
+                            </button>
+                            <button class="btn-delete-icon" onclick="deleteCategory('${cat.id}')" title="Kategorie löschen">
+                                <span class="material-symbols-rounded" style="font-size:20px;">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div>${exercisesHTML}</div>
+                </div>`;
+            });
+        }
+
+        // Werte (Sätze, Wdh, Gewicht) sofort beim Ändern speichern
+        function updateMetric(catId, exId, field, newValue) {
+            const category = fitnessData.find(c => c.id === catId);
+            if (!category) return;
+            const exercise = category.exercises.find(e => e.id === exId);
+            if (!exercise) return;
+
+            exercise[field] = parseFloat(newValue) || 0;
+            saveData();
+        }
+
+        // Kategorie-Modal öffnen & speichern
+        function openCategoryModal() {
+            document.getElementById('input-cat-name').value = '';
+            document.getElementById('modal-category').classList.add('open');
+            setTimeout(() => document.getElementById('input-cat-name').focus(), 100);
+        }
+
+        function saveCategory() {
+            const name = document.getElementById('input-cat-name').value.trim();
+            if (!name) return;
+
+            fitnessData.push({
+                id: 'cat_' + Date.now(),
+                name: name,
+                exercises: []
+            });
+            saveData();
+            renderFitness();
+            closeModals();
+        }
+
+        function deleteCategory(catId) {
+            fitnessData = fitnessData.filter(c => c.id !== catId);
+            saveData();
+            renderFitness();
+        }
+
+        // Übungs-Modal öffnen & speichern
+        function openExerciseModal(catId) {
+            currentCategoryId = catId;
+            document.getElementById('input-ex-name').value = '';
+            document.getElementById('input-ex-sets').value = '3';
+            document.getElementById('input-ex-reps').value = '10';
+            document.getElementById('input-ex-weight').value = '50';
+            document.getElementById('modal-exercise').classList.add('open');
+            setTimeout(() => document.getElementById('input-ex-name').focus(), 100);
+        }
+
+        function saveExercise() {
+            const name = document.getElementById('input-ex-name').value.trim();
+            const sets = parseFloat(document.getElementById('input-ex-sets').value) || 0;
+            const reps = parseFloat(document.getElementById('input-ex-reps').value) || 0;
+            const weight = parseFloat(document.getElementById('input-ex-weight').value) || 0;
+
+            if (!name || !currentCategoryId) return;
+
+            const category = fitnessData.find(c => c.id === currentCategoryId);
+            if (category) {
+                category.exercises.push({
+                    id: 'ex_' + Date.now(),
+                    name: name,
+                    sets: sets,
+                    reps: reps,
+                    weight: weight
+                });
+                saveData();
+                renderFitness();
+            }
+            closeModals();
+        }
+
+        function deleteExercise(catId, exId) {
+            const category = fitnessData.find(c => c.id === catId);
+            if (!category) return;
+            category.exercises = category.exercises.filter(e => e.id !== exId);
+            saveData();
+            renderFitness();
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+        }
+
+        // Reiter wechseln
+        function switchTab(tabId, element) {
+            document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
+            document.getElementById('view-' + tabId).classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // Beim Start direkt laden
+        renderFitness();
+    </script>
+</body>
+</html>
