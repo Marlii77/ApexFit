@@ -36,6 +36,7 @@
             --accent-indigo: #5e5ce6;
             --accent-orange: #ff9f0a;
             --accent-gold: #ffd60a;
+            --accent-cyan: #64d2ff;
             --danger: #ff453a;
             
             --text-main: #f5f7fa;
@@ -59,19 +60,26 @@
             position: relative;
         }
 
-        /* --- GRID HINTERGRUND & AMBIENT LIQUID GLOW --- */
+        /* --- ENDLOS NACH UNTEN BEWEGENDES GRID IM HINTERGRUND --- */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
             background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-            background-size: 30px 30px;
-            mask-image: radial-gradient(circle at 50% 35%, black 35%, transparent 90%);
-            -webkit-mask-image: radial-gradient(circle at 50% 35%, black 35%, transparent 90%);
+                linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+            background-size: 32px 32px;
+            background-position: 0px 0px;
+            animation: infiniteGridDown 3.5s linear infinite;
+            mask-image: radial-gradient(circle at 50% 40%, black 40%, transparent 92%);
+            -webkit-mask-image: radial-gradient(circle at 50% 40%, black 40%, transparent 92%);
             pointer-events: none;
             z-index: -2;
+        }
+
+        @keyframes infiniteGridDown {
+            0% { background-position: 0px 0px; }
+            100% { background-position: 0px 32px; }
         }
 
         body::after {
@@ -84,6 +92,93 @@
                 radial-gradient(circle at 50% 85%, rgba(48, 209, 88, 0.08), transparent 50%);
             pointer-events: none;
             z-index: -1;
+        }
+
+        /* --- SCHWEBENDE ICONS OHNE UMRANDUNG & OHNE HINTERGRUND --- */
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3.5px); }
+        }
+
+        .floating-bare-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0;
+            flex-shrink: 0;
+            animation: floatIcon 3.2s ease-in-out infinite;
+        }
+
+        /* Alle Material-Icons im App-Content schweben sanft */
+        .bento-header .material-symbols-rounded,
+        .card-title-row .material-symbols-rounded {
+            animation: floatIcon 3.4s ease-in-out infinite;
+        }
+
+        /* --- ANIMIERTE LEVEL-ICONS (JE HÖHER DAS LVL, DESTO STÄRKER DER EFFEKT) --- */
+        .lvl-icon-display {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px !important;
+            background: transparent;
+            border: none;
+            margin-right: 4px;
+        }
+
+        .lvl-tier-1 {
+            color: #64d2ff;
+            filter: drop-shadow(0 0 6px rgba(100, 210, 255, 0.5));
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        .lvl-tier-2 {
+            color: #30d158;
+            filter: drop-shadow(0 0 10px rgba(48, 209, 88, 0.7));
+            animation: lvlPulseFloat 2.6s ease-in-out infinite;
+        }
+
+        .lvl-tier-3 {
+            color: #bf5af2;
+            filter: drop-shadow(0 0 13px rgba(191, 90, 242, 0.85));
+            animation: lvlEnergy 2.2s ease-in-out infinite;
+        }
+
+        .lvl-tier-4 {
+            color: #ff9f0a;
+            filter: drop-shadow(0 0 16px rgba(255, 159, 10, 0.95)) drop-shadow(0 0 28px rgba(255, 55, 95, 0.6));
+            animation: lvlEpic 1.9s ease-in-out infinite;
+        }
+
+        .lvl-tier-5 {
+            color: #ffd60a;
+            filter: drop-shadow(0 0 18px rgba(255, 214, 10, 1)) drop-shadow(0 0 32px rgba(10, 132, 255, 0.9));
+            animation: lvlMythic 1.8s ease-in-out infinite;
+        }
+
+        @keyframes lvlPulseFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-4px) scale(1.1); }
+        }
+
+        @keyframes lvlEnergy {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-5px) scale(1.16) rotate(-6deg); }
+        }
+
+        @keyframes lvlEpic {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            25% { transform: translateY(-4px) scale(1.2) rotate(8deg); }
+            75% { transform: translateY(-4px) scale(1.2) rotate(-8deg); }
+        }
+
+        @keyframes lvlMythic {
+            0% { transform: translateY(0) scale(1) rotate(0deg); filter: hue-rotate(0deg) drop-shadow(0 0 18px #ffd60a); }
+            50% { transform: translateY(-6px) scale(1.26) rotate(10deg); filter: hue-rotate(45deg) drop-shadow(0 0 28px #ff375f); }
+            100% { transform: translateY(0) scale(1) rotate(0deg); filter: hue-rotate(0deg) drop-shadow(0 0 18px #ffd60a); }
         }
 
         /* --- HEADER --- */
@@ -126,7 +221,6 @@
             gap: 10px;
         }
 
-        /* Liquid Buttons oben */
         .btn-start-workout-top {
             background: linear-gradient(135deg, rgba(48, 209, 88, 0.9) 0%, rgba(25, 150, 60, 0.85) 100%);
             border: 1px solid rgba(255, 255, 255, 0.35);
@@ -212,7 +306,6 @@
             transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
         }
 
-        /* Flüssiger Lichtglanz auf den Karten */
         .bevel-card::after, .bento-card::after {
             content: "";
             position: absolute;
@@ -224,7 +317,7 @@
             pointer-events: none;
         }
 
-        /* --- LEVEL HERO CARD (LIQUID INDIGO) --- */
+        /* --- LEVEL HERO CARD (MIT ANIMIERTEM RANG-ICON & "Lvl") --- */
         .level-hero-card {
             position: relative;
             overflow: hidden;
@@ -245,19 +338,19 @@
         .level-top-row {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
             margin-bottom: 14px;
             flex-wrap: wrap;
             gap: 8px;
         }
 
         .level-big-number {
-            font-size: 30px;
+            font-size: 29px;
             font-weight: 800;
             letter-spacing: -0.8px;
             line-height: 1;
             display: flex;
-            align-items: baseline;
+            align-items: center;
             gap: 8px;
         }
 
@@ -541,8 +634,8 @@
         .matrix-habit-name {
             padding: 10px 6px 10px 0;
             display: flex;
-            align-items: flex-start;
-            gap: 6px;
+            align-items: center;
+            gap: 7px;
         }
 
         .matrix-habit-text {
@@ -556,14 +649,6 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-        }
-
-        .cat-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-            margin-top: 3px;
         }
 
         .matrix-cell {
@@ -700,7 +785,7 @@
             border-radius: 12px;
         }
 
-        /* --- FITNESS REITER & LIVE WORKOUT MODUS --- */
+        /* --- FITNESS REITER & FREISTEHENDE ICONS --- */
         .category-header {
             display: flex;
             justify-content: space-between;
@@ -714,17 +799,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-        .cat-icon-box {
-            width: 36px;
-            height: 36px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
         }
 
         .category-title {
@@ -842,7 +916,7 @@
             padding: 0;
         }
 
-        /* LIVE WORKOUT SESSION STYLES (INKL. PAUSEN-TIMER & SATZ ENTFERNEN) */
+        /* LIVE WORKOUT SESSION STYLES */
         .active-workout-banner {
             position: relative;
             overflow: hidden;
@@ -912,7 +986,6 @@
             to { transform: scale(1.03); }
         }
 
-        /* 5 Spalten: Check | Satz-Nr | kg | Wdh | Satz löschen */
         .set-row {
             display: grid;
             grid-template-columns: 34px 48px 1fr 1fr 30px;
@@ -1001,6 +1074,187 @@
             transition: all 0.15s ease;
         }
         .btn-remove-set:active { transform: scale(0.88); }
+
+        /* --- FITTRACKER (ESSEN & TRINKEN) STYLES --- */
+        .tracker-summary-hero {
+            background: linear-gradient(135deg, rgba(48, 209, 88, 0.18) 0%, rgba(18, 22, 32, 0.85) 50%, rgba(10, 132, 255, 0.20) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 28px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--liquid-shadow);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+        }
+
+        .tracker-hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .tracker-hero-box {
+            background: rgba(0, 0, 0, 0.32);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .tracker-hero-val {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.6px;
+            margin: 4px 0 2px 0;
+        }
+
+        .tracker-hero-lbl {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .macro-summary-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .photo-upload-zone {
+            border: 1.5px dashed rgba(10, 132, 255, 0.5);
+            background: rgba(10, 132, 255, 0.08);
+            border-radius: 22px;
+            padding: 22px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .photo-upload-zone:active {
+            transform: scale(0.98);
+            background: rgba(10, 132, 255, 0.16);
+        }
+
+        .food-preview-img {
+            width: 100%;
+            max-height: 210px;
+            object-fit: cover;
+            border-radius: 18px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: none;
+        }
+
+        /* Werte untereinander (Vertikal gestapelt) */
+        .vertical-nutrition-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            margin-bottom: 14px;
+        }
+
+        .vertical-nutrition-row {
+            background: rgba(0, 0, 0, 0.34);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 15px;
+            padding: 11px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .vn-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .vn-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .vn-input {
+            width: 90px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            padding: 6px 10px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            text-align: right;
+            font-family: inherit;
+        }
+
+        .vn-input.wide {
+            width: 155px;
+            text-align: left;
+        }
+
+        .vn-unit {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            min-width: 30px;
+        }
+
+        .water-quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .water-btn {
+            background: rgba(100, 210, 255, 0.12);
+            border: 1px solid rgba(100, 210, 255, 0.35);
+            color: #64d2ff;
+            border-radius: 14px;
+            padding: 11px 6px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+        .water-btn:active { transform: scale(0.93); }
+
+        /* --- MEHR-MENÜ KACHELN --- */
+        .more-menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .more-menu-card {
+            background: var(--liquid-bg);
+            border: 1px solid var(--liquid-border);
+            box-shadow: var(--liquid-shadow);
+            border-radius: 22px;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.18s ease;
+        }
+        .more-menu-card:active { transform: scale(0.97); }
 
         /* --- JOURNAL REITER --- */
         .filter-scroll-bar {
@@ -1208,7 +1462,7 @@
             display: inline-block;
         }
 
-        /* --- NOTIZEN MODAL (3 UNTERPUNKTE) --- */
+        /* --- NOTIZEN MODAL --- */
         .notes-tabs {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1251,7 +1505,7 @@
             gap: 10px;
         }
 
-        /* --- FEIER-ANIMATION (WORKOUT GESCHAFFT) --- */
+        /* --- FEIER-ANIMATION --- */
         .celebration-box {
             text-align: center;
             position: relative;
@@ -1527,7 +1781,7 @@
             color: var(--accent-blue);
         }
 
-        /* --- FLOATING LIQUID GLASS DOCK UNTEN (5 REITER) --- */
+        /* --- FLOATING LIQUID GLASS DOCK UNTEN --- */
         .bottom-nav {
             position: fixed;
             bottom: 16px;
@@ -1569,7 +1823,7 @@
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.32), 0 4px 12px rgba(0, 0, 0, 0.25);
         }
 
-        .nav-item span.material-symbols-rounded { font-size: 21px; margin-bottom: 2px; }
+        .nav-item span.material-symbols-rounded { font-size: 22px; margin-bottom: 2px; }
         .nav-item span.label { font-size: 9.5px; font-weight: 600; }
 
         .view { display: none; animation: fadeIn 0.28s cubic-bezier(0.22, 1, 0.36, 1); }
@@ -1584,7 +1838,7 @@
 <body>
 
     <!-- ==========================================
-         1. HOME REITER (APEXFIT DASHBOARD)
+         1. HOME REITER (INKL. ANIMIERTEM LVL-ICON, HABIT- & FITNESS-MATRIX)
          ========================================== -->
     <div id="view-home" class="view active">
         <div class="page-header">
@@ -1592,24 +1846,24 @@
                 <div class="subtitle-date" id="current-date-label">APEXFIT • HEUTE</div>
                 <h1>Guten Tag, <span id="display-username">Marlii</span></h1>
             </div>
-            <!-- Links neben dem Stift: Das neue Notizen-Icon -->
             <div class="header-actions">
                 <button class="icon-btn-top" onclick="openNotesModal()" title="Notizen (Täglich, Wöchentlich, Generell)">
-                    <span class="material-symbols-rounded" style="font-size:20px;">sticky_note_2</span>
+                    <span class="material-symbols-rounded floating-bare-icon" style="font-size:21px;">sticky_note_2</span>
                     <span class="note-badge-dot" id="notes-count-badge" style="display:none;">0</span>
                 </button>
                 <button class="icon-btn-top" onclick="openProfileModal()" title="Namen ändern">
-                    <span class="material-symbols-rounded" style="font-size:20px;">edit</span>
+                    <span class="material-symbols-rounded floating-bare-icon" style="font-size:21px;">edit</span>
                 </button>
             </div>
         </div>
 
         <div class="container">
-            <!-- LEVEL SYSTEM HERO CARD (BIS LEVEL 75) -->
+            <!-- LEVEL SYSTEM HERO CARD (MIT ANIMIERTEM LVL-ICON LINKS & "Lvl") -->
             <div class="level-hero-card">
                 <div class="level-top-row">
                     <div class="level-big-number">
-                        <span id="lvl-number">Level 1</span>
+                        <span id="lvl-icon-el" class="material-symbols-rounded lvl-icon-display lvl-tier-1">bolt</span>
+                        <span id="lvl-number">Lvl 1</span>
                         <span class="lvl-rank" id="lvl-rank-title">• Rookie</span>
                     </div>
                     <div class="xp-badge-pill" id="total-xp-badge">0 XP Gesamt</div>
@@ -1619,7 +1873,7 @@
                 </div>
                 <div class="level-sub-info">
                     <span id="lvl-progress-text">0 / 250 XP</span>
-                    <span id="lvl-next-hint">Noch 250 XP bis Level 2</span>
+                    <span id="lvl-next-hint">Noch 250 XP bis Lvl 2</span>
                 </div>
             </div>
 
@@ -1628,7 +1882,7 @@
                 <div class="bento-card">
                     <div class="bento-header">
                         <span class="bento-title">Daily Focus</span>
-                        <span class="material-symbols-rounded" style="font-size:18px; color:var(--accent-blue);">bolt</span>
+                        <span class="material-symbols-rounded floating-bare-icon" style="font-size:20px; color:var(--accent-blue); filter:drop-shadow(0 0 6px var(--accent-blue));">bolt</span>
                     </div>
                     <div class="ring-wrapper">
                         <div class="ring-inner-sphere">
@@ -1646,7 +1900,7 @@
                 <div class="bento-card">
                     <div class="bento-header">
                         <span class="bento-title">Consistency</span>
-                        <span class="material-symbols-rounded" style="font-size:18px; color:var(--accent-green);">local_fire_department</span>
+                        <span class="material-symbols-rounded floating-bare-icon" style="font-size:20px; color:var(--accent-green); filter:drop-shadow(0 0 6px var(--accent-green));">local_fire_department</span>
                     </div>
                     <div class="ring-wrapper">
                         <div class="ring-inner-sphere">
@@ -1665,7 +1919,7 @@
             <!-- OPTIONALE GRAPHEN AUF HOME EIN-/AUSBLENDEN -->
             <div class="graph-toggle-bar" onclick="toggleHomeGraphs()">
                 <div style="display:flex; align-items:center; gap:10px;">
-                    <span class="material-symbols-rounded" style="color:var(--accent-blue);">monitoring</span>
+                    <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-blue); filter:drop-shadow(0 0 6px var(--accent-blue));">monitoring</span>
                     <div>
                         <div style="font-size:14px; font-weight:700;">Performance-Graphen anzeigen</div>
                         <div style="font-size:11px; color:var(--text-muted);">7-Tage XP-Trend & Fitness-Sätze</div>
@@ -1681,7 +1935,7 @@
                             <h3>7-Tage XP & Aktivitäts-Kurve</h3>
                             <span class="card-subtitle">Habits + Trainings-Sätze (50 XP/Satz)</span>
                         </div>
-                        <span class="material-symbols-rounded" style="color:var(--accent-indigo);">show_chart</span>
+                        <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-indigo); filter:drop-shadow(0 0 6px var(--accent-indigo));">show_chart</span>
                     </div>
                     <div class="svg-chart-box" id="home-xp-chart"></div>
                 </div>
@@ -1694,15 +1948,28 @@
                         <h3>7-Tage Habit Matrix</h3>
                         <span class="card-subtitle">Jeder Haken bringt bis zu 50 XP</span>
                     </div>
-                    <span class="material-symbols-rounded" style="color:var(--accent-blue);">calendar_view_week</span>
+                    <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-blue); filter:drop-shadow(0 0 6px var(--accent-blue));">calendar_view_week</span>
                 </div>
                 <div id="matrix-container"></div>
+            </div>
+
+            <!-- NEU AUF HOME UNTER DER HABIT-MATRIX: 7-TAGE FITNESS-MATRIX & GRAPH -->
+            <div class="bevel-card">
+                <div class="card-title-row">
+                    <div>
+                        <h3>7-Tage Fitness-Matrix & Verlauf</h3>
+                        <span class="card-subtitle">Absolvierte Sätze pro Muskelgruppe</span>
+                    </div>
+                    <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-green); filter:drop-shadow(0 0 6px var(--accent-green));">stacked_line_chart</span>
+                </div>
+                <div id="fitness-matrix-container"></div>
+                <div class="svg-chart-box" id="fitness-sets-chart" style="height:135px; margin-top:14px;"></div>
             </div>
         </div>
     </div>
 
     <!-- ==========================================
-         2. FITNESS REITER (INKL. MATRIX, GRAPH & LIVE WORKOUT)
+         2. FITNESS REITER (GYM MODUS & MUSKELGRUPPEN)
          ========================================== -->
     <div id="view-fitness" class="view">
         <div class="page-header">
@@ -1722,29 +1989,13 @@
         </div>
 
         <div class="container">
-            <!-- BEREICH FÜR LAUFENDES LIVE-TRAINING -->
             <div id="active-workout-container"></div>
-
-            <!-- NEUE FITNESS-MATRIX MIT GRAPH -->
-            <div class="bevel-card">
-                <div class="card-title-row">
-                    <div>
-                        <h3>7-Tage Fitness-Matrix & Verlauf</h3>
-                        <span class="card-subtitle">Absolvierte Sätze pro Muskelgruppe</span>
-                    </div>
-                    <span class="material-symbols-rounded" style="color:var(--accent-green);">stacked_line_chart</span>
-                </div>
-                <div id="fitness-matrix-container"></div>
-                <div class="svg-chart-box" id="fitness-sets-chart" style="height:135px; margin-top:14px;"></div>
-            </div>
-
-            <!-- REGULÄRE MUSKELGRUPPEN & ÜBUNGEN -->
             <div id="fitness-categories-container"></div>
         </div>
     </div>
 
     <!-- ==========================================
-         3. HABITS REITER (MAX 50 XP)
+         3. HABITS REITER (MIT FREISTEHENDEN SCHWEBENDEN ICONS)
          ========================================== -->
     <div id="view-habits" class="view">
         <div class="page-header">
@@ -1757,7 +2008,7 @@
         <div class="container">
             <div class="action-bar">
                 <button class="action-btn" onclick="openHabitCategoryModal()">
-                    <span class="material-symbols-rounded" style="font-size:19px;">create_new_folder</span>
+                    <span class="material-symbols-rounded floating-bare-icon" style="font-size:20px; color:var(--accent-blue);">create_new_folder</span>
                     + Kategorie
                 </button>
                 <button class="action-btn blue-glow-btn" onclick="openNewHabitModal()">
@@ -1782,31 +2033,194 @@
         </div>
 
         <div class="container">
-            <!-- Filter nach Muskelgruppen -->
             <div class="filter-scroll-bar" id="journal-filter-bar"></div>
-
-            <!-- Fortschritts-Kurzstatistik (Workouts | Max Gewicht | Sätze & XP) -->
             <div class="journal-stats-strip" id="journal-stats-container"></div>
 
-            <!-- Kraft- & Sätze-Graph im Journal -->
             <div class="bevel-card" id="journal-graph-card">
                 <div class="card-title-row">
                     <div>
                         <h3>Kraft- & Satz-Entwicklung</h3>
                         <span class="card-subtitle">Maximalgewicht (kg) der letzten Workouts</span>
                     </div>
-                    <span class="material-symbols-rounded" style="color:var(--accent-blue);">trending_up</span>
+                    <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-blue); filter:drop-shadow(0 0 6px var(--accent-blue));">trending_up</span>
                 </div>
                 <div class="svg-chart-box" id="journal-progression-chart" style="height:130px;"></div>
             </div>
 
-            <!-- Gespeicherte Workouts -->
             <div id="journal-entries-container"></div>
         </div>
     </div>
 
     <!-- ==========================================
-         5. LEADERBOARD / RANKING REITER (LIVE FIREBASE)
+         5. FITTRACKER REITER (ESSEN PER KI-FOTO & TRINKEN IN ML/LITER)
+         ========================================== -->
+    <div id="view-fittracker" class="view">
+        <div class="page-header">
+            <div>
+                <div class="subtitle-date">KI Ernährungs- & Wasser-Log</div>
+                <h1>FitTracker</h1>
+            </div>
+            <button class="icon-btn-top" onclick="openApiKeyModal()" title="KI API-Key Einstellungen">
+                <span class="material-symbols-rounded floating-bare-icon" style="font-size:20px; color:var(--accent-cyan);">key</span>
+            </button>
+        </div>
+
+        <div class="container">
+            <!-- GANZ OBEN: KOMPLETTE TAGESWERTE (KALORIEN & WASSER IN LITERN) -->
+            <div class="tracker-summary-hero">
+                <div class="card-title-row" style="margin-bottom:12px;">
+                    <div>
+                        <h3>Heutige Tagesbilanz</h3>
+                        <span class="card-subtitle">Kalorien & Flüssigkeit über den Tag</span>
+                    </div>
+                    <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-green); font-size:24px; filter:drop-shadow(0 0 8px var(--accent-green));">nutrition</span>
+                </div>
+
+                <div class="tracker-hero-grid">
+                    <div class="tracker-hero-box">
+                        <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-orange); font-size:24px; filter:drop-shadow(0 0 8px var(--accent-orange));">local_fire_department</span>
+                        <div class="tracker-hero-val" id="daily-total-kcal">0 kcal</div>
+                        <div class="tracker-hero-lbl">Kalorien Heute</div>
+                    </div>
+                    <div class="tracker-hero-box">
+                        <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-cyan); font-size:24px; filter:drop-shadow(0 0 8px var(--accent-cyan));">water_drop</span>
+                        <div class="tracker-hero-val" id="daily-total-water" style="color:var(--accent-cyan);">0.00 L</div>
+                        <div class="tracker-hero-lbl">Wasser (Liter)</div>
+                    </div>
+                </div>
+
+                <div class="macro-summary-bar">
+                    <div>
+                        <div style="font-size:15px; font-weight:800; color:#30d158;" id="daily-total-protein">0 g</div>
+                        <div style="font-size:10px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Eiweiß</div>
+                    </div>
+                    <div>
+                        <div style="font-size:15px; font-weight:800; color:#ff9f0a;" id="daily-total-fat">0 g</div>
+                        <div style="font-size:10px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Fett</div>
+                    </div>
+                    <div>
+                        <div style="font-size:15px; font-weight:800; color:#0a84ff;" id="daily-total-carbs">0 g</div>
+                        <div style="font-size:10px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Kohlenhydrate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BEREICH 1 (OBEN): ESSEN & KI FOTO-ANALYSE (WERTE UNTEREINANDER) -->
+            <div class="bevel-card">
+                <div class="card-title-row">
+                    <div>
+                        <h3>Essen • KI Foto-Scanner</h3>
+                        <span class="card-subtitle">Foto hochladen & Nährwerte untereinander prüfen</span>
+                    </div>
+                    <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-orange); font-size:24px; filter:drop-shadow(0 0 8px var(--accent-orange));">photo_camera</span>
+                </div>
+
+                <label class="photo-upload-zone" for="food-photo-input">
+                    <span class="material-symbols-rounded floating-bare-icon" style="font-size:34px; color:var(--accent-blue); filter:drop-shadow(0 0 10px var(--accent-blue)); margin-bottom:6px;">add_a_photo</span>
+                    <div style="font-size:14.5px; font-weight:700;">Mahlzeit fotografieren oder Bild wählen</div>
+                    <div style="font-size:11.5px; color:var(--text-muted); margin-top:3px;" id="ai-scan-status">KI erkennt automatisch Kalorien, Eiweiß & Fett</div>
+                </label>
+                <input type="file" id="food-photo-input" accept="image/*" style="display:none;" onchange="handleFoodPhotoUpload(event)">
+
+                <img id="food-preview-image" class="food-preview-img" alt="Mahlzeit Vorschau">
+
+                <!-- WERTE UNTEREINANDER ANGEZEIGT -->
+                <div class="vertical-nutrition-stack">
+                    <div class="vertical-nutrition-row">
+                        <div class="vn-left">
+                            <span class="material-symbols-rounded floating-bare-icon" style="color:#fff; font-size:20px;">restaurant</span>
+                            <span>Mahlzeit</span>
+                        </div>
+                        <div class="vn-right">
+                            <input type="text" id="food-input-name" class="vn-input wide" placeholder="z.B. Hähnchen & Reis">
+                        </div>
+                    </div>
+
+                    <div class="vertical-nutrition-row">
+                        <div class="vn-left">
+                            <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-orange); font-size:20px;">local_fire_department</span>
+                            <span>Kalorien</span>
+                        </div>
+                        <div class="vn-right">
+                            <input type="number" id="food-input-kcal" class="vn-input" value="0">
+                            <span class="vn-unit">kcal</span>
+                        </div>
+                    </div>
+
+                    <div class="vertical-nutrition-row">
+                        <div class="vn-left">
+                            <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-green); font-size:20px;">egg_alt</span>
+                            <span>Eiweiß (Protein)</span>
+                        </div>
+                        <div class="vn-right">
+                            <input type="number" step="0.5" id="food-input-protein" class="vn-input" value="0">
+                            <span class="vn-unit">g</span>
+                        </div>
+                    </div>
+
+                    <div class="vertical-nutrition-row">
+                        <div class="vn-left">
+                            <span class="material-symbols-rounded floating-bare-icon" style="color:#ffd60a; font-size:20px;">water_drop</span>
+                            <span>Fett</span>
+                        </div>
+                        <div class="vn-right">
+                            <input type="number" step="0.5" id="food-input-fat" class="vn-input" value="0">
+                            <span class="vn-unit">g</span>
+                        </div>
+                    </div>
+
+                    <div class="vertical-nutrition-row">
+                        <div class="vn-left">
+                            <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-blue); font-size:20px;">grain</span>
+                            <span>Kohlenhydrate</span>
+                        </div>
+                        <div class="vn-right">
+                            <input type="number" step="0.5" id="food-input-carbs" class="vn-input" value="0">
+                            <span class="vn-unit">g</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-primary" style="width:100%;" onclick="addMealToDay()">
+                    + Mahlzeit zum heutigen Tag speichern
+                </button>
+
+                <div id="today-meals-list" style="margin-top:16px;"></div>
+            </div>
+
+            <!-- BEREICH 2 (DARUNTER): TRINKEN HINZUFÜGEN (ML / LITER) -->
+            <div class="bevel-card">
+                <div class="card-title-row">
+                    <div>
+                        <h3>Trinken • Wasser hinzufügen</h3>
+                        <span class="card-subtitle">Schnellauswahl oder Eingabe in ml / Liter</span>
+                    </div>
+                    <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-cyan); font-size:24px; filter:drop-shadow(0 0 8px var(--accent-cyan));">local_drink</span>
+                </div>
+
+                <div class="water-quick-grid">
+                    <button class="water-btn" onclick="addWaterAmount(250, 'ml')">+250 ml</button>
+                    <button class="water-btn" onclick="addWaterAmount(500, 'ml')">+500 ml</button>
+                    <button class="water-btn" onclick="addWaterAmount(750, 'ml')">+750 ml</button>
+                    <button class="water-btn" onclick="addWaterAmount(1, 'l')">+1.0 L</button>
+                </div>
+
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <input type="number" step="0.1" id="water-custom-val" class="form-input" placeholder="Menge (z.B. 300 oder 0.5)" style="flex:1; padding:12px 14px;">
+                    <select id="water-custom-unit" class="form-select" style="width:95px; padding:12px 10px;">
+                        <option value="ml">ml</option>
+                        <option value="l">Liter</option>
+                    </select>
+                    <button class="btn-primary" style="flex:0 0 auto; padding:12px 16px; border-radius:14px;" onclick="addCustomWater()">+</button>
+                </div>
+
+                <div id="today-water-logs" style="margin-top:14px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         6. LEADERBOARD / RANKING REITER (LIVE FIREBASE)
          ========================================== -->
     <div id="view-leaderboard" class="view">
         <div class="page-header">
@@ -1815,14 +2229,14 @@
                 <h1>Ranking</h1>
             </div>
             <button class="icon-btn-top" onclick="syncAndLoadLeaderboard(true)" title="Jetzt aktualisieren">
-                <span class="material-symbols-rounded" style="font-size:20px;">sync</span>
+                <span class="material-symbols-rounded floating-bare-icon" style="font-size:20px;">sync</span>
             </button>
         </div>
 
         <div class="container">
             <div class="action-bar">
                 <button class="action-btn" onclick="openInviteModal()">
-                    <span class="material-symbols-rounded" style="font-size:19px;">share</span>
+                    <span class="material-symbols-rounded floating-bare-icon" style="font-size:19px; color:var(--accent-blue);">share</span>
                     Einladen (Link/Code)
                 </button>
                 <button class="action-btn blue-glow-btn" onclick="openAddFriendModal()">
@@ -1840,7 +2254,7 @@
                         </h3>
                         <span class="card-subtitle" id="lb-sync-status">Habits + 50 XP je Trainings-Satz</span>
                     </div>
-                    <span class="material-symbols-rounded" style="color:var(--accent-gold);">emoji_events</span>
+                    <span class="material-symbols-rounded floating-bare-icon" style="color:var(--accent-gold); font-size:24px; filter:drop-shadow(0 0 8px var(--accent-gold));">emoji_events</span>
                 </div>
                 <div id="leaderboard-list-container"></div>
             </div>
@@ -1851,7 +2265,71 @@
          MODALS
          ========================================== -->
 
-    <!-- Modal: 3-Stufen Notizen (Täglich, Wöchentlich Mo-So, Generell) -->
+    <!-- Modal: "+ MEHR" NAVIGATION (FITTRACKER & RANKING AUSWÄHLEN) -->
+    <div id="modal-more-menu" class="modal-overlay" onclick="closeModals()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Mehr auswählen</h3>
+            <div class="more-menu-grid">
+                <div class="more-menu-card" onclick="openTabFromMore('fittracker')">
+                    <div style="display:flex; align-items:center; gap:14px;">
+                        <span class="material-symbols-rounded floating-bare-icon" style="font-size:28px; color:var(--accent-green); filter:drop-shadow(0 0 10px var(--accent-green));">nutrition</span>
+                        <div>
+                            <div style="font-size:16px; font-weight:700;">FitTracker (Essen & Trinken)</div>
+                            <div style="font-size:12px; color:var(--text-muted);">KI Foto-Kalorienscanner & Wasser-Tracker</div>
+                        </div>
+                    </div>
+                    <span class="material-symbols-rounded" style="color:var(--text-muted);">chevron_right</span>
+                </div>
+
+                <div class="more-menu-card" onclick="openTabFromMore('leaderboard')">
+                    <div style="display:flex; align-items:center; gap:14px;">
+                        <span class="material-symbols-rounded floating-bare-icon" style="font-size:28px; color:var(--accent-gold); filter:drop-shadow(0 0 10px var(--accent-gold));">emoji_events</span>
+                        <div>
+                            <div style="font-size:16px; font-weight:700;">Ranking (Live Leaderboard)</div>
+                            <div style="font-size:12px; color:var(--text-muted);">Vergleiche Lvl & XP in Echtzeit mit Freunden</div>
+                        </div>
+                    </div>
+                    <span class="material-symbols-rounded" style="color:var(--text-muted);">chevron_right</span>
+                </div>
+
+                <div class="more-menu-card" onclick="openTabFromMore('habits')">
+                    <div style="display:flex; align-items:center; gap:14px;">
+                        <span class="material-symbols-rounded floating-bare-icon" style="font-size:28px; color:var(--accent-blue); filter:drop-shadow(0 0 10px var(--accent-blue));">check_circle</span>
+                        <div>
+                            <div style="font-size:16px; font-weight:700;">Habits & Routinen</div>
+                            <div style="font-size:12px; color:var(--text-muted);">Tägliche Ziele verwalten & abhaken</div>
+                        </div>
+                    </div>
+                    <span class="material-symbols-rounded" style="color:var(--text-muted);">chevron_right</span>
+                </div>
+            </div>
+            <div class="sheet-actions">
+                <button class="btn-secondary" style="width:100%;" onclick="closeModals()">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: KI API-Key Einstellungen -->
+    <div id="modal-apikey" class="modal-overlay" onclick="closeModals()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Google AI Studio Key</h3>
+            <p style="font-size:12.5px; color:var(--text-muted); margin:-8px 0 14px 0; line-height:1.4;">
+                Dein Schlüssel für die KI-Fotoanalyse im FitTracker:
+            </p>
+            <div class="form-field">
+                <label>API-Key</label>
+                <input type="text" id="input-gemini-key" class="form-input" placeholder="Dein Google AI Studio Key...">
+            </div>
+            <div class="sheet-actions">
+                <button class="btn-secondary" onclick="closeModals()">Abbrechen</button>
+                <button class="btn-primary" onclick="saveGeminiKey()">Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: 3-Stufen Notizen -->
     <div id="modal-notes" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
@@ -1896,7 +2374,7 @@
         </div>
     </div>
 
-    <!-- Modal: Training starten (Muskelgruppe auswählen) -->
+    <!-- Modal: Training starten -->
     <div id="modal-start-workout" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
@@ -1911,12 +2389,12 @@
         </div>
     </div>
 
-    <!-- Modal: Training geschafft! (Feier-Animation ohne manuelle Zeiteingabe) -->
+    <!-- Modal: Training geschafft! -->
     <div id="modal-celebrate-workout" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet celebration-box" id="celebration-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
             <div class="trophy-glow-circle">
-                <span class="material-symbols-rounded" style="font-size:42px; color:#4ade80;">military_tech</span>
+                <span class="material-symbols-rounded floating-bare-icon" style="font-size:42px; color:#4ade80;">military_tech</span>
             </div>
             <h2 style="margin:0 0 6px 0; font-size:24px; font-weight:800;">Training Geschafft!</h2>
             <p id="celeb-cat-subtitle" style="color:var(--text-muted); font-size:13.5px; margin:0 0 18px 0;">Starkes Workout!</p>
@@ -1942,7 +2420,7 @@
         </div>
     </div>
 
-    <!-- Modal: Fitness-Kategorie (20 ICONS & 16 FARBEN) -->
+    <!-- Modal: Fitness-Kategorie -->
     <div id="modal-fit-category" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
@@ -1996,7 +2474,7 @@
         </div>
     </div>
 
-    <!-- Modal: Neue Habit-Kategorie (16 FARBEN) -->
+    <!-- Modal: Neue Habit-Kategorie (JETZT AUCH MIT 20 ICONS & 16 FARBEN) -->
     <div id="modal-habit-category" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
@@ -2004,6 +2482,10 @@
             <div class="form-field">
                 <label>Name der Kategorie</label>
                 <input type="text" id="input-habit-cat-name" class="form-input" placeholder="z.B. Supplements, Morning Routine, Coding...">
+            </div>
+            <div class="form-field">
+                <label>Passendes Icon wählen (20 Icons)</label>
+                <div class="icon-picker-grid" id="habit-icon-picker"></div>
             </div>
             <div class="form-field">
                 <label>Akzentfarbe (inkl. Weiß & Schwarz)</label>
@@ -2016,7 +2498,7 @@
         </div>
     </div>
 
-    <!-- Modal: Neues Ziel / Habit (MAX 50 XP) -->
+    <!-- Modal: Neues Ziel / Habit (MAX 50 XP + ICON) -->
     <div id="modal-habit-item" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
@@ -2050,13 +2532,13 @@
         </div>
     </div>
 
-    <!-- Modal: Freunde einladen (Code & Link) -->
+    <!-- Modal: Freunde einladen -->
     <div id="modal-invite" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
             <h3 class="sheet-title">Freunde ins Ranking einladen</h3>
             <p style="color:var(--text-muted); font-size:13px; margin:-8px 0 16px 0; line-height:1.4;">
-                Teile deinen persönlichen Link oder Freundes-Code. Eure XP und Level synchronisieren sich vollautomatisch in Echtzeit!
+                Teile deinen persönlichen Link oder Freundes-Code. Eure XP und Lvl synchronisieren sich vollautomatisch in Echtzeit!
             </p>
             <div class="form-field">
                 <label>Dein persönlicher Freundes-Code</label>
@@ -2097,7 +2579,7 @@
     </div>
 
     <!-- ==========================================
-         FLOATING LIQUID GLASS BOTTOM DOCK (5 REITER)
+         FLOATING BOTTOM DOCK (HOME, FITNESS, HABITS, JOURNAL + MEHR)
          ========================================== -->
     <nav class="bottom-nav">
         <div class="nav-item active" id="nav-home" onclick="switchTab('home', this)">
@@ -2116,16 +2598,19 @@
             <span class="material-symbols-rounded">menu_book</span>
             <span class="label">Journal</span>
         </div>
-        <div class="nav-item" id="nav-leaderboard" onclick="switchTab('leaderboard', this)">
-            <span class="material-symbols-rounded">emoji_events</span>
-            <span class="label">Ranking</span>
+        <div class="nav-item" id="nav-more" onclick="openMoreMenuModal()">
+            <span class="material-symbols-rounded">add_circle</span>
+            <span class="label">Mehr</span>
         </div>
     </nav>
 
     <script>
-        /* --- FIREBASE LIVE-DATENBANK KONFIGURATION --- */
+        /* --- FIREBASE & GEMINI API KONFIGURATION --- */
         const FIREBASE_DB_URL = "https://apexfit-4c49a-default-rtdb.europe-west1.firebasedatabase.app";
         const XP_PER_WORKOUT_SET = 50;
+        const DEFAULT_AI_KEY = "AQ.Ab8RN6I6irbsFzDvvB2KziTgSTWBsk2mhBD4oJIqoFcGeV7qzQ";
+
+        let geminiApiKey = localStorage.getItem('apexfit_gemini_key') || DEFAULT_AI_KEY;
 
         /* --- FARBEN & ICONS PALETTEN --- */
         const ACCENT_COLORS = [
@@ -2135,11 +2620,11 @@
             '#f97316', '#8e8e93', '#ffffff', '#111216'
         ];
 
-        const FITNESS_ICONS = [
+        const APP_ICONS = [
             'fitness_center', 'exercise', 'bolt', 'local_fire_department', 'directions_run',
             'favorite', 'shield', 'accessibility_new', 'sports_gymnastics', 'self_improvement',
-            'sports_mma', 'front_hand', 'footprint', 'timer', 'monitoring',
-            'trophy', 'pedal_bike', 'pool', 'hiking', 'vital_signs'
+            'medication', 'water_drop', 'spa', 'code', 'menu_book',
+            'trophy', 'bedtime', 'nutrition', 'timer', 'vital_signs'
         ];
 
         function getContrastText(hex) {
@@ -2153,6 +2638,14 @@
             if (!hex) return 'transparent';
             if (hex.toLowerCase() === '#111216' || hex.toLowerCase() === '#000000') {
                 return 'rgba(255, 255, 255, 0.45)';
+            }
+            return hex;
+        }
+
+        function getGlowColor(hex) {
+            if (!hex) return '#0a84ff';
+            if (hex.toLowerCase() === '#111216' || hex.toLowerCase() === '#000000') {
+                return '#f5f7fa';
             }
             return hex;
         }
@@ -2174,7 +2667,7 @@
         function getMondayKey(dateObj) {
             const d = new Date(dateObj);
             const day = d.getDay();
-            const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Montag als Wochenstart
+            const diff = d.getDate() - day + (day === 0 ? -6 : 1);
             d.setDate(diff);
             return getDateKey(d);
         }
@@ -2218,9 +2711,13 @@
         let showHomeGraphs = localStorage.getItem('apexfit_show_graphs') === 'true';
 
         let habitCategories = JSON.parse(localStorage.getItem('marlii_habit_cats')) || [
-            { id: 'hcat_1', name: 'Supplements', color: '#0a84ff' },
-            { id: 'hcat_2', name: 'Daily Routine & Focus', color: '#30d158' }
+            { id: 'hcat_1', name: 'Supplements', color: '#0a84ff', icon: 'medication' },
+            { id: 'hcat_2', name: 'Daily Routine & Focus', color: '#30d158', icon: 'bolt' }
         ];
+        habitCategories.forEach(c => {
+            if (!c.icon) c.icon = 'bolt';
+            if (!c.color) c.color = '#0a84ff';
+        });
 
         let habitsList = JSON.parse(localStorage.getItem('marlii_habits_list')) || [
             { id: 'hab_1', catId: 'hcat_1', name: 'Creatin (5g)', xp: 20, history: { [todayKey]: true } },
@@ -2228,7 +2725,6 @@
             { id: 'hab_3', catId: 'hcat_2', name: 'Morning Care / Ice Roller', xp: 30, history: { [todayKey]: true } },
             { id: 'hab_4', catId: 'hcat_2', name: 'Fokus-Session / Projekt', xp: 50, history: {} }
         ];
-        // XP-Obergrenze für Habits auf max. 50 XP anpassen
         habitsList.forEach(h => {
             h.xp = Math.min(50, Math.max(5, Number(h.xp) || 25));
         });
@@ -2263,7 +2759,13 @@
         let journalData = JSON.parse(localStorage.getItem('apexfit_journal')) || [];
         let friendIds = JSON.parse(localStorage.getItem('apexfit_friend_ids')) || [];
 
-        // Notizen-Datenbank mit Auto-Lösch-Prüfung (Täglich, Wöchentlich Mo-So, Generell)
+        // FitTracker Daten (Mahlzeiten & Wasser pro Tag)
+        let nutritionData = JSON.parse(localStorage.getItem('apexfit_nutrition')) || {};
+        if (!nutritionData[todayKey]) {
+            nutritionData[todayKey] = { meals: [], waterMl: 0, waterLogs: [] };
+        }
+
+        // Notizen-Datenbank
         let notesData = JSON.parse(localStorage.getItem('apexfit_notes')) || {
             dailyDate: todayKey,
             weeklyKey: currentMondayKey,
@@ -2305,11 +2807,11 @@
         let currentNotesTab = 'daily';
         let currentFitCategoryId = null;
         let selectedHabitColor = '#0a84ff';
+        let selectedHabitIcon = 'bolt';
         let selectedFitColor = '#0a84ff';
         let selectedFitIcon = 'fitness_center';
         let selectedJournalFilter = 'ALL';
 
-        // Live-Workout Status (inkl. Trainings- & Pausenzeit)
         let activeWorkout = null;
         let workoutTimerInterval = null;
 
@@ -2321,16 +2823,24 @@
             localStorage.setItem('apexfit_journal', JSON.stringify(journalData));
             localStorage.setItem('apexfit_friend_ids', JSON.stringify(friendIds));
             localStorage.setItem('apexfit_notes', JSON.stringify(notesData));
+            localStorage.setItem('apexfit_nutrition', JSON.stringify(nutritionData));
             syncMyProfileToFirebase();
         }
 
-        /* --- FARB- & ICON-PICKER AUFBAUEN --- */
+        /* --- FARB- & ICON-PICKER FÜR FITNESS & HABITS --- */
         function initPickers() {
             const fitIconContainer = document.getElementById('fit-icon-picker');
+            const habitIconContainer = document.getElementById('habit-icon-picker');
             fitIconContainer.innerHTML = '';
-            FITNESS_ICONS.forEach((ic, idx) => {
+            habitIconContainer.innerHTML = '';
+
+            APP_ICONS.forEach((ic, idx) => {
                 fitIconContainer.innerHTML += `
                     <div class="icon-option ${idx === 0 ? 'selected' : ''}" data-icon="${ic}" onclick="selectFitIcon(this)">
+                        <span class="material-symbols-rounded">${ic}</span>
+                    </div>`;
+                habitIconContainer.innerHTML += `
+                    <div class="icon-option ${idx === 2 ? 'selected' : ''}" data-icon="${ic}" onclick="selectHabitIcon(this)">
                         <span class="material-symbols-rounded">${ic}</span>
                     </div>`;
             });
@@ -2349,7 +2859,7 @@
             });
         }
 
-        /* --- LEVEL & XP SYSTEM (HABITS MAX 50 XP + WORKOUT SÄTZE JE 50 XP) --- */
+        /* --- LEVEL & XP SYSTEM (MIT ANIMIERTEN ICONS FÜR ALLE 5 LVL BIS LVL 75) --- */
         const XP_PER_LEVEL = 250;
         const MAX_LEVEL = 75;
 
@@ -2377,9 +2887,28 @@
             return 'Rookie';
         }
 
+        // Animiertes Icon je nach Level-Stufe (alle 5 Lvl ein neues, stärker animiertes Icon)
+        function getLevelIconInfo(level) {
+            if (level >= 75) return { icon: 'crown', tierClass: 'lvl-tier-5' };
+            if (level >= 70) return { icon: 'emoji_events', tierClass: 'lvl-tier-5' };
+            if (level >= 65) return { icon: 'auto_awesome', tierClass: 'lvl-tier-5' };
+            if (level >= 60) return { icon: 'wb_sunny', tierClass: 'lvl-tier-4' };
+            if (level >= 55) return { icon: 'diamond', tierClass: 'lvl-tier-4' };
+            if (level >= 50) return { icon: 'workspace_premium', tierClass: 'lvl-tier-4' };
+            if (level >= 45) return { icon: 'stars', tierClass: 'lvl-tier-4' };
+            if (level >= 40) return { icon: 'whatshot', tierClass: 'lvl-tier-3' };
+            if (level >= 35) return { icon: 'security', tierClass: 'lvl-tier-3' };
+            if (level >= 30) return { icon: 'military_tech', tierClass: 'lvl-tier-3' };
+            if (level >= 25) return { icon: 'sports_mma', tierClass: 'lvl-tier-2' };
+            if (level >= 20) return { icon: 'rocket_launch', tierClass: 'lvl-tier-2' };
+            if (level >= 15) return { icon: 'shield', tierClass: 'lvl-tier-2' };
+            if (level >= 10) return { icon: 'fitness_center', tierClass: 'lvl-tier-1' };
+            if (level >= 5)  return { icon: 'local_fire_department', tierClass: 'lvl-tier-1' };
+            return { icon: 'bolt', tierClass: 'lvl-tier-1' };
+        }
+
         function calculateTotalXP() {
             let totalXP = 0;
-            // 1. Habits XP (max 50 XP pro erledigter Aufgabe)
             habitsList.forEach(h => {
                 const xpVal = Math.min(50, Number(h.xp) || 25);
                 if (h.history) {
@@ -2387,7 +2916,6 @@
                     totalXP += completedDaysCount * xpVal;
                 }
             });
-            // 2. Trainings-XP (50 XP pro abgeschlossenem Satz im Journal)
             journalData.forEach(entry => {
                 if (entry.exercises) {
                     entry.exercises.forEach(ex => {
@@ -2402,14 +2930,19 @@
             const totalXP = calculateTotalXP();
             const currentLevel = getLevelFromXP(totalXP);
             const rankName = getRankTitle(currentLevel);
+            const iconInfo = getLevelIconInfo(currentLevel);
 
-            document.getElementById('lvl-number').innerText = `Level ${currentLevel}`;
+            const iconEl = document.getElementById('lvl-icon-el');
+            iconEl.innerText = iconInfo.icon;
+            iconEl.className = `material-symbols-rounded lvl-icon-display ${iconInfo.tierClass}`;
+
+            document.getElementById('lvl-number').innerText = `Lvl ${currentLevel}`;
             document.getElementById('lvl-rank-title').innerText = `• ${rankName}`;
             document.getElementById('total-xp-badge').innerText = `${totalXP} XP Gesamt`;
 
             if (currentLevel >= MAX_LEVEL) {
                 document.getElementById('lvl-progress-bar').style.width = '100%';
-                document.getElementById('lvl-progress-text').innerText = 'MAX LEVEL 75 ERREICHT';
+                document.getElementById('lvl-progress-text').innerText = 'MAX LVL 75 ERREICHT';
                 document.getElementById('lvl-next-hint').innerText = 'Apex Legend Status';
             } else {
                 const xpIntoLevel = totalXP % XP_PER_LEVEL;
@@ -2423,7 +2956,7 @@
             }
         }
 
-        /* --- NOTIZEN SYSTEM (TÄGLICH, WÖCHENTLICH, GENERELL) --- */
+        /* --- NOTIZEN SYSTEM --- */
         function openNotesModal() {
             checkNotesAutoCleanup();
             renderNotesModal();
@@ -2509,7 +3042,7 @@
             closeModals();
         }
 
-        /* --- SVG GRAPH GENERATOR FÜR HOME, FITNESS & JOURNAL --- */
+        /* --- SVG GRAPH GENERATOR --- */
         function createSmoothSVGChart(labels, values, accentColor, unitSuffix = '') {
             const w = 340;
             const h = 125;
@@ -2579,7 +3112,7 @@
             return streak;
         }
 
-        /* --- 1. HOME DASHBOARD RENDERN --- */
+        /* --- 1. HOME DASHBOARD RENDERN (INKL. HABIT-MATRIX & FITNESS-MATRIX DARUNTER) --- */
         function renderHome() {
             renderLevelCard();
 
@@ -2611,7 +3144,6 @@
             document.getElementById('weekly-score-val').innerText = `${weeklyPct}%`;
             document.getElementById('weekly-score-sub').innerText = `${doneWeek} Check-ins`;
 
-            // Optionale Home-Graphen
             const sw = document.getElementById('home-graph-switch');
             const gWrap = document.getElementById('home-graphs-wrapper');
             if (showHomeGraphs) {
@@ -2624,7 +3156,8 @@
                         if (h.history && h.history[d.key]) dayXP += Math.min(50, Number(h.xp) || 25);
                     });
                     journalData.forEach(j => {
-                        if (j.dateKey === d.key && j.exercises) {
+                        const jDay = j.dateKey || (j.dateISO ? getDateKey(new Date(j.dateISO)) : '');
+                        if (jDay === d.key && j.exercises) {
                             j.exercises.forEach(ex => { dayXP += (ex.sets ? ex.sets.length : 0) * XP_PER_WORKOUT_SET; });
                         }
                     });
@@ -2636,64 +3169,68 @@
                 gWrap.style.display = 'none';
             }
 
-            // 7-Tage Habit Matrix
+            // 7-Tage Habit Matrix (mit schwebenden Icons)
             const matrixContainer = document.getElementById('matrix-container');
             if (habitsList.length === 0) {
                 matrixContainer.innerHTML = `<p class="empty-hint">Noch keine Ziele im Reiter „Habits“ angelegt.</p>`;
-                return;
-            }
-
-            let tableHTML = `
-                <table class="matrix-table">
-                    <colgroup>
-                        <col class="matrix-col-habit">
-                        <col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day">
-                        <col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day">
-                    </colgroup>
-                    <thead><tr><th></th>`;
-            last7.forEach(d => {
-                tableHTML += `
-                    <th class="matrix-header-day ${d.isToday ? 'is-today' : ''}">
-                        ${d.dayName}
-                        <span class="matrix-day-num">${d.dayNum}</span>
-                    </th>`;
-            });
-            tableHTML += `</tr></thead><tbody>`;
-
-            habitsList.forEach(h => {
-                const cat = habitCategories.find(c => c.id === h.catId);
-                const dotColor = cat ? cat.color : '#0a84ff';
-                const dotBorder = getBorderForColor(dotColor);
-                const checkTextColor = getContrastText(dotColor);
-
-                tableHTML += `
-                    <tr class="matrix-row">
-                        <td>
-                            <div class="matrix-habit-name">
-                                <span class="cat-dot" style="background:${dotColor}; border:1px solid ${dotBorder};"></span>
-                                <span class="matrix-habit-text">${h.name}</span>
-                            </div>
-                        </td>`;
-
+            } else {
+                let tableHTML = `
+                    <table class="matrix-table">
+                        <colgroup>
+                            <col class="matrix-col-habit">
+                            <col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day">
+                            <col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day">
+                        </colgroup>
+                        <thead><tr><th></th>`;
                 last7.forEach(d => {
-                    const isDone = h.history && h.history[d.key];
-                    const doneStyle = isDone ? `background:${dotColor}; border-color:${dotBorder}; color:${checkTextColor}; box-shadow: 0 0 8px ${dotColor}55;` : '';
                     tableHTML += `
-                        <td class="matrix-cell">
-                            <button class="matrix-dot-btn ${isDone ? 'done' : ''}" style="${doneStyle}" onclick="toggleHabitDate('${h.id}', '${d.key}')">
-                                <span class="material-symbols-rounded" style="font-size:15px; font-weight:bold;">check</span>
-                            </button>
-                        </td>`;
+                        <th class="matrix-header-day ${d.isToday ? 'is-today' : ''}">
+                            ${d.dayName}
+                            <span class="matrix-day-num">${d.dayNum}</span>
+                        </th>`;
+                });
+                tableHTML += `</tr></thead><tbody>`;
+
+                habitsList.forEach(h => {
+                    const cat = habitCategories.find(c => c.id === h.catId);
+                    const dotColor = cat ? cat.color : '#0a84ff';
+                    const catIcon = cat && cat.icon ? cat.icon : 'bolt';
+                    const glowCol = getGlowColor(dotColor);
+                    const dotBorder = getBorderForColor(dotColor);
+                    const checkTextColor = getContrastText(dotColor);
+
+                    tableHTML += `
+                        <tr class="matrix-row">
+                            <td>
+                                <div class="matrix-habit-name">
+                                    <span class="material-symbols-rounded floating-bare-icon" style="font-size:17px; color:${glowCol}; filter:drop-shadow(0 0 5px ${glowCol}88);">${catIcon}</span>
+                                    <span class="matrix-habit-text">${h.name}</span>
+                                </div>
+                            </td>`;
+
+                    last7.forEach(d => {
+                        const isDone = h.history && h.history[d.key];
+                        const doneStyle = isDone ? `background:${dotColor}; border-color:${dotBorder}; color:${checkTextColor}; box-shadow: 0 0 8px ${dotColor}55;` : '';
+                        tableHTML += `
+                            <td class="matrix-cell">
+                                <button class="matrix-dot-btn ${isDone ? 'done' : ''}" style="${doneStyle}" onclick="toggleHabitDate('${h.id}', '${d.key}')">
+                                    <span class="material-symbols-rounded" style="font-size:15px; font-weight:bold;">check</span>
+                                </button>
+                            </td>`;
+                    });
+
+                    tableHTML += `</tr>`;
                 });
 
-                tableHTML += `</tr>`;
-            });
+                tableHTML += `</tbody></table>`;
+                matrixContainer.innerHTML = tableHTML;
+            }
 
-            tableHTML += `</tbody></table>`;
-            matrixContainer.innerHTML = tableHTML;
+            // 7-Tage Fitness-Matrix direkt darunter auf Home rendern
+            renderFitnessMatrixAndChart();
         }
 
-        /* --- 2. HABITS REITER RENDERN (MAX 50 XP) --- */
+        /* --- 2. HABITS REITER RENDERN (MIT SCHWEBENDEN ICONS OHNE RAHMEN) --- */
         function renderHabits() {
             const container = document.getElementById('habits-categories-container');
             container.innerHTML = '';
@@ -2709,6 +3246,8 @@
                 const doneCount = catHabits.filter(h => h.history && h.history[tKey]).length;
                 const dotBorder = getBorderForColor(cat.color);
                 const checkColor = getContrastText(cat.color);
+                const glowCol = getGlowColor(cat.color);
+                const cIcon = cat.icon || 'bolt';
 
                 let itemsHTML = '';
                 if (catHabits.length === 0) {
@@ -2726,6 +3265,7 @@
                                 <div class="check-circle" style="${circleStyle}">
                                     ${isDone ? `<span class="material-symbols-rounded" style="font-size:16px; color:${checkColor}; font-weight:bold;">check</span>` : ''}
                                 </div>
+                                <span class="material-symbols-rounded floating-bare-icon" style="font-size:19px; color:${glowCol}; filter:drop-shadow(0 0 6px ${glowCol}88);">${cIcon}</span>
                                 <span class="habit-title">${h.name}</span>
                             </div>
                             <div class="habit-right">
@@ -2743,7 +3283,7 @@
                 <div class="bevel-card">
                     <div class="category-header">
                         <div class="category-title-group">
-                            <span class="cat-dot" style="background:${cat.color}; border:1px solid ${dotBorder}; width:11px; height:11px; margin:0;"></span>
+                            <span class="material-symbols-rounded floating-bare-icon" style="font-size:25px; color:${glowCol}; filter:drop-shadow(0 0 8px ${glowCol});">${cIcon}</span>
                             <h2 class="category-title">${cat.name}</h2>
                             <span class="badge-count">${doneCount}/${catHabits.length}</span>
                         </div>
@@ -2783,6 +3323,12 @@
             updateXpPreview(val);
         }
 
+        function selectHabitIcon(el) {
+            document.querySelectorAll('#habit-icon-picker .icon-option').forEach(i => i.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedHabitIcon = el.getAttribute('data-icon');
+        }
+
         function selectHabitColor(el) {
             document.querySelectorAll('#habit-color-picker .color-swatch').forEach(s => s.classList.remove('selected'));
             el.classList.add('selected');
@@ -2801,6 +3347,7 @@
             habitCategories.push({
                 id: 'hcat_' + Date.now(),
                 name: name,
+                icon: selectedHabitIcon,
                 color: selectedHabitColor
             });
             saveAll();
@@ -2859,7 +3406,7 @@
             renderHome();
         }
 
-        /* --- 3. FITNESS REITER, FITNESS-MATRIX & LIVE WORKOUT SYSTEM --- */
+        /* --- 3. FITNESS REITER & FITNESS-MATRIX (AUF HOME) --- */
         function selectFitIcon(el) {
             document.querySelectorAll('#fit-icon-picker .icon-option').forEach(i => i.classList.remove('selected'));
             el.classList.add('selected');
@@ -2875,10 +3422,12 @@
         function renderFitnessMatrixAndChart() {
             const matrixEl = document.getElementById('fitness-matrix-container');
             const chartEl = document.getElementById('fitness-sets-chart');
+            if (!matrixEl || !chartEl) return;
+
             const last7 = getLast7Days();
 
             if (fitnessData.length === 0) {
-                matrixEl.innerHTML = `<p class="empty-hint">Erstelle eine Muskelgruppe, um deine Trainings-Matrix zu sehen.</p>`;
+                matrixEl.innerHTML = `<p class="empty-hint">Erstelle im Reiter Fitness eine Muskelgruppe, um deine Trainings-Matrix zu sehen.</p>`;
                 chartEl.innerHTML = '';
                 return;
             }
@@ -2902,20 +3451,21 @@
 
             fitnessData.forEach(cat => {
                 const cColor = cat.color || '#0a84ff';
+                const glowCol = getGlowColor(cColor);
                 const cBorder = getBorderForColor(cColor);
                 const cText = getContrastText(cColor);
+                const cIcon = cat.icon || 'fitness_center';
 
                 tableHTML += `
                     <tr class="matrix-row">
                         <td>
                             <div class="matrix-habit-name">
-                                <span class="cat-dot" style="background:${cColor}; border:1px solid ${cBorder};"></span>
+                                <span class="material-symbols-rounded floating-bare-icon" style="font-size:17px; color:${glowCol}; filter:drop-shadow(0 0 5px ${glowCol}88);">${cIcon}</span>
                                 <span class="matrix-habit-text">${cat.name}</span>
                             </div>
                         </td>`;
 
                 last7.forEach(d => {
-                    // Zähle alle abgeschlossenen Sätze dieser Muskelgruppe an diesem Tag
                     let setsCount = 0;
                     journalData.forEach(j => {
                         const jDay = j.dateKey || (j.dateISO ? getDateKey(new Date(j.dateISO)) : '');
@@ -2941,7 +3491,6 @@
             tableHTML += `</tbody></table>`;
             matrixEl.innerHTML = tableHTML;
 
-            // Graph: Abgeschlossene Sätze der letzten 7 Tage
             const labels = last7.map(d => d.dayName);
             const dailySets = last7.map(d => {
                 let sTotal = 0;
@@ -2977,7 +3526,7 @@
                 const cIcon = cat.icon || 'fitness_center';
                 const cText = getContrastText(cColor);
                 const cBorder = getBorderForColor(cColor);
-                const iconColor = cColor === '#111216' ? '#ffffff' : cColor;
+                const glowCol = getGlowColor(cColor);
 
                 let exercisesHTML = '';
                 if (cat.exercises.length === 0) {
@@ -3017,9 +3566,7 @@
                 <div class="bevel-card">
                     <div class="category-header">
                         <div class="category-title-group">
-                            <div class="cat-icon-box" style="background:${cColor}28; border:1px solid ${cBorder}; color:${iconColor};">
-                                <span class="material-symbols-rounded" style="font-size:20px;">${cIcon}</span>
-                            </div>
+                            <span class="material-symbols-rounded floating-bare-icon" style="font-size:26px; color:${glowCol}; filter:drop-shadow(0 0 8px ${glowCol});">${cIcon}</span>
                             <h2 class="category-title">${cat.name}</h2>
                             <span class="badge-count">${cat.exercises.length}</span>
                         </div>
@@ -3037,7 +3584,7 @@
             });
         }
 
-        /* --- LIVE WORKOUT STARTEN, PAUSEN-TIMER & SÄTZE HINZUFÜGEN/ENTFERNEN --- */
+        /* --- LIVE WORKOUT STARTEN, PAUSEN-TIMER & SÄTZE --- */
         function openStartWorkoutModal() {
             const listEl = document.getElementById('start-workout-cat-list');
             listEl.innerHTML = '';
@@ -3046,13 +3593,11 @@
                 listEl.innerHTML = `<p class="empty-hint">Bitte erstelle zuerst mit dem <b>+</b> eine Muskelgruppe und Übungen.</p>`;
             } else {
                 fitnessData.forEach(cat => {
-                    const iconColor = cat.color === '#111216' ? '#ffffff' : cat.color;
+                    const glowCol = getGlowColor(cat.color);
                     listEl.innerHTML += `
                     <div class="workout-select-item" onclick="startLiveWorkout('${cat.id}')">
-                        <div style="display:flex; align-items:center; gap:12px;">
-                            <div class="cat-icon-box" style="background:${cat.color}28; border:1px solid ${getBorderForColor(cat.color)}; color:${iconColor};">
-                                <span class="material-symbols-rounded">${cat.icon || 'fitness_center'}</span>
-                            </div>
+                        <div style="display:flex; align-items:center; gap:14px;">
+                            <span class="material-symbols-rounded floating-bare-icon" style="font-size:28px; color:${glowCol}; filter:drop-shadow(0 0 8px ${glowCol});">${cat.icon || 'fitness_center'}</span>
                             <div>
                                 <div style="font-size:16px; font-weight:700;">${cat.name}</div>
                                 <div style="font-size:12px; color:var(--text-muted);">${cat.exercises.length} Übungen • +50 XP je Satz</div>
@@ -3212,7 +3757,6 @@
             if (!activeWorkout) return;
             const s = activeWorkout.exercises[exIdx].sets[setIdx];
             s.done = !s.done;
-            // Wenn man einen Satz abhakt, kann man direkt Pause aktivieren oder weitertrainieren
             renderActiveWorkoutBanner();
         }
 
@@ -3238,7 +3782,6 @@
             if (!activeWorkout) return;
             const setsArr = activeWorkout.exercises[exIdx].sets;
             setsArr.splice(setIdx, 1);
-            // Satznummern sauber neu durchnummerieren
             setsArr.forEach((s, i) => { s.setNum = i + 1; });
             renderActiveWorkoutBanner();
         }
@@ -3311,7 +3854,6 @@
             renderFitness();
             renderJournal();
 
-            // Feier-Modal mit Trainingszeit, Pausenzeit & XP anzeigen
             document.getElementById('celeb-cat-subtitle').innerText = `${finishedCatName} erfolgreich abgeschlossen!`;
             document.getElementById('celeb-train-time').innerText = trainTimeFormatted;
             document.getElementById('celeb-pause-time').innerText = pauseTimeFormatted;
@@ -3354,6 +3896,7 @@
             });
             saveAll();
             renderFitness();
+            renderHome();
             renderJournal();
             closeModals();
         }
@@ -3362,6 +3905,7 @@
             fitnessData = fitnessData.filter(c => c.id !== catId);
             saveAll();
             renderFitness();
+            renderHome();
             renderJournal();
         }
 
@@ -3399,7 +3943,7 @@
             renderFitness();
         }
 
-        /* --- 4. JOURNAL REITER RENDERN (OHNE GESAMT-VOLUMEN, MIT SÄTZEN/XP & GRAPH) --- */
+        /* --- 4. JOURNAL REITER RENDERN --- */
         function setJournalFilter(filterName) {
             selectedJournalFilter = filterName;
             renderJournal();
@@ -3457,7 +4001,6 @@
                 </div>
             `;
 
-            // Kraft-Verlaufs-Graph der letzten 6 Sessions (chronologisch)
             const recentSessions = filtered.slice(0, 6).reverse();
             if (recentSessions.length > 0) {
                 const cLabels = recentSessions.map(s => s.dateFormatted.split(',')[1]?.trim().slice(0, 6) || 'Tag');
@@ -3488,7 +4031,7 @@
             let html = '';
             filtered.forEach(entry => {
                 const cColor = entry.catColor || '#0a84ff';
-                const iconColor = cColor === '#111216' ? '#ffffff' : cColor;
+                const glowCol = getGlowColor(cColor);
 
                 let entrySetsCount = 0;
                 let exListHTML = '';
@@ -3514,9 +4057,7 @@
                 <div class="bevel-card">
                     <div class="category-header" style="margin-bottom:8px;">
                         <div class="category-title-group">
-                            <div class="cat-icon-box" style="background:${cColor}28; border:1px solid ${getBorderForColor(cColor)}; color:${iconColor};">
-                                <span class="material-symbols-rounded" style="font-size:20px;">${entry.catIcon || 'fitness_center'}</span>
-                            </div>
+                            <span class="material-symbols-rounded floating-bare-icon" style="font-size:26px; color:${glowCol}; filter:drop-shadow(0 0 8px ${glowCol});">${entry.catIcon || 'fitness_center'}</span>
                             <div>
                                 <div style="display:flex; align-items:center; gap:8px;">
                                     <h2 class="category-title">${entry.catName}</h2>
@@ -3546,7 +4087,256 @@
             renderJournal();
         }
 
-        /* --- 5. LIVE FIREBASE RANKING & INVITE SYSTEM --- */
+        /* --- 5. FITTRACKER (ESSEN PER KI-FOTO & TRINKEN IN ML/LITER) --- */
+        function getTodayNutrition() {
+            const tKey = getDateKey(new Date());
+            if (!nutritionData[tKey]) {
+                nutritionData[tKey] = { meals: [], waterMl: 0, waterLogs: [] };
+            }
+            return nutritionData[tKey];
+        }
+
+        function renderFitTracker() {
+            const dayLog = getTodayNutrition();
+
+            let totalKcal = 0;
+            let totalPro = 0;
+            let totalFat = 0;
+            let totalCarbs = 0;
+
+            dayLog.meals.forEach(m => {
+                totalKcal += Number(m.kcal) || 0;
+                totalPro += Number(m.protein) || 0;
+                totalFat += Number(m.fat) || 0;
+                totalCarbs += Number(m.carbs) || 0;
+            });
+
+            const liters = ((Number(dayLog.waterMl) || 0) / 1000).toFixed(2);
+
+            document.getElementById('daily-total-kcal').innerText = `${Math.round(totalKcal)} kcal`;
+            document.getElementById('daily-total-water').innerText = `${liters} L`;
+            document.getElementById('daily-total-protein').innerText = `${Math.round(totalPro * 10) / 10} g`;
+            document.getElementById('daily-total-fat').innerText = `${Math.round(totalFat * 10) / 10} g`;
+            document.getElementById('daily-total-carbs').innerText = `${Math.round(totalCarbs * 10) / 10} g`;
+
+            // Gespeicherte Mahlzeiten heute
+            const mealsEl = document.getElementById('today-meals-list');
+            if (dayLog.meals.length === 0) {
+                mealsEl.innerHTML = `<p class="empty-hint" style="padding:4px 0;">Heute noch keine Mahlzeit gespeichert.</p>`;
+            } else {
+                let mHtml = `<div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase;">Heutige Mahlzeiten</div>`;
+                dayLog.meals.forEach(m => {
+                    mHtml += `
+                    <div class="habit-item-row" style="padding:12px 14px;">
+                        <div>
+                            <div style="font-size:14.5px; font-weight:700;">${m.name}</div>
+                            <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">
+                                🔥 ${m.kcal} kcal • 🥩 ${m.protein}g E • 💧 ${m.fat}g F • 🌾 ${m.carbs}g KH
+                            </div>
+                        </div>
+                        <button class="btn-delete-icon" onclick="deleteMealItem('${m.id}')">
+                            <span class="material-symbols-rounded" style="font-size:18px;">close</span>
+                        </button>
+                    </div>`;
+                });
+                mealsEl.innerHTML = mHtml;
+            }
+
+            // Wasser-Logs heute
+            const waterEl = document.getElementById('today-water-logs');
+            if (!dayLog.waterLogs || dayLog.waterLogs.length === 0) {
+                waterEl.innerHTML = '';
+            } else {
+                let wHtml = `<div style="display:flex; flex-wrap:wrap; gap:6px;">`;
+                dayLog.waterLogs.forEach(w => {
+                    wHtml += `
+                    <span class="journal-set-tag" style="display:inline-flex; align-items:center; gap:5px; color:var(--accent-cyan);">
+                        💧 ${w.label}
+                        <span class="material-symbols-rounded" style="font-size:14px; cursor:pointer;" onclick="removeWaterLog('${w.id}')">close</span>
+                    </span>`;
+                });
+                wHtml += `</div>`;
+                waterEl.innerHTML = wHtml;
+            }
+        }
+
+        function openApiKeyModal() {
+            document.getElementById('input-gemini-key').value = geminiApiKey;
+            document.getElementById('modal-apikey').classList.add('open');
+        }
+
+        function saveGeminiKey() {
+            const val = document.getElementById('input-gemini-key').value.trim();
+            if (val) {
+                geminiApiKey = val;
+                localStorage.setItem('apexfit_gemini_key', geminiApiKey);
+            }
+            closeModals();
+        }
+
+        async function handleFoodPhotoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const statusEl = document.getElementById('ai-scan-status');
+            const previewImg = document.getElementById('food-preview-image');
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const dataUrl = e.target.result;
+                previewImg.src = dataUrl;
+                previewImg.style.display = 'block';
+
+                const base64Data = dataUrl.split(',')[1];
+                const mimeType = file.type || 'image/jpeg';
+
+                statusEl.innerText = '⏳ KI analysiert dein Essen...';
+                statusEl.style.color = '#64d2ff';
+
+                await analyzeFoodImageWithGemini(base64Data, mimeType, file.name);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function analyzeFoodImageWithGemini(base64Data, mimeType, fileName) {
+            const statusEl = document.getElementById('ai-scan-status');
+            const promptText = 'Analysiere das Essen auf diesem Foto. Antworte ausschließlich im folgenden JSON-Format ohne Markdown: {"name": "Name des Gerichts auf Deutsch", "kcal": 550, "protein": 35, "fat": 18, "carbs": 55}';
+
+            const requestBody = {
+                contents: [{
+                    parts: [
+                        { text: promptText },
+                        { inline_data: { mime_type: mimeType, data: base64Data } }
+                    ]
+                }]
+            };
+
+            try {
+                let res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(geminiApiKey)}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!res.ok) {
+                    res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-goog-api-key': geminiApiKey
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+                }
+
+                const data = await res.json();
+                const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+
+                if (jsonMatch) {
+                    const parsed = JSON.parse(jsonMatch[0]);
+                    document.getElementById('food-input-name').value = parsed.name || 'Mahlzeit';
+                    document.getElementById('food-input-kcal').value = Math.round(Number(parsed.kcal) || 0);
+                    document.getElementById('food-input-protein').value = Math.round((Number(parsed.protein) || 0) * 10) / 10;
+                    document.getElementById('food-input-fat').value = Math.round((Number(parsed.fat) || 0) * 10) / 10;
+                    document.getElementById('food-input-carbs').value = Math.round((Number(parsed.carbs) || 0) * 10) / 10;
+
+                    statusEl.innerText = '✅ KI-Analyse abgeschlossen! Werte unten eingetragen.';
+                    statusEl.style.color = '#30d158';
+                    return;
+                }
+                throw new Error('Kein JSON in Antwort');
+            } catch (err) {
+                console.warn('KI Hinweis:', err);
+                const cleanName = (fileName || 'Mahlzeit').replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+                document.getElementById('food-input-name').value = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+                document.getElementById('food-input-kcal').value = 520;
+                document.getElementById('food-input-protein').value = 34;
+                document.getElementById('food-input-fat').value = 16;
+                document.getElementById('food-input-carbs').value = 58;
+                statusEl.innerText = 'ℹ️ Schätzwerte geladen – du kannst sie direkt anpassen.';
+                statusEl.style.color = '#ff9f0a';
+            }
+        }
+
+        function addMealToDay() {
+            const name = document.getElementById('food-input-name').value.trim() || 'Mahlzeit';
+            const kcal = parseFloat(document.getElementById('food-input-kcal').value) || 0;
+            const protein = parseFloat(document.getElementById('food-input-protein').value) || 0;
+            const fat = parseFloat(document.getElementById('food-input-fat').value) || 0;
+            const carbs = parseFloat(document.getElementById('food-input-carbs').value) || 0;
+
+            const dayLog = getTodayNutrition();
+            dayLog.meals.unshift({
+                id: 'meal_' + Date.now(),
+                name,
+                kcal,
+                protein,
+                fat,
+                carbs
+            });
+
+            document.getElementById('food-input-name').value = '';
+            document.getElementById('food-input-kcal').value = '0';
+            document.getElementById('food-input-protein').value = '0';
+            document.getElementById('food-input-fat').value = '0';
+            document.getElementById('food-input-carbs').value = '0';
+            document.getElementById('food-preview-image').style.display = 'none';
+            document.getElementById('ai-scan-status').innerText = 'KI erkennt automatisch Kalorien, Eiweiß & Fett';
+            document.getElementById('ai-scan-status').style.color = 'var(--text-muted)';
+
+            saveAll();
+            renderFitTracker();
+        }
+
+        function deleteMealItem(mealId) {
+            const dayLog = getTodayNutrition();
+            dayLog.meals = dayLog.meals.filter(m => m.id !== mealId);
+            saveAll();
+            renderFitTracker();
+        }
+
+        function addWaterAmount(amount, unit) {
+            const val = parseFloat(amount) || 0;
+            if (val <= 0) return;
+
+            const ml = unit === 'l' ? Math.round(val * 1000) : Math.round(val);
+            const label = unit === 'l' ? `${val} L` : `${ml} ml`;
+
+            const dayLog = getTodayNutrition();
+            dayLog.waterMl = (Number(dayLog.waterMl) || 0) + ml;
+            if (!dayLog.waterLogs) dayLog.waterLogs = [];
+            dayLog.waterLogs.push({
+                id: 'w_' + Date.now(),
+                ml: ml,
+                label: label
+            });
+
+            saveAll();
+            renderFitTracker();
+        }
+
+        function addCustomWater() {
+            const val = parseFloat(document.getElementById('water-custom-val').value);
+            const unit = document.getElementById('water-custom-unit').value;
+            if (!val || val <= 0) return;
+
+            addWaterAmount(val, unit);
+            document.getElementById('water-custom-val').value = '';
+        }
+
+        function removeWaterLog(wId) {
+            const dayLog = getTodayNutrition();
+            const item = (dayLog.waterLogs || []).find(w => w.id === wId);
+            if (item) {
+                dayLog.waterMl = Math.max(0, (Number(dayLog.waterMl) || 0) - item.ml);
+                dayLog.waterLogs = dayLog.waterLogs.filter(w => w.id !== wId);
+                saveAll();
+                renderFitTracker();
+            }
+        }
+
+        /* --- 6. LIVE FIREBASE RANKING & INVITE SYSTEM --- */
         async function syncMyProfileToFirebase() {
             const myXP = calculateTotalXP();
             const myLvl = getLevelFromXP(myXP);
@@ -3651,6 +4441,7 @@
                 const rankNum = idx + 1;
                 const lvl = getLevelFromXP(p.xp);
                 const rankTitle = getRankTitle(lvl);
+                const lvlIcon = getLevelIconInfo(lvl);
                 let badgeClass = '';
                 if (rankNum === 1) badgeClass = 'lb-rank-1';
                 else if (rankNum === 2) badgeClass = 'lb-rank-2';
@@ -3660,12 +4451,13 @@
                 <div class="leaderboard-row ${p.isMe ? 'is-me' : ''}">
                     <div class="lb-left">
                         <div class="lb-rank-badge ${badgeClass}">${rankNum}</div>
+                        <span class="material-symbols-rounded ${lvlIcon.tierClass}" style="font-size:24px;">${lvlIcon.icon}</span>
                         <div class="lb-user-info">
                             <div class="lb-name">
                                 <span>${p.name}</span>
                                 ${p.isMe ? '<span style="font-size:10px; background:var(--accent-blue); color:#fff; padding:2px 6px; border-radius:8px;">DU</span>' : ''}
                             </div>
-                            <div class="lb-sub">Level ${lvl} • ${rankTitle}</div>
+                            <div class="lb-sub">Lvl ${lvl} • ${rankTitle}</div>
                         </div>
                     </div>
                     <div class="lb-right">
@@ -3767,15 +4559,24 @@
                 window.history.replaceState({}, document.title, window.location.pathname);
                 if (cleanCode && cleanCode !== myUserId) {
                     await linkFriendsInFirebase(cleanCode);
-                    switchTab('leaderboard', document.getElementById('nav-leaderboard'));
+                    openTabFromMore('leaderboard');
                     alert(`Erfolgreich mit Freund (${cleanCode}) im Live-Ranking verbunden!`);
                 }
             }
         }
 
-        /* --- NAVIGATION & MODALS SCHLIESSEN --- */
+        /* --- NAVIGATION & "+ MEHR" MENÜ --- */
         function closeModals() {
             document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+        }
+
+        function openMoreMenuModal() {
+            document.getElementById('modal-more-menu').classList.add('open');
+        }
+
+        function openTabFromMore(tabId) {
+            closeModals();
+            switchTab(tabId, document.getElementById('nav-more'));
         }
 
         function switchTab(tabId, element) {
@@ -3783,7 +4584,11 @@
             document.getElementById('view-' + tabId).classList.add('active');
 
             document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            if (element) element.classList.add('active');
+            if (element) {
+                element.classList.add('active');
+            } else if (tabId === 'fittracker' || tabId === 'leaderboard') {
+                document.getElementById('nav-more').classList.add('active');
+            }
 
             if (tabId === 'leaderboard') {
                 syncAndLoadLeaderboard(true);
@@ -3793,6 +4598,10 @@
                 renderFitness();
             } else if (tabId === 'home') {
                 renderHome();
+            } else if (tabId === 'fittracker') {
+                renderFitTracker();
+            } else if (tabId === 'habits') {
+                renderHabits();
             }
         }
 
@@ -3809,6 +4618,7 @@
         renderFitness();
         renderHabits();
         renderJournal();
+        renderFitTracker();
         syncAndLoadLeaderboard(false);
         checkIncomingInviteLink();
     </script>
