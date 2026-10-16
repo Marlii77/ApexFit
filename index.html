@@ -18,12 +18,18 @@
 
     <style>
         :root {
-            --bg-main: #131418;
-            --bg-secondary: #1b1d24;
-            --card-bg: rgba(32, 34, 42, 0.84);
-            --card-inner: rgba(22, 24, 30, 0.9);
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-top-glow: rgba(255, 255, 255, 0.14);
+            --bg-main: #0f1015;
+            --bg-secondary: #171922;
+            
+            /* Liquid Glass Variablen */
+            --liquid-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.06) 100%);
+            --liquid-inner: linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(15, 16, 22, 0.65) 100%);
+            --liquid-border: rgba(255, 255, 255, 0.14);
+            --liquid-shadow: 
+                0 20px 42px rgba(0, 0, 0, 0.5),
+                inset 0 1.5px 1px rgba(255, 255, 255, 0.28),
+                inset 0 -1px 1.5px rgba(255, 255, 255, 0.06),
+                inset 1px 0 1px rgba(255, 255, 255, 0.08);
             
             --accent-blue: #0a84ff;
             --accent-green: #30d158;
@@ -32,8 +38,8 @@
             --accent-gold: #ffd60a;
             --danger: #ff453a;
             
-            --text-main: #f5f5f7;
-            --text-muted: #8e909e;
+            --text-main: #f5f7fa;
+            --text-muted: #8e93a4;
         }
 
         * {
@@ -45,15 +51,39 @@
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
             background-color: var(--bg-main);
-            background-image: 
-                radial-gradient(circle at 20% -10%, rgba(94, 92, 230, 0.16), transparent 50%),
-                radial-gradient(circle at 85% 10%, rgba(10, 132, 255, 0.12), transparent 45%),
-                linear-gradient(180deg, #16181e 0%, #101115 100%);
-            background-attachment: fixed;
             color: var(--text-main); 
             margin: 0; 
-            padding: 0 0 120px 0; 
+            padding: 0 0 125px 0; 
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- GRID HINTERGRUND & AMBIENT LIQUID GLOW --- */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+            mask-image: radial-gradient(circle at 50% 35%, black 35%, transparent 90%);
+            -webkit-mask-image: radial-gradient(circle at 50% 35%, black 35%, transparent 90%);
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 18% 5%, rgba(94, 92, 230, 0.22), transparent 42%),
+                radial-gradient(circle at 85% 15%, rgba(10, 132, 255, 0.18), transparent 42%),
+                radial-gradient(circle at 50% 85%, rgba(48, 209, 88, 0.08), transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         /* --- HEADER --- */
@@ -64,28 +94,29 @@
             padding: 42px 18px 16px 18px;
             position: sticky;
             top: 0;
-            z-index: 10;
-            background: rgba(19, 20, 24, 0.78);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            z-index: 20;
+            background: rgba(15, 16, 21, 0.65);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .page-header h1 {
             font-size: 25px;
-            font-weight: 700;
+            font-weight: 800;
             margin: 0;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.6px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .subtitle-date {
-            font-size: 11px;
+            font-size: 10.5px;
             color: var(--accent-blue);
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.9px;
+            letter-spacing: 1px;
             margin-bottom: 4px;
         }
 
@@ -95,47 +126,70 @@
             gap: 10px;
         }
 
+        /* Liquid Buttons oben */
         .btn-start-workout-top {
-            background: linear-gradient(135deg, #30d158 0%, #1f9d3d 100%);
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            box-shadow: 0 6px 18px rgba(48, 209, 88, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            background: linear-gradient(135deg, rgba(48, 209, 88, 0.9) 0%, rgba(25, 150, 60, 0.85) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 20px rgba(48, 209, 88, 0.32), inset 0 1.5px 1px rgba(255, 255, 255, 0.45);
             color: #fff;
             height: 40px;
-            padding: 0 14px;
-            border-radius: 20px;
+            padding: 0 15px;
+            border-radius: 22px;
             font-size: 13px;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 5px;
             cursor: pointer;
-            transition: transform 0.15s ease;
+            transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .btn-start-workout-top:active { transform: scale(0.95); }
+        .btn-start-workout-top:active { transform: scale(0.94); }
 
         .icon-btn-top {
-            width: 40px;
-            height: 40px;
+            position: relative;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-top-glow);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: var(--liquid-bg);
+            border: 1px solid var(--liquid-border);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35), inset 0 1.5px 1px rgba(255, 255, 255, 0.28);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             color: var(--text-main);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.15s ease;
+            transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .icon-btn-top.primary-glow {
-            background: linear-gradient(135deg, #0a84ff 0%, #005bb5 100%);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 6px 18px rgba(10, 132, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.9) 0%, rgba(0, 91, 181, 0.85) 100%);
+            border-color: rgba(255, 255, 255, 0.38);
+            box-shadow: 0 8px 20px rgba(10, 132, 255, 0.38), inset 0 1.5px 1px rgba(255, 255, 255, 0.45);
         }
 
-        .icon-btn-top:active { transform: scale(0.92); }
+        .icon-btn-top:active { transform: scale(0.9); }
+
+        .note-badge-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--accent-blue);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            border: 2px solid var(--bg-main);
+            box-shadow: 0 0 8px rgba(10, 132, 255, 0.6);
+        }
 
         .container {
             padding: 0 18px;
@@ -143,35 +197,49 @@
             margin: 0 auto;
         }
 
-        /* --- PREMIUM CARDS --- */
+        /* --- LIQUID GLASS CARDS --- */
         .bevel-card {
             position: relative;
             overflow: hidden;
-            background: var(--card-bg);
-            border: 1px solid var(--border-subtle);
-            border-radius: 26px;
+            background: var(--liquid-bg);
+            border: 1px solid var(--liquid-border);
+            border-radius: 28px;
             padding: 20px;
             margin-bottom: 16px;
-            box-shadow: 
-                0 14px 34px rgba(0, 0, 0, 0.35), 
-                inset 0 1px 0 var(--border-top-glow);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            box-shadow: var(--liquid-shadow);
+            backdrop-filter: blur(28px) saturate(185%);
+            -webkit-backdrop-filter: blur(28px) saturate(185%);
+            transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
         }
 
-        /* --- LEVEL HERO CARD --- */
+        /* Flüssiger Lichtglanz auf den Karten */
+        .bevel-card::after, .bento-card::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.06), transparent 45%);
+            pointer-events: none;
+        }
+
+        /* --- LEVEL HERO CARD (LIQUID INDIGO) --- */
         .level-hero-card {
             position: relative;
             overflow: hidden;
-            background: linear-gradient(145deg, rgba(38, 40, 56, 0.9) 0%, rgba(26, 28, 36, 0.95) 100%);
-            border: 1px solid rgba(94, 92, 230, 0.32);
-            border-radius: 26px;
+            background: linear-gradient(135deg, rgba(94, 92, 230, 0.26) 0%, rgba(25, 28, 42, 0.75) 55%, rgba(10, 132, 255, 0.18) 100%);
+            border: 1px solid rgba(135, 133, 255, 0.35);
+            border-radius: 28px;
             padding: 20px 22px;
             margin-bottom: 16px;
             box-shadow: 
-                0 16px 36px rgba(0, 0, 0, 0.4),
-                0 0 25px rgba(94, 92, 230, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.18);
+                0 20px 42px rgba(0, 0, 0, 0.5),
+                0 0 28px rgba(94, 92, 230, 0.16),
+                inset 0 1.5px 1px rgba(255, 255, 255, 0.35),
+                inset 0 -1px 1px rgba(94, 92, 230, 0.2);
+            backdrop-filter: blur(28px) saturate(190%);
+            -webkit-backdrop-filter: blur(28px) saturate(190%);
         }
 
         .level-top-row {
@@ -196,25 +264,27 @@
         .level-big-number span.lvl-rank {
             font-size: 14px;
             font-weight: 600;
-            color: #a5a4ff;
+            color: #b4b3ff;
             letter-spacing: 0;
         }
 
         .xp-badge-pill {
-            background: rgba(94, 92, 230, 0.22);
-            border: 1px solid rgba(94, 92, 230, 0.45);
-            color: #c7c6ff;
+            background: rgba(94, 92, 230, 0.28);
+            border: 1px solid rgba(165, 164, 255, 0.45);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            color: #d8d7ff;
             font-size: 12px;
             font-weight: 700;
-            padding: 5px 11px;
+            padding: 5px 12px;
             border-radius: 20px;
         }
 
         .level-progress-track {
             width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
+            height: 9px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
             overflow: hidden;
             margin-bottom: 10px;
         }
@@ -222,10 +292,10 @@
         .level-progress-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #5e5ce6 0%, #0a84ff 100%);
-            border-radius: 10px;
-            box-shadow: 0 0 12px rgba(10, 132, 255, 0.7);
-            transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            background: linear-gradient(90deg, #5e5ce6 0%, #0a84ff 50%, #64d2ff 100%);
+            border-radius: 12px;
+            box-shadow: 0 0 14px rgba(10, 132, 255, 0.8);
+            transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .level-sub-info {
@@ -247,15 +317,17 @@
         .bento-card {
             position: relative;
             overflow: hidden;
-            background: var(--card-bg);
-            border: 1px solid var(--border-subtle);
-            border-radius: 26px;
+            background: var(--liquid-bg);
+            border: 1px solid var(--liquid-border);
+            border-radius: 28px;
             padding: 18px 14px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32), inset 0 1px 0 var(--border-top-glow);
+            box-shadow: var(--liquid-shadow);
+            backdrop-filter: blur(28px) saturate(185%);
+            -webkit-backdrop-filter: blur(28px) saturate(185%);
         }
 
         .bento-header {
@@ -264,6 +336,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            z-index: 1;
         }
 
         .bento-title {
@@ -280,6 +353,7 @@
             align-items: center;
             justify-content: center;
             margin: 4px 0 10px 0;
+            z-index: 1;
         }
 
         .ring-inner-sphere {
@@ -287,9 +361,9 @@
             width: 76px;
             height: 76px;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.08), rgba(18, 19, 24, 0.95));
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.06);
+            background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.14), rgba(15, 16, 22, 0.92));
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.12), 0 6px 16px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -315,17 +389,17 @@
             stroke-linecap: round;
             stroke-dasharray: 276.46;
             stroke-dashoffset: 276.46;
-            transition: stroke-dashoffset 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: stroke-dashoffset 0.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .ring-blue {
             stroke: var(--accent-blue);
-            filter: drop-shadow(0 0 6px rgba(10, 132, 255, 0.45));
+            filter: drop-shadow(0 0 7px rgba(10, 132, 255, 0.55));
         }
 
         .ring-green {
             stroke: var(--accent-green);
-            filter: drop-shadow(0 0 6px rgba(48, 209, 88, 0.45));
+            filter: drop-shadow(0 0 7px rgba(48, 209, 88, 0.55));
         }
 
         .ring-value {
@@ -346,20 +420,81 @@
             font-size: 12px;
             font-weight: 500;
             color: var(--text-muted);
+            z-index: 1;
         }
 
-        /* --- 7-TAGE MATRIX --- */
+        /* --- GRAPHEN & TOGGLE BAR --- */
+        .graph-toggle-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--liquid-bg);
+            border: 1px solid var(--liquid-border);
+            box-shadow: var(--liquid-shadow);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 12px 18px;
+            border-radius: 22px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .graph-toggle-bar:active { transform: scale(0.98); }
+
+        .ios-switch {
+            width: 46px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            position: relative;
+            transition: all 0.25s ease;
+        }
+
+        .ios-switch::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+            transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .ios-switch.on {
+            background: var(--accent-blue);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .ios-switch.on::after {
+            transform: translateX(20px);
+        }
+
+        .svg-chart-box {
+            width: 100%;
+            height: 150px;
+            margin-top: 8px;
+            position: relative;
+        }
+
+        /* --- 7-TAGE MATRIX & FITNESS MATRIX --- */
         .card-title-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
         }
 
         .card-title-row h3 {
             margin: 0;
             font-size: 17px;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: -0.3px;
         }
 
@@ -372,6 +507,8 @@
             width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
+            position: relative;
+            z-index: 1;
         }
 
         .matrix-col-habit { width: 38%; }
@@ -437,19 +574,21 @@
         .matrix-dot-btn {
             width: 24px;
             height: 24px;
-            border-radius: 7px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.10);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             color: transparent;
             padding: 0;
-            transition: all 0.18s ease;
+            transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        /* --- ACTION BAR & BUTTONS --- */
+        .matrix-dot-btn:active { transform: scale(0.85); }
+
+        /* --- ACTION BAR & LIQUID BUTTONS --- */
         .action-bar {
             display: flex;
             gap: 12px;
@@ -458,37 +597,42 @@
 
         .action-btn {
             flex: 1;
-            background: var(--card-bg);
-            border: 1px solid var(--border-subtle);
-            box-shadow: inset 0 1px 0 var(--border-top-glow);
+            background: var(--liquid-bg);
+            border: 1px solid var(--liquid-border);
+            box-shadow: var(--liquid-shadow);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             color: var(--text-main);
             padding: 14px 12px;
-            border-radius: 18px;
+            border-radius: 20px;
             font-size: 13.5px;
-            font-weight: 600;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 7px;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .action-btn.blue-glow-btn {
-            background: linear-gradient(135deg, #0a84ff 0%, #005bb5 100%);
-            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.9) 0%, rgba(0, 91, 181, 0.85) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             box-shadow: 
-                0 8px 22px rgba(10, 132, 255, 0.35), 
-                inset 0 1.5px 1px rgba(255, 255, 255, 0.35);
+                0 10px 24px rgba(10, 132, 255, 0.35), 
+                inset 0 1.5px 1px rgba(255, 255, 255, 0.45);
             color: #ffffff;
         }
 
-        .action-btn:active { transform: scale(0.97); }
+        .action-btn:active { transform: scale(0.95); }
 
         /* --- HABIT ITEMS --- */
         .habit-item-row {
-            background: var(--card-inner);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 1;
+            background: var(--liquid-inner);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
             border-radius: 18px;
             padding: 14px 16px;
             margin-bottom: 10px;
@@ -512,11 +656,11 @@
             height: 26px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.08);
-            border: 1.5px solid rgba(255, 255, 255, 0.22);
+            border: 1.5px solid rgba(255, 255, 255, 0.24);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
+            transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
             flex-shrink: 0;
         }
 
@@ -539,9 +683,9 @@
         .xp-pill {
             font-size: 11px;
             font-weight: 700;
-            background: rgba(94, 92, 230, 0.18);
-            border: 1px solid rgba(94, 92, 230, 0.38);
-            color: #b5b4ff;
+            background: rgba(94, 92, 230, 0.2);
+            border: 1px solid rgba(145, 144, 255, 0.4);
+            color: #c4c3ff;
             padding: 4px 9px;
             border-radius: 12px;
         }
@@ -549,7 +693,8 @@
         .streak-pill {
             font-size: 11px;
             font-weight: 600;
-            background: rgba(255, 159, 10, 0.14);
+            background: rgba(255, 159, 10, 0.16);
+            border: 1px solid rgba(255, 159, 10, 0.3);
             color: var(--accent-orange);
             padding: 4px 8px;
             border-radius: 12px;
@@ -561,6 +706,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
         }
 
         .category-title-group {
@@ -572,21 +719,23 @@
         .cat-icon-box {
             width: 36px;
             height: 36px;
-            border-radius: 11px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
         }
 
         .category-title {
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700;
             margin: 0;
         }
 
         .badge-count {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--text-muted);
             font-size: 12px;
             font-weight: 600;
@@ -601,7 +750,8 @@
         }
 
         .btn-pill {
-            border: 1px solid rgba(255, 255, 255, 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3);
             font-size: 12px;
             font-weight: 700;
             padding: 6px 13px;
@@ -610,22 +760,28 @@
             align-items: center;
             gap: 4px;
             cursor: pointer;
+            transition: transform 0.15s ease;
         }
+        .btn-pill:active { transform: scale(0.94); }
 
         .btn-delete-icon {
             background: transparent;
             border: none;
-            color: #6c6e7a;
+            color: #7c8091;
             cursor: pointer;
             padding: 4px;
             display: flex;
             align-items: center;
+            transition: color 0.15s ease;
         }
         .btn-delete-icon:hover { color: var(--danger); }
 
         .exercise-item {
-            background: var(--card-inner);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 1;
+            background: var(--liquid-inner);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
             border-radius: 18px;
             padding: 14px 16px;
             margin-bottom: 12px;
@@ -651,18 +807,19 @@
         }
 
         .metric-box {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(0, 0, 0, 0.32);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             padding: 8px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: all 0.2s ease;
         }
 
         .metric-box:focus-within {
             border-color: var(--accent-blue);
-            background: rgba(10, 132, 255, 0.12);
+            background: rgba(10, 132, 255, 0.14);
         }
 
         .metric-label {
@@ -685,109 +842,165 @@
             padding: 0;
         }
 
-        /* LIVE WORKOUT SESSION STYLES */
+        /* LIVE WORKOUT SESSION STYLES (INKL. PAUSEN-TIMER & SATZ ENTFERNEN) */
         .active-workout-banner {
-            background: linear-gradient(145deg, rgba(48, 209, 88, 0.16) 0%, rgba(24, 26, 34, 0.95) 100%);
-            border: 1px solid rgba(48, 209, 88, 0.4);
-            border-radius: 26px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, rgba(48, 209, 88, 0.18) 0%, rgba(20, 24, 34, 0.88) 60%, rgba(10, 132, 255, 0.14) 100%);
+            border: 1px solid rgba(48, 209, 88, 0.45);
+            border-radius: 28px;
             padding: 20px;
             margin-bottom: 18px;
-            box-shadow: 0 16px 38px rgba(0, 0, 0, 0.45);
+            box-shadow: 0 20px 44px rgba(0, 0, 0, 0.55), inset 0 1.5px 1px rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
         }
 
         .workout-top-bar {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
+            align-items: flex-start;
+            margin-bottom: 14px;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .timers-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            width: 100%;
+            margin-top: 10px;
         }
 
         .timer-pill {
-            background: rgba(48, 209, 88, 0.2);
+            flex: 1;
+            background: rgba(48, 209, 88, 0.18);
             border: 1px solid rgba(48, 209, 88, 0.45);
             color: #4ade80;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 20px;
+            padding: 8px 12px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            gap: 6px;
         }
 
+        .timer-pill.pause-pill {
+            background: rgba(255, 159, 10, 0.16);
+            border-color: rgba(255, 159, 10, 0.45);
+            color: #fbbf24;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .timer-pill.pause-pill.active-pause {
+            background: linear-gradient(135deg, #ff9f0a 0%, #d97706 100%);
+            color: #000;
+            border-color: #fde68a;
+            box-shadow: 0 0 16px rgba(255, 159, 10, 0.6);
+            animation: pulseGlow 1.4s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { transform: scale(1); }
+            to { transform: scale(1.03); }
+        }
+
+        /* 5 Spalten: Check | Satz-Nr | kg | Wdh | Satz löschen */
         .set-row {
             display: grid;
-            grid-template-columns: 38px 52px 1fr 1fr;
-            gap: 8px;
+            grid-template-columns: 34px 48px 1fr 1fr 30px;
+            gap: 7px;
             align-items: center;
-            background: rgba(0, 0, 0, 0.28);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.32);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 14px;
-            padding: 8px 10px;
+            padding: 8px 8px;
             margin-bottom: 8px;
             transition: all 0.2s ease;
         }
 
         .set-row.set-done {
-            background: rgba(48, 209, 88, 0.12);
-            border-color: rgba(48, 209, 88, 0.38);
+            background: rgba(48, 209, 88, 0.15);
+            border-color: rgba(48, 209, 88, 0.42);
         }
 
         .set-check-btn {
             width: 30px;
             height: 30px;
             border-radius: 9px;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1.5px solid rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1.5px solid rgba(255, 255, 255, 0.24);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             color: transparent;
-            transition: all 0.18s ease;
+            padding: 0;
+            transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .set-row.set-done .set-check-btn {
             background: var(--accent-green);
             border-color: var(--accent-green);
             color: #000;
-            box-shadow: 0 0 10px rgba(48, 209, 88, 0.45);
+            box-shadow: 0 0 12px rgba(48, 209, 88, 0.5);
         }
 
         .set-num-label {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
             color: var(--text-muted);
         }
 
         .set-inline-box {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 10px;
-            padding: 5px 8px;
+            padding: 5px 7px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
         .set-inline-input {
-            width: 55%;
+            width: 58%;
             background: transparent;
             border: none;
             color: #fff;
-            font-size: 15px;
+            font-size: 14.5px;
             font-weight: 700;
             font-family: inherit;
         }
 
         .set-inline-unit {
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
         }
+
+        .btn-remove-set {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 69, 58, 0.12);
+            border: 1px solid rgba(255, 69, 58, 0.25);
+            color: #ff6961;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.15s ease;
+        }
+        .btn-remove-set:active { transform: scale(0.88); }
 
         /* --- JOURNAL REITER --- */
         .filter-scroll-bar {
@@ -801,8 +1014,9 @@
         .filter-scroll-bar::-webkit-scrollbar { display: none; }
 
         .filter-chip {
-            background: var(--card-bg);
-            border: 1px solid var(--border-subtle);
+            background: var(--liquid-bg);
+            border: 1px solid var(--liquid-border);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
             color: var(--text-muted);
             padding: 8px 15px;
             border-radius: 20px;
@@ -817,10 +1031,10 @@
         }
 
         .filter-chip.active {
-            background: var(--accent-blue);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #0a84ff 0%, #005bb5 100%);
+            border-color: rgba(255, 255, 255, 0.35);
             color: #fff;
-            box-shadow: 0 4px 14px rgba(10, 132, 255, 0.35);
+            box-shadow: 0 6px 16px rgba(10, 132, 255, 0.38);
         }
 
         .journal-stats-strip {
@@ -831,15 +1045,18 @@
         }
 
         .journal-stat-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border-subtle);
-            border-radius: 18px;
-            padding: 12px 10px;
+            background: var(--liquid-bg);
+            border: 1px solid var(--liquid-border);
+            box-shadow: var(--liquid-shadow);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 20px;
+            padding: 13px 10px;
             text-align: center;
         }
 
         .journal-stat-val {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 800;
             color: var(--text-main);
         }
@@ -854,12 +1071,15 @@
 
         .journal-entry-exercises {
             margin-top: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
             padding-top: 12px;
+            position: relative;
+            z-index: 1;
         }
 
         .journal-ex-block {
-            background: var(--card-inner);
+            background: var(--liquid-inner);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 14px;
             padding: 11px 14px;
             margin-bottom: 8px;
@@ -881,11 +1101,11 @@
         .journal-set-tag {
             font-size: 11.5px;
             font-weight: 600;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 4px 9px;
             border-radius: 8px;
-            color: #d1d1d6;
+            color: #d8dae2;
         }
 
         input::-webkit-outer-spin-button,
@@ -905,8 +1125,10 @@
 
         /* --- LEADERBOARD REITER --- */
         .leaderboard-row {
-            background: var(--card-inner);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            z-index: 1;
+            background: var(--liquid-inner);
+            border: 1px solid rgba(255, 255, 255, 0.07);
             border-radius: 18px;
             padding: 14px 16px;
             margin-bottom: 10px;
@@ -916,8 +1138,9 @@
         }
 
         .leaderboard-row.is-me {
-            background: linear-gradient(135deg, rgba(10, 132, 255, 0.16) 0%, rgba(94, 92, 230, 0.16) 100%);
-            border-color: rgba(10, 132, 255, 0.45);
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.2) 0%, rgba(94, 92, 230, 0.2) 100%);
+            border-color: rgba(10, 132, 255, 0.5);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
         }
 
         .lb-left {
@@ -939,7 +1162,7 @@
             color: var(--text-muted);
         }
 
-        .lb-rank-1 { background: linear-gradient(135deg, #ffd60a, #ff9f0a); color: #000; box-shadow: 0 0 12px rgba(255, 214, 10, 0.4); }
+        .lb-rank-1 { background: linear-gradient(135deg, #ffd60a, #ff9f0a); color: #000; box-shadow: 0 0 12px rgba(255, 214, 10, 0.45); }
         .lb-rank-2 { background: linear-gradient(135deg, #e5e5ea, #8e8e93); color: #000; }
         .lb-rank-3 { background: linear-gradient(135deg, #eca163, #a25b2a); color: #000; }
 
@@ -985,13 +1208,98 @@
             display: inline-block;
         }
 
+        /* --- NOTIZEN MODAL (3 UNTERPUNKTE) --- */
+        .notes-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 5px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 14px;
+        }
+
+        .notes-tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 9px 6px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .notes-tab-btn.active {
+            background: var(--liquid-bg);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+        }
+
+        .note-item-card {
+            background: rgba(0, 0, 0, 0.32);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- FEIER-ANIMATION (WORKOUT GESCHAFFT) --- */
+        .celebration-box {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trophy-glow-circle {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            margin: 6px auto 16px auto;
+            background: radial-gradient(circle at 30% 30%, rgba(48, 209, 88, 0.45), rgba(10, 132, 255, 0.25));
+            border: 1.5px solid rgba(48, 209, 88, 0.6);
+            box-shadow: 0 0 32px rgba(48, 209, 88, 0.45), inset 0 2px 6px rgba(255, 255, 255, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: popBounce 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes popBounce {
+            0% { transform: scale(0.3); opacity: 0; }
+            70% { transform: scale(1.12); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 14px;
+            border-radius: 3px;
+            top: -15px;
+            animation: confettiFall 2.2s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(340px) rotate(540deg); opacity: 0; }
+        }
+
         /* --- MODALS, COLOR & ICON PICKER --- */
         .modal-overlay {
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.68);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 100;
             display: none;
             align-items: flex-end;
@@ -1000,15 +1308,18 @@
         .modal-overlay.open { display: flex; }
 
         .bottom-sheet {
-            background: #20222a;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            background: linear-gradient(160deg, rgba(38, 41, 54, 0.94) 0%, rgba(22, 24, 32, 0.98) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(30px) saturate(190%);
+            -webkit-backdrop-filter: blur(30px) saturate(190%);
             width: 100%;
             max-width: 500px;
-            border-radius: 28px 28px 0 0;
+            border-radius: 30px 30px 0 0;
             padding: 24px 22px 36px 22px;
             max-height: 90vh;
             overflow-y: auto;
-            animation: slideUp 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
+            animation: slideUp 0.28s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         @keyframes slideUp {
@@ -1019,7 +1330,7 @@
         .sheet-handle {
             width: 40px;
             height: 5px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.22);
             border-radius: 10px;
             margin: -8px auto 18px auto;
         }
@@ -1045,14 +1356,13 @@
             width: 100%;
             padding: 14px 16px;
             border-radius: 14px;
-            background: #15161c;
-            border: 1px solid var(--border-subtle);
+            background: rgba(0, 0, 0, 0.38);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: white;
             font-size: 16px;
             font-family: inherit;
         }
 
-        /* 16 Akzentfarben (inkl. Weiß & Schwarz) */
         .color-picker-grid {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
@@ -1073,7 +1383,6 @@
             box-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
         }
 
-        /* 20 Icons für Fitness */
         .icon-picker-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -1084,8 +1393,8 @@
         .icon-option {
             height: 42px;
             border-radius: 12px;
-            background: #15161c;
-            border: 1px solid var(--border-subtle);
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1100,11 +1409,10 @@
             color: #fff;
         }
 
-        /* Auswahl-Liste für "Training starten" */
         .workout-select-item {
-            background: #15161c;
-            border: 1px solid var(--border-subtle);
-            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
             padding: 14px 16px;
             margin-bottom: 10px;
             display: flex;
@@ -1118,13 +1426,13 @@
             border-color: var(--accent-blue);
         }
 
-        /* XP Slider */
+        /* XP Slider (Max 50 XP) */
         .xp-slider {
             -webkit-appearance: none;
             width: 100%;
             height: 8px;
             border-radius: 10px;
-            background: #15161c;
+            background: rgba(0, 0, 0, 0.4);
             outline: none;
             margin: 8px 0 12px 0;
         }
@@ -1148,8 +1456,8 @@
 
         .xp-preset-btn {
             flex: 1;
-            background: #15161c;
-            border: 1px solid var(--border-subtle);
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-muted);
             padding: 8px 0;
             border-radius: 10px;
@@ -1159,7 +1467,7 @@
         }
 
         .xp-preset-btn.active {
-            background: rgba(10, 132, 255, 0.22);
+            background: rgba(10, 132, 255, 0.25);
             border-color: var(--accent-blue);
             color: #fff;
         }
@@ -1179,8 +1487,8 @@
         .btn-primary {
             flex: 1;
             background: linear-gradient(135deg, #0a84ff 0%, #005bb5 100%);
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            box-shadow: 0 8px 20px rgba(10, 132, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 20px rgba(10, 132, 255, 0.35), inset 0 1.5px 1px rgba(255, 255, 255, 0.4);
             color: #fff;
             padding: 15px;
             border-radius: 16px;
@@ -1190,9 +1498,9 @@
         }
 
         .btn-secondary {
-            background: #15161c;
+            background: rgba(0, 0, 0, 0.38);
             color: var(--text-main);
-            border: 1px solid var(--border-subtle);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             padding: 15px 18px;
             border-radius: 16px;
             font-size: 15px;
@@ -1201,8 +1509,8 @@
         }
 
         .invite-box {
-            background: #15161c;
-            border: 1px solid var(--border-subtle);
+            background: rgba(0, 0, 0, 0.38);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 14px;
             margin-bottom: 14px;
@@ -1219,7 +1527,7 @@
             color: var(--accent-blue);
         }
 
-        /* --- FLOATING DOCK UNTEN (5 REITER) --- */
+        /* --- FLOATING LIQUID GLASS DOCK UNTEN (5 REITER) --- */
         .bottom-nav {
             position: fixed;
             bottom: 16px;
@@ -1228,16 +1536,18 @@
             width: calc(100% - 20px);
             max-width: 480px;
             height: 68px;
-            background-color: rgba(24, 26, 33, 0.88);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: linear-gradient(135deg, rgba(35, 38, 50, 0.78) 0%, rgba(18, 20, 28, 0.86) 100%);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 36px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 6px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+            box-shadow: 
+                0 18px 42px rgba(0, 0, 0, 0.65),
+                inset 0 1.5px 1px rgba(255, 255, 255, 0.28);
             z-index: 50;
         }
 
@@ -1250,23 +1560,23 @@
             cursor: pointer;
             padding: 7px 4px;
             border-radius: 28px;
-            transition: all 0.2s ease;
+            transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .nav-item.active { 
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.11);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.06) 100%);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.32), 0 4px 12px rgba(0, 0, 0, 0.25);
         }
 
         .nav-item span.material-symbols-rounded { font-size: 21px; margin-bottom: 2px; }
         .nav-item span.label { font-size: 9.5px; font-weight: 600; }
 
-        .view { display: none; animation: fadeIn 0.25s ease; }
+        .view { display: none; animation: fadeIn 0.28s cubic-bezier(0.22, 1, 0.36, 1); }
         .view.active { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -1282,9 +1592,16 @@
                 <div class="subtitle-date" id="current-date-label">APEXFIT • HEUTE</div>
                 <h1>Guten Tag, <span id="display-username">Marlii</span></h1>
             </div>
-            <button class="icon-btn-top" onclick="openProfileModal()" title="Namen ändern">
-                <span class="material-symbols-rounded" style="font-size:20px;">edit</span>
-            </button>
+            <!-- Links neben dem Stift: Das neue Notizen-Icon -->
+            <div class="header-actions">
+                <button class="icon-btn-top" onclick="openNotesModal()" title="Notizen (Täglich, Wöchentlich, Generell)">
+                    <span class="material-symbols-rounded" style="font-size:20px;">sticky_note_2</span>
+                    <span class="note-badge-dot" id="notes-count-badge" style="display:none;">0</span>
+                </button>
+                <button class="icon-btn-top" onclick="openProfileModal()" title="Namen ändern">
+                    <span class="material-symbols-rounded" style="font-size:20px;">edit</span>
+                </button>
+            </div>
         </div>
 
         <div class="container">
@@ -1345,12 +1662,37 @@
                 </div>
             </div>
 
-            <!-- 7-TAGE MATRIX -->
+            <!-- OPTIONALE GRAPHEN AUF HOME EIN-/AUSBLENDEN -->
+            <div class="graph-toggle-bar" onclick="toggleHomeGraphs()">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="material-symbols-rounded" style="color:var(--accent-blue);">monitoring</span>
+                    <div>
+                        <div style="font-size:14px; font-weight:700;">Performance-Graphen anzeigen</div>
+                        <div style="font-size:11px; color:var(--text-muted);">7-Tage XP-Trend & Fitness-Sätze</div>
+                    </div>
+                </div>
+                <div class="ios-switch" id="home-graph-switch"></div>
+            </div>
+
+            <div id="home-graphs-wrapper" style="display:none;">
+                <div class="bevel-card">
+                    <div class="card-title-row">
+                        <div>
+                            <h3>7-Tage XP & Aktivitäts-Kurve</h3>
+                            <span class="card-subtitle">Habits + Trainings-Sätze (50 XP/Satz)</span>
+                        </div>
+                        <span class="material-symbols-rounded" style="color:var(--accent-indigo);">show_chart</span>
+                    </div>
+                    <div class="svg-chart-box" id="home-xp-chart"></div>
+                </div>
+            </div>
+
+            <!-- 7-TAGE HABIT MATRIX -->
             <div class="bevel-card">
                 <div class="card-title-row">
                     <div>
-                        <h3>7-Tage Matrix</h3>
-                        <span class="card-subtitle">Jeder Haken bringt dir direkt XP</span>
+                        <h3>7-Tage Habit Matrix</h3>
+                        <span class="card-subtitle">Jeder Haken bringt bis zu 50 XP</span>
                     </div>
                     <span class="material-symbols-rounded" style="color:var(--accent-blue);">calendar_view_week</span>
                 </div>
@@ -1360,12 +1702,12 @@
     </div>
 
     <!-- ==========================================
-         2. FITNESS REITER (INKL. TRAINING STARTEN)
+         2. FITNESS REITER (INKL. MATRIX, GRAPH & LIVE WORKOUT)
          ========================================== -->
     <div id="view-fitness" class="view">
         <div class="page-header">
             <div>
-                <div class="subtitle-date">ApexFit • Training</div>
+                <div class="subtitle-date">50 XP pro Satz • Gym Modus</div>
                 <h1>Fitness</h1>
             </div>
             <div class="header-actions">
@@ -1383,18 +1725,31 @@
             <!-- BEREICH FÜR LAUFENDES LIVE-TRAINING -->
             <div id="active-workout-container"></div>
 
+            <!-- NEUE FITNESS-MATRIX MIT GRAPH -->
+            <div class="bevel-card">
+                <div class="card-title-row">
+                    <div>
+                        <h3>7-Tage Fitness-Matrix & Verlauf</h3>
+                        <span class="card-subtitle">Absolvierte Sätze pro Muskelgruppe</span>
+                    </div>
+                    <span class="material-symbols-rounded" style="color:var(--accent-green);">stacked_line_chart</span>
+                </div>
+                <div id="fitness-matrix-container"></div>
+                <div class="svg-chart-box" id="fitness-sets-chart" style="height:135px; margin-top:14px;"></div>
+            </div>
+
             <!-- REGULÄRE MUSKELGRUPPEN & ÜBUNGEN -->
             <div id="fitness-categories-container"></div>
         </div>
     </div>
 
     <!-- ==========================================
-         3. HABITS REITER
+         3. HABITS REITER (MAX 50 XP)
          ========================================== -->
     <div id="view-habits" class="view">
         <div class="page-header">
             <div>
-                <div class="subtitle-date">Tägliche Ziele & Routinen</div>
+                <div class="subtitle-date">Tägliche Ziele (Max. 50 XP)</div>
                 <h1>Habits</h1>
             </div>
         </div>
@@ -1416,12 +1771,12 @@
     </div>
 
     <!-- ==========================================
-         4. JOURNAL REITER (NEU!)
+         4. JOURNAL REITER
          ========================================== -->
     <div id="view-journal" class="view">
         <div class="page-header">
             <div>
-                <div class="subtitle-date">Fortschritt & Historie</div>
+                <div class="subtitle-date">Fortschritt & Trainings-Zeiten</div>
                 <h1>Journal</h1>
             </div>
         </div>
@@ -1430,8 +1785,20 @@
             <!-- Filter nach Muskelgruppen -->
             <div class="filter-scroll-bar" id="journal-filter-bar"></div>
 
-            <!-- Fortschritts-Kurzstatistik -->
+            <!-- Fortschritts-Kurzstatistik (Workouts | Max Gewicht | Sätze & XP) -->
             <div class="journal-stats-strip" id="journal-stats-container"></div>
+
+            <!-- Kraft- & Sätze-Graph im Journal -->
+            <div class="bevel-card" id="journal-graph-card">
+                <div class="card-title-row">
+                    <div>
+                        <h3>Kraft- & Satz-Entwicklung</h3>
+                        <span class="card-subtitle">Maximalgewicht (kg) der letzten Workouts</span>
+                    </div>
+                    <span class="material-symbols-rounded" style="color:var(--accent-blue);">trending_up</span>
+                </div>
+                <div class="svg-chart-box" id="journal-progression-chart" style="height:130px;"></div>
+            </div>
 
             <!-- Gespeicherte Workouts -->
             <div id="journal-entries-container"></div>
@@ -1471,7 +1838,7 @@
                             <span>Live Leaderboard</span>
                             <span class="live-dot" title="Verbunden mit Firebase"></span>
                         </h3>
-                        <span class="card-subtitle" id="lb-sync-status">Punkte aktualisieren sich automatisch</span>
+                        <span class="card-subtitle" id="lb-sync-status">Habits + 50 XP je Trainings-Satz</span>
                     </div>
                     <span class="material-symbols-rounded" style="color:var(--accent-gold);">emoji_events</span>
                 </div>
@@ -1483,6 +1850,35 @@
     <!-- ==========================================
          MODALS
          ========================================== -->
+
+    <!-- Modal: 3-Stufen Notizen (Täglich, Wöchentlich Mo-So, Generell) -->
+    <div id="modal-notes" class="modal-overlay" onclick="closeModals()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Deine Notizen</h3>
+            
+            <div class="notes-tabs">
+                <button class="notes-tab-btn active" id="ntab-daily" onclick="switchNotesTab('daily')">Täglich (24h)</button>
+                <button class="notes-tab-btn" id="ntab-weekly" onclick="switchNotesTab('weekly')">Woche (Mo–So)</button>
+                <button class="notes-tab-btn" id="ntab-general" onclick="switchNotesTab('general')">Generell (Nie)</button>
+            </div>
+
+            <p id="notes-expiry-hint" style="font-size:11.5px; color:var(--accent-blue); margin:0 0 12px 0; font-weight:600;">
+                Löscht sich automatisch am Ende des heutigen Tages.
+            </p>
+
+            <div style="display:flex; gap:8px; margin-bottom:14px;">
+                <input type="text" id="input-note-text" class="form-input" placeholder="Neue Notiz schreiben..." style="padding:12px 14px;">
+                <button class="btn-primary" style="flex:0 0 auto; padding:0 18px; border-radius:14px;" onclick="addNoteItem()">+</button>
+            </div>
+
+            <div id="notes-list-container" style="max-height:240px; overflow-y:auto;"></div>
+
+            <div class="sheet-actions">
+                <button class="btn-secondary" style="width:100%;" onclick="closeModals()">Schließen</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal: Namen anpassen -->
     <div id="modal-profile" class="modal-overlay" onclick="closeModals()">
@@ -1506,7 +1902,7 @@
             <div class="sheet-handle"></div>
             <h3 class="sheet-title">Training starten</h3>
             <p style="color:var(--text-muted); font-size:13px; margin:-10px 0 16px 0;">
-                Wähle die Muskelgruppe aus, die du heute im Gym trainierst:
+                Wähle deine Muskelgruppe (Jeder fertige Satz = <b>+50 XP</b>):
             </p>
             <div id="start-workout-cat-list"></div>
             <div class="sheet-actions">
@@ -1515,19 +1911,34 @@
         </div>
     </div>
 
-    <!-- Modal: Training beenden & Dauer eingeben -->
-    <div id="modal-finish-workout" class="modal-overlay" onclick="closeModals()">
-        <div class="bottom-sheet" onclick="event.stopPropagation()">
+    <!-- Modal: Training geschafft! (Feier-Animation ohne manuelle Zeiteingabe) -->
+    <div id="modal-celebrate-workout" class="modal-overlay" onclick="closeModals()">
+        <div class="bottom-sheet celebration-box" id="celebration-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
-            <h3 class="sheet-title">Training abschließen</h3>
-            <div class="form-field">
-                <label>Dauer des Trainings (in Minuten)</label>
-                <input type="number" id="input-workout-duration" class="form-input" value="45" placeholder="z.B. 60">
+            <div class="trophy-glow-circle">
+                <span class="material-symbols-rounded" style="font-size:42px; color:#4ade80;">military_tech</span>
             </div>
-            <div class="sheet-actions">
-                <button class="btn-secondary" onclick="closeModals()">Zurück</button>
-                <button class="btn-primary" onclick="confirmSaveWorkoutToJournal()">Im Journal speichern</button>
+            <h2 style="margin:0 0 6px 0; font-size:24px; font-weight:800;">Training Geschafft!</h2>
+            <p id="celeb-cat-subtitle" style="color:var(--text-muted); font-size:13.5px; margin:0 0 18px 0;">Starkes Workout!</p>
+
+            <div class="journal-stats-strip" style="margin-bottom:18px;">
+                <div class="journal-stat-box">
+                    <div class="journal-stat-val" id="celeb-train-time" style="color:#4ade80;">00:00</div>
+                    <div class="journal-stat-lbl">Trainingszeit</div>
+                </div>
+                <div class="journal-stat-box">
+                    <div class="journal-stat-val" id="celeb-pause-time" style="color:#fbbf24;">00:00</div>
+                    <div class="journal-stat-lbl">Pausenzeit</div>
+                </div>
+                <div class="journal-stat-box">
+                    <div class="journal-stat-val" id="celeb-xp-earned" style="color:#64d2ff;">+0 XP</div>
+                    <div class="journal-stat-lbl" id="celeb-sets-count">0 Sätze</div>
+                </div>
             </div>
+
+            <button class="btn-primary" style="width:100%; background:linear-gradient(135deg, #30d158 0%, #1f9d3d 100%);" onclick="closeCelebrationAndOpenJournal()">
+                Im Journal ansehen
+            </button>
         </div>
     </div>
 
@@ -1605,14 +2016,14 @@
         </div>
     </div>
 
-    <!-- Modal: Neues Ziel / Habit (10-100 XP) -->
+    <!-- Modal: Neues Ziel / Habit (MAX 50 XP) -->
     <div id="modal-habit-item" class="modal-overlay" onclick="closeModals()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
             <h3 class="sheet-title">Neues tägliches Ziel</h3>
             <div class="form-field">
                 <label>Name des Ziels / der Aufgabe</label>
-                <input type="text" id="input-habit-name" class="form-input" placeholder="z.B. Creatin (5g), Workout, Fokus-Session...">
+                <input type="text" id="input-habit-name" class="form-input" placeholder="z.B. Creatin (5g), Ice Roller, Fokus...">
             </div>
             <div class="form-field">
                 <label>Kategorie auswählen</label>
@@ -1620,16 +2031,16 @@
             </div>
             <div class="form-field">
                 <label>
-                    <span>XP-Belohnung (10 – 100 XP)</span>
-                    <span id="xp-slider-label" style="color:var(--accent-blue); font-weight:800; font-size:13px;">50 XP</span>
+                    <span>XP-Belohnung (5 – 50 XP)</span>
+                    <span id="xp-slider-label" style="color:var(--accent-blue); font-weight:800; font-size:13px;">25 XP</span>
                 </label>
-                <input type="range" id="input-habit-xp" class="xp-slider" min="10" max="100" step="5" value="50" oninput="updateXpPreview(this.value)">
+                <input type="range" id="input-habit-xp" class="xp-slider" min="5" max="50" step="5" value="25" oninput="updateXpPreview(this.value)">
                 <div class="xp-presets">
                     <button type="button" class="xp-preset-btn" onclick="setXpPreset(10)">10 XP</button>
-                    <button type="button" class="xp-preset-btn" onclick="setXpPreset(25)">25 XP</button>
-                    <button type="button" class="xp-preset-btn active" onclick="setXpPreset(50)">50 XP</button>
-                    <button type="button" class="xp-preset-btn" onclick="setXpPreset(75)">75 XP</button>
-                    <button type="button" class="xp-preset-btn" onclick="setXpPreset(100)">100 XP</button>
+                    <button type="button" class="xp-preset-btn" onclick="setXpPreset(20)">20 XP</button>
+                    <button type="button" class="xp-preset-btn active" onclick="setXpPreset(25)">25 XP</button>
+                    <button type="button" class="xp-preset-btn" onclick="setXpPreset(40)">40 XP</button>
+                    <button type="button" class="xp-preset-btn" onclick="setXpPreset(50)">50 XP</button>
                 </div>
             </div>
             <div class="sheet-actions">
@@ -1645,7 +2056,7 @@
             <div class="sheet-handle"></div>
             <h3 class="sheet-title">Freunde ins Ranking einladen</h3>
             <p style="color:var(--text-muted); font-size:13px; margin:-8px 0 16px 0; line-height:1.4;">
-                Teile deinen persönlichen Link oder Freundes-Code. Eure XP und Level synchronisieren sich danach vollautomatisch in Echtzeit!
+                Teile deinen persönlichen Link oder Freundes-Code. Eure XP und Level synchronisieren sich vollautomatisch in Echtzeit!
             </p>
             <div class="form-field">
                 <label>Dein persönlicher Freundes-Code</label>
@@ -1686,7 +2097,7 @@
     </div>
 
     <!-- ==========================================
-         FLOATING BOTTOM DOCK (5 REITER)
+         FLOATING LIQUID GLASS BOTTOM DOCK (5 REITER)
          ========================================== -->
     <nav class="bottom-nav">
         <div class="nav-item active" id="nav-home" onclick="switchTab('home', this)">
@@ -1714,8 +2125,9 @@
     <script>
         /* --- FIREBASE LIVE-DATENBANK KONFIGURATION --- */
         const FIREBASE_DB_URL = "https://apexfit-4c49a-default-rtdb.europe-west1.firebasedatabase.app";
+        const XP_PER_WORKOUT_SET = 50;
 
-        /* --- FARBEN & ICONS PALETTEN (INKL. WEISS & SCHWARZ) --- */
+        /* --- FARBEN & ICONS PALETTEN --- */
         const ACCENT_COLORS = [
             '#0a84ff', '#30d158', '#5e5ce6', '#ff9f0a',
             '#ff375f', '#64d2ff', '#bf5af2', '#ffd60a',
@@ -1730,7 +2142,6 @@
             'trophy', 'pedal_bike', 'pool', 'hiking', 'vital_signs'
         ];
 
-        // Kontrast-Helfer für Weiß (#ffffff), Gelb (#ffd60a) und Schwarz (#111216)
         function getContrastText(hex) {
             if (!hex) return '#ffffff';
             const c = hex.toLowerCase();
@@ -1746,12 +2157,26 @@
             return hex;
         }
 
-        /* --- HILFSFUNKTIONEN FÜR DATUM --- */
+        function formatSecondsMMSS(totalSec) {
+            const m = String(Math.floor(totalSec / 60)).padStart(2, '0');
+            const s = String(totalSec % 60).padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        /* --- HILFSFUNKTIONEN FÜR DATUM & WOCHE (MO-SO) --- */
         function getDateKey(dateObj) {
             const y = dateObj.getFullYear();
             const m = String(dateObj.getMonth() + 1).padStart(2, '0');
             const d = String(dateObj.getDate()).padStart(2, '0');
             return `${y}-${m}-${d}`;
+        }
+
+        function getMondayKey(dateObj) {
+            const d = new Date(dateObj);
+            const day = d.getDay();
+            const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Montag als Wochenstart
+            d.setDate(diff);
+            return getDateKey(d);
         }
 
         function getLast7Days() {
@@ -1776,6 +2201,7 @@
 
         /* --- EINDEUTIGE USER-ID & DATEN INITIALISIEREN --- */
         const todayKey = getDateKey(new Date());
+        const currentMondayKey = getMondayKey(new Date());
 
         let myUserId = localStorage.getItem('apexfit_uid');
         if (!myUserId) {
@@ -1789,18 +2215,23 @@
         let userName = localStorage.getItem('apexfit_username') || 'Marlii';
         document.getElementById('display-username').innerText = userName;
 
+        let showHomeGraphs = localStorage.getItem('apexfit_show_graphs') === 'true';
+
         let habitCategories = JSON.parse(localStorage.getItem('marlii_habit_cats')) || [
             { id: 'hcat_1', name: 'Supplements', color: '#0a84ff' },
             { id: 'hcat_2', name: 'Daily Routine & Focus', color: '#30d158' }
         ];
 
         let habitsList = JSON.parse(localStorage.getItem('marlii_habits_list')) || [
-            { id: 'hab_1', catId: 'hcat_1', name: 'Creatin (5g)', xp: 25, history: { [todayKey]: true } },
-            { id: 'hab_2', catId: 'hcat_1', name: 'Magnesium & Omega-3', xp: 25, history: {} },
-            { id: 'hab_3', catId: 'hcat_2', name: 'Morning Care / Ice Roller', xp: 40, history: { [todayKey]: true } },
-            { id: 'hab_4', catId: 'hcat_2', name: 'Fokus-Session / Projekt', xp: 80, history: {} }
+            { id: 'hab_1', catId: 'hcat_1', name: 'Creatin (5g)', xp: 20, history: { [todayKey]: true } },
+            { id: 'hab_2', catId: 'hcat_1', name: 'Magnesium & Omega-3', xp: 20, history: {} },
+            { id: 'hab_3', catId: 'hcat_2', name: 'Morning Care / Ice Roller', xp: 30, history: { [todayKey]: true } },
+            { id: 'hab_4', catId: 'hcat_2', name: 'Fokus-Session / Projekt', xp: 50, history: {} }
         ];
-        habitsList.forEach(h => { if (!h.xp) h.xp = 40; });
+        // XP-Obergrenze für Habits auf max. 50 XP anpassen
+        habitsList.forEach(h => {
+            h.xp = Math.min(50, Math.max(5, Number(h.xp) || 25));
+        });
 
         let fitnessData = JSON.parse(localStorage.getItem('marlii_fitness_data')) || [
             {
@@ -1832,13 +2263,53 @@
         let journalData = JSON.parse(localStorage.getItem('apexfit_journal')) || [];
         let friendIds = JSON.parse(localStorage.getItem('apexfit_friend_ids')) || [];
 
+        // Notizen-Datenbank mit Auto-Lösch-Prüfung (Täglich, Wöchentlich Mo-So, Generell)
+        let notesData = JSON.parse(localStorage.getItem('apexfit_notes')) || {
+            dailyDate: todayKey,
+            weeklyKey: currentMondayKey,
+            daily: [],
+            weekly: [],
+            general: []
+        };
+
+        function checkNotesAutoCleanup() {
+            let changed = false;
+            const nowDayKey = getDateKey(new Date());
+            const nowMonKey = getMondayKey(new Date());
+
+            if (notesData.dailyDate !== nowDayKey) {
+                notesData.daily = [];
+                notesData.dailyDate = nowDayKey;
+                changed = true;
+            }
+            if (notesData.weeklyKey !== nowMonKey) {
+                notesData.weekly = [];
+                notesData.weeklyKey = nowMonKey;
+                changed = true;
+            }
+            if (changed) {
+                localStorage.setItem('apexfit_notes', JSON.stringify(notesData));
+            }
+            updateNotesBadge();
+        }
+
+        function updateNotesBadge() {
+            const total = (notesData.daily?.length || 0) + (notesData.weekly?.length || 0) + (notesData.general?.length || 0);
+            const badge = document.getElementById('notes-count-badge');
+            if (badge) {
+                badge.style.display = total > 0 ? 'flex' : 'none';
+                badge.innerText = total;
+            }
+        }
+
+        let currentNotesTab = 'daily';
         let currentFitCategoryId = null;
         let selectedHabitColor = '#0a84ff';
         let selectedFitColor = '#0a84ff';
         let selectedFitIcon = 'fitness_center';
         let selectedJournalFilter = 'ALL';
 
-        // Live-Workout Status
+        // Live-Workout Status (inkl. Trainings- & Pausenzeit)
         let activeWorkout = null;
         let workoutTimerInterval = null;
 
@@ -1849,6 +2320,7 @@
             localStorage.setItem('marlii_fitness_data', JSON.stringify(fitnessData));
             localStorage.setItem('apexfit_journal', JSON.stringify(journalData));
             localStorage.setItem('apexfit_friend_ids', JSON.stringify(friendIds));
+            localStorage.setItem('apexfit_notes', JSON.stringify(notesData));
             syncMyProfileToFirebase();
         }
 
@@ -1877,7 +2349,7 @@
             });
         }
 
-        /* --- LEVEL SYSTEM BIS LEVEL 75 --- */
+        /* --- LEVEL & XP SYSTEM (HABITS MAX 50 XP + WORKOUT SÄTZE JE 50 XP) --- */
         const XP_PER_LEVEL = 250;
         const MAX_LEVEL = 75;
 
@@ -1907,11 +2379,20 @@
 
         function calculateTotalXP() {
             let totalXP = 0;
+            // 1. Habits XP (max 50 XP pro erledigter Aufgabe)
             habitsList.forEach(h => {
-                const xpVal = Number(h.xp) || 40;
+                const xpVal = Math.min(50, Number(h.xp) || 25);
                 if (h.history) {
                     const completedDaysCount = Object.keys(h.history).filter(k => h.history[k]).length;
                     totalXP += completedDaysCount * xpVal;
+                }
+            });
+            // 2. Trainings-XP (50 XP pro abgeschlossenem Satz im Journal)
+            journalData.forEach(entry => {
+                if (entry.exercises) {
+                    entry.exercises.forEach(ex => {
+                        totalXP += (ex.sets ? ex.sets.length : 0) * XP_PER_WORKOUT_SET;
+                    });
                 }
             });
             return totalXP;
@@ -1942,6 +2423,74 @@
             }
         }
 
+        /* --- NOTIZEN SYSTEM (TÄGLICH, WÖCHENTLICH, GENERELL) --- */
+        function openNotesModal() {
+            checkNotesAutoCleanup();
+            renderNotesModal();
+            document.getElementById('modal-notes').classList.add('open');
+        }
+
+        function switchNotesTab(tabKey) {
+            currentNotesTab = tabKey;
+            document.querySelectorAll('.notes-tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('ntab-' + tabKey).classList.add('active');
+
+            const hintEl = document.getElementById('notes-expiry-hint');
+            if (tabKey === 'daily') {
+                hintEl.innerText = '⏱ Tägliche Notizen löschen sich automatisch um Mitternacht.';
+            } else if (tabKey === 'weekly') {
+                hintEl.innerText = '📅 Wöchentliche Notizen gelten von Montag bis Sonntag.';
+            } else {
+                hintEl.innerText = '📌 Generelle Notizen bleiben dauerhaft gespeichert.';
+            }
+            renderNotesModal();
+        }
+
+        function renderNotesModal() {
+            const listEl = document.getElementById('notes-list-container');
+            const arr = notesData[currentNotesTab] || [];
+
+            if (arr.length === 0) {
+                listEl.innerHTML = `<p class="empty-hint">Keine Notizen in dieser Ansicht vorhanden.</p>`;
+                return;
+            }
+
+            let html = '';
+            arr.forEach(item => {
+                html += `
+                <div class="note-item-card">
+                    <div style="font-size:14px; line-height:1.4; word-break:break-word;">${item.text}</div>
+                    <button class="btn-delete-icon" onclick="deleteNoteItem('${item.id}')">
+                        <span class="material-symbols-rounded" style="font-size:18px;">close</span>
+                    </button>
+                </div>`;
+            });
+            listEl.innerHTML = html;
+        }
+
+        function addNoteItem() {
+            const inp = document.getElementById('input-note-text');
+            const text = inp.value.trim();
+            if (!text) return;
+
+            if (!notesData[currentNotesTab]) notesData[currentNotesTab] = [];
+            notesData[currentNotesTab].unshift({
+                id: 'note_' + Date.now(),
+                text: text
+            });
+            inp.value = '';
+            saveAll();
+            updateNotesBadge();
+            renderNotesModal();
+        }
+
+        function deleteNoteItem(noteId) {
+            notesData[currentNotesTab] = (notesData[currentNotesTab] || []).filter(n => n.id !== noteId);
+            saveAll();
+            updateNotesBadge();
+            renderNotesModal();
+        }
+
         /* --- PROFIL / BENUTZERNAME --- */
         function openProfileModal() {
             document.getElementById('input-username').value = userName;
@@ -1958,6 +2507,62 @@
                 syncAndLoadLeaderboard();
             }
             closeModals();
+        }
+
+        /* --- SVG GRAPH GENERATOR FÜR HOME, FITNESS & JOURNAL --- */
+        function createSmoothSVGChart(labels, values, accentColor, unitSuffix = '') {
+            const w = 340;
+            const h = 125;
+            const padLeft = 24;
+            const padRight = 18;
+            const padTop = 22;
+            const padBottom = 26;
+            const plotW = w - padLeft - padRight;
+            const plotH = h - padTop - padBottom;
+
+            const maxVal = Math.max(...values, 10);
+            const pts = values.map((v, i) => {
+                const x = padLeft + (values.length > 1 ? (i / (values.length - 1)) * plotW : plotW / 2);
+                const y = padTop + plotH - (v / maxVal) * plotH;
+                return { x, y, v, label: labels[i] };
+            });
+
+            let pathD = '';
+            pts.forEach((p, idx) => {
+                pathD += (idx === 0 ? `M ${p.x},${p.y}` : ` L ${p.x},${p.y}`);
+            });
+
+            const areaD = `${pathD} L ${pts[pts.length - 1].x},${padTop + plotH} L ${pts[0].x},${padTop + plotH} Z`;
+            const gradId = 'grad_' + Math.random().toString(36).substring(2, 7);
+
+            let circlesHTML = '';
+            pts.forEach(p => {
+                circlesHTML += `
+                    <circle cx="${p.x}" cy="${p.y}" r="4" fill="${accentColor}" stroke="#fff" stroke-width="1.5" />
+                    <text x="${p.x}" y="${p.y - 8}" fill="#f5f7fa" font-size="9.5" font-weight="700" text-anchor="middle">${p.v}${unitSuffix}</text>
+                    <text x="${p.x}" y="${h - 6}" fill="#8e93a4" font-size="9.5" font-weight="600" text-anchor="middle">${p.label}</text>
+                `;
+            });
+
+            return `
+            <svg viewBox="0 0 ${w} ${h}" style="width:100%; height:100%; overflow:visible;">
+                <defs>
+                    <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="${accentColor}" stop-opacity="0.42"/>
+                        <stop offset="100%" stop-color="${accentColor}" stop-opacity="0.0"/>
+                    </linearGradient>
+                </defs>
+                <line x1="${padLeft}" y1="${padTop + plotH}" x2="${w - padRight}" y2="${padTop + plotH}" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+                <path d="${areaD}" fill="url(#${gradId})" />
+                <path d="${pathD}" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                ${circlesHTML}
+            </svg>`;
+        }
+
+        function toggleHomeGraphs() {
+            showHomeGraphs = !showHomeGraphs;
+            localStorage.setItem('apexfit_show_graphs', showHomeGraphs);
+            renderHome();
         }
 
         /* --- STREAK BERECHNEN --- */
@@ -2006,6 +2611,32 @@
             document.getElementById('weekly-score-val').innerText = `${weeklyPct}%`;
             document.getElementById('weekly-score-sub').innerText = `${doneWeek} Check-ins`;
 
+            // Optionale Home-Graphen
+            const sw = document.getElementById('home-graph-switch');
+            const gWrap = document.getElementById('home-graphs-wrapper');
+            if (showHomeGraphs) {
+                sw.classList.add('on');
+                gWrap.style.display = 'block';
+                const labels = last7.map(d => d.dayName);
+                const xpValues = last7.map(d => {
+                    let dayXP = 0;
+                    habitsList.forEach(h => {
+                        if (h.history && h.history[d.key]) dayXP += Math.min(50, Number(h.xp) || 25);
+                    });
+                    journalData.forEach(j => {
+                        if (j.dateKey === d.key && j.exercises) {
+                            j.exercises.forEach(ex => { dayXP += (ex.sets ? ex.sets.length : 0) * XP_PER_WORKOUT_SET; });
+                        }
+                    });
+                    return dayXP;
+                });
+                document.getElementById('home-xp-chart').innerHTML = createSmoothSVGChart(labels, xpValues, '#0a84ff', '');
+            } else {
+                sw.classList.remove('on');
+                gWrap.style.display = 'none';
+            }
+
+            // 7-Tage Habit Matrix
             const matrixContainer = document.getElementById('matrix-container');
             if (habitsList.length === 0) {
                 matrixContainer.innerHTML = `<p class="empty-hint">Noch keine Ziele im Reiter „Habits“ angelegt.</p>`;
@@ -2062,7 +2693,7 @@
             matrixContainer.innerHTML = tableHTML;
         }
 
-        /* --- 2. HABITS REITER RENDERN --- */
+        /* --- 2. HABITS REITER RENDERN (MAX 50 XP) --- */
         function renderHabits() {
             const container = document.getElementById('habits-categories-container');
             container.innerHTML = '';
@@ -2086,7 +2717,7 @@
                     catHabits.forEach(h => {
                         const isDone = h.history && h.history[tKey];
                         const streak = calculateStreak(h);
-                        const xpVal = h.xp || 40;
+                        const xpVal = Math.min(50, Number(h.xp) || 25);
                         const circleStyle = isDone ? `background:${cat.color}; border-color:${dotBorder}; box-shadow: 0 0 12px ${cat.color}66;` : '';
 
                         itemsHTML += `
@@ -2192,7 +2823,7 @@
                 return;
             }
             document.getElementById('input-habit-name').value = '';
-            setXpPreset(50);
+            setXpPreset(25);
             const select = document.getElementById('select-habit-cat');
             select.innerHTML = '';
             habitCategories.forEach(c => {
@@ -2205,7 +2836,7 @@
         function saveNewHabit() {
             const name = document.getElementById('input-habit-name').value.trim();
             const catId = document.getElementById('select-habit-cat').value;
-            const xpVal = Math.min(100, Math.max(10, parseInt(document.getElementById('input-habit-xp').value) || 50));
+            const xpVal = Math.min(50, Math.max(5, parseInt(document.getElementById('input-habit-xp').value) || 25));
             if (!name || !catId) return;
 
             habitsList.push({
@@ -2228,7 +2859,7 @@
             renderHome();
         }
 
-        /* --- 3. FITNESS REITER & LIVE WORKOUT SYSTEM --- */
+        /* --- 3. FITNESS REITER, FITNESS-MATRIX & LIVE WORKOUT SYSTEM --- */
         function selectFitIcon(el) {
             document.querySelectorAll('#fit-icon-picker .icon-option').forEach(i => i.classList.remove('selected'));
             el.classList.add('selected');
@@ -2241,8 +2872,94 @@
             selectedFitColor = el.getAttribute('data-color');
         }
 
+        function renderFitnessMatrixAndChart() {
+            const matrixEl = document.getElementById('fitness-matrix-container');
+            const chartEl = document.getElementById('fitness-sets-chart');
+            const last7 = getLast7Days();
+
+            if (fitnessData.length === 0) {
+                matrixEl.innerHTML = `<p class="empty-hint">Erstelle eine Muskelgruppe, um deine Trainings-Matrix zu sehen.</p>`;
+                chartEl.innerHTML = '';
+                return;
+            }
+
+            let tableHTML = `
+                <table class="matrix-table">
+                    <colgroup>
+                        <col class="matrix-col-habit">
+                        <col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day">
+                        <col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day"><col class="matrix-col-day">
+                    </colgroup>
+                    <thead><tr><th></th>`;
+            last7.forEach(d => {
+                tableHTML += `
+                    <th class="matrix-header-day ${d.isToday ? 'is-today' : ''}">
+                        ${d.dayName}
+                        <span class="matrix-day-num">${d.dayNum}</span>
+                    </th>`;
+            });
+            tableHTML += `</tr></thead><tbody>`;
+
+            fitnessData.forEach(cat => {
+                const cColor = cat.color || '#0a84ff';
+                const cBorder = getBorderForColor(cColor);
+                const cText = getContrastText(cColor);
+
+                tableHTML += `
+                    <tr class="matrix-row">
+                        <td>
+                            <div class="matrix-habit-name">
+                                <span class="cat-dot" style="background:${cColor}; border:1px solid ${cBorder};"></span>
+                                <span class="matrix-habit-text">${cat.name}</span>
+                            </div>
+                        </td>`;
+
+                last7.forEach(d => {
+                    // Zähle alle abgeschlossenen Sätze dieser Muskelgruppe an diesem Tag
+                    let setsCount = 0;
+                    journalData.forEach(j => {
+                        const jDay = j.dateKey || (j.dateISO ? getDateKey(new Date(j.dateISO)) : '');
+                        if (jDay === d.key && j.catName === cat.name && j.exercises) {
+                            j.exercises.forEach(ex => { setsCount += (ex.sets ? ex.sets.length : 0); });
+                        }
+                    });
+
+                    const isTrained = setsCount > 0;
+                    const cellStyle = isTrained ? `background:${cColor}; border-color:${cBorder}; color:${cText}; box-shadow:0 0 8px ${cColor}55; font-size:10px; font-weight:800;` : '';
+
+                    tableHTML += `
+                        <td class="matrix-cell">
+                            <div class="matrix-dot-btn ${isTrained ? 'done' : ''}" style="${cellStyle}">
+                                ${isTrained ? setsCount : ''}
+                            </div>
+                        </td>`;
+                });
+
+                tableHTML += `</tr>`;
+            });
+
+            tableHTML += `</tbody></table>`;
+            matrixEl.innerHTML = tableHTML;
+
+            // Graph: Abgeschlossene Sätze der letzten 7 Tage
+            const labels = last7.map(d => d.dayName);
+            const dailySets = last7.map(d => {
+                let sTotal = 0;
+                journalData.forEach(j => {
+                    const jDay = j.dateKey || (j.dateISO ? getDateKey(new Date(j.dateISO)) : '');
+                    if (jDay === d.key && j.exercises) {
+                        j.exercises.forEach(ex => { sTotal += (ex.sets ? ex.sets.length : 0); });
+                    }
+                });
+                return sTotal;
+            });
+
+            chartEl.innerHTML = createSmoothSVGChart(labels, dailySets, '#30d158', '');
+        }
+
         function renderFitness() {
             renderActiveWorkoutBanner();
+            renderFitnessMatrixAndChart();
 
             const container = document.getElementById('fitness-categories-container');
             container.innerHTML = '';
@@ -2320,7 +3037,7 @@
             });
         }
 
-        /* --- LIVE WORKOUT STARTEN & SÄTZE ABHAKEN --- */
+        /* --- LIVE WORKOUT STARTEN, PAUSEN-TIMER & SÄTZE HINZUFÜGEN/ENTFERNEN --- */
         function openStartWorkoutModal() {
             const listEl = document.getElementById('start-workout-cat-list');
             listEl.innerHTML = '';
@@ -2338,7 +3055,7 @@
                             </div>
                             <div>
                                 <div style="font-size:16px; font-weight:700;">${cat.name}</div>
-                                <div style="font-size:12px; color:var(--text-muted);">${cat.exercises.length} Übungen bereit</div>
+                                <div style="font-size:12px; color:var(--text-muted);">${cat.exercises.length} Übungen • +50 XP je Satz</div>
                             </div>
                         </div>
                         <span class="material-symbols-rounded" style="color:var(--accent-green);">play_circle</span>
@@ -2375,7 +3092,9 @@
                 catName: cat.name,
                 catIcon: cat.icon || 'fitness_center',
                 catColor: cat.color || '#0a84ff',
-                startTime: Date.now(),
+                trainSeconds: 0,
+                pauseSeconds: 0,
+                isPaused: false,
                 exercises: sessionExercises
             };
 
@@ -2388,13 +3107,23 @@
         function startWorkoutStopwatch() {
             if (workoutTimerInterval) clearInterval(workoutTimerInterval);
             workoutTimerInterval = setInterval(() => {
-                const timerEl = document.getElementById('live-workout-timer');
-                if (!activeWorkout || !timerEl) return;
-                const diffSec = Math.floor((Date.now() - activeWorkout.startTime) / 1000);
-                const mins = String(Math.floor(diffSec / 60)).padStart(2, '0');
-                const secs = String(diffSec % 60).padStart(2, '0');
-                timerEl.innerText = `${mins}:${secs}`;
+                if (!activeWorkout) return;
+                if (activeWorkout.isPaused) {
+                    activeWorkout.pauseSeconds++;
+                } else {
+                    activeWorkout.trainSeconds++;
+                }
+                const tEl = document.getElementById('live-workout-timer');
+                const pEl = document.getElementById('live-pause-timer');
+                if (tEl) tEl.innerText = formatSecondsMMSS(activeWorkout.trainSeconds);
+                if (pEl) pEl.innerText = formatSecondsMMSS(activeWorkout.pauseSeconds);
             }, 1000);
+        }
+
+        function toggleWorkoutPauseMode() {
+            if (!activeWorkout) return;
+            activeWorkout.isPaused = !activeWorkout.isPaused;
+            renderActiveWorkoutBanner();
         }
 
         function renderActiveWorkoutBanner() {
@@ -2413,10 +3142,10 @@
                     ex.sets.forEach((s, setIdx) => {
                         setsHTML += `
                         <div class="set-row ${s.done ? 'set-done' : ''}">
-                            <button class="set-check-btn" onclick="toggleWorkoutSet(${exIdx}, ${setIdx})">
+                            <button class="set-check-btn" onclick="toggleWorkoutSet(${exIdx}, ${setIdx})" title="Satz abhaken (+50 XP)">
                                 <span class="material-symbols-rounded" style="font-size:18px; font-weight:bold;">check</span>
                             </button>
-                            <span class="set-num-label">${s.setNum}. Satz</span>
+                            <span class="set-num-label">${setIdx + 1}. Satz</span>
                             <div class="set-inline-box">
                                 <input type="number" step="0.5" class="set-inline-input" value="${s.weight}" 
                                     onchange="updateWorkoutSetValue(${exIdx}, ${setIdx}, 'weight', this.value)">
@@ -2427,6 +3156,9 @@
                                     onchange="updateWorkoutSetValue(${exIdx}, ${setIdx}, 'reps', this.value)">
                                 <span class="set-inline-unit">Wdh</span>
                             </div>
+                            <button class="btn-remove-set" onclick="removeWorkoutSet(${exIdx}, ${setIdx})" title="Satz entfernen">
+                                <span class="material-symbols-rounded" style="font-size:16px;">remove</span>
+                            </button>
                         </div>`;
                     });
 
@@ -2434,7 +3166,7 @@
                     <div class="exercise-item" style="margin-bottom:14px;">
                         <div class="exercise-top">
                             <span class="exercise-name">${ex.name}</span>
-                            <button class="btn-pill" style="background:rgba(255,255,255,0.08); color:#fff; font-size:11px; padding:4px 10px;" onclick="addExtraWorkoutSet(${exIdx})">
+                            <button class="btn-pill" style="background:rgba(255,255,255,0.09); color:#fff; font-size:11px; padding:4px 10px;" onclick="addExtraWorkoutSet(${exIdx})">
                                 + Satz
                             </button>
                         </div>
@@ -2443,26 +3175,35 @@
                 });
             }
 
+            const pauseActiveClass = activeWorkout.isPaused ? 'active-pause' : '';
+            const pauseLabel = activeWorkout.isPaused ? 'Pause läuft (Weiter)' : 'Pause starten';
+
             container.innerHTML = `
             <div class="active-workout-banner">
                 <div class="workout-top-bar">
-                    <div>
-                        <div style="font-size:11px; color:#4ade80; font-weight:700; text-transform:uppercase;">AKTIVES TRAINING</div>
-                        <h2 style="margin:2px 0 0 0; font-size:21px;">${activeWorkout.catName}</h2>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <div class="timer-pill">
-                            <span class="material-symbols-rounded" style="font-size:16px;">timer</span>
-                            <span id="live-workout-timer">00:00</span>
+                    <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+                        <div>
+                            <div style="font-size:11px; color:#4ade80; font-weight:800; text-transform:uppercase;">AKTIVES TRAINING • +50 XP/SATZ</div>
+                            <h2 style="margin:2px 0 0 0; font-size:21px;">${activeWorkout.catName}</h2>
                         </div>
                         <button class="btn-delete-icon" onclick="cancelActiveWorkout()" title="Training abbrechen">
                             <span class="material-symbols-rounded" style="color:var(--danger);">close</span>
                         </button>
                     </div>
+                    <div class="timers-row">
+                        <div class="timer-pill">
+                            <span class="material-symbols-rounded" style="font-size:16px;">fitness_center</span>
+                            <span>Training: <b id="live-workout-timer">${formatSecondsMMSS(activeWorkout.trainSeconds)}</b></span>
+                        </div>
+                        <div class="timer-pill pause-pill ${pauseActiveClass}" onclick="toggleWorkoutPauseMode()">
+                            <span class="material-symbols-rounded" style="font-size:16px;">${activeWorkout.isPaused ? 'play_arrow' : 'pause_circle'}</span>
+                            <span>${pauseLabel}: <b id="live-pause-timer">${formatSecondsMMSS(activeWorkout.pauseSeconds)}</b></span>
+                        </div>
+                    </div>
                 </div>
                 <div>${exBlocksHTML}</div>
-                <button class="btn-primary" style="width:100%; margin-top:12px; background:linear-gradient(135deg, #30d158 0%, #1f9d3d 100%); box-shadow: 0 8px 20px rgba(48, 209, 88, 0.35);" onclick="openFinishWorkoutModal()">
-                    Training beenden & ins Journal speichern
+                <button class="btn-primary" style="width:100%; margin-top:12px; background:linear-gradient(135deg, #30d158 0%, #1f9d3d 100%); box-shadow: 0 8px 20px rgba(48, 209, 88, 0.35);" onclick="finishWorkoutWithCelebration()">
+                    Training abschließen & XP sichern
                 </button>
             </div>`;
         }
@@ -2471,6 +3212,7 @@
             if (!activeWorkout) return;
             const s = activeWorkout.exercises[exIdx].sets[setIdx];
             s.done = !s.done;
+            // Wenn man einen Satz abhakt, kann man direkt Pause aktivieren oder weitertrainieren
             renderActiveWorkoutBanner();
         }
 
@@ -2492,26 +3234,45 @@
             renderActiveWorkoutBanner();
         }
 
+        function removeWorkoutSet(exIdx, setIdx) {
+            if (!activeWorkout) return;
+            const setsArr = activeWorkout.exercises[exIdx].sets;
+            setsArr.splice(setIdx, 1);
+            // Satznummern sauber neu durchnummerieren
+            setsArr.forEach((s, i) => { s.setNum = i + 1; });
+            renderActiveWorkoutBanner();
+        }
+
         function cancelActiveWorkout() {
-            if (confirm('Aktuelles Training wirklich ohne Speichern beenden?')) {
+            if (confirm('Aktuelles Training wirklich ohne Speichern abbrechen?')) {
                 activeWorkout = null;
                 if (workoutTimerInterval) clearInterval(workoutTimerInterval);
                 renderActiveWorkoutBanner();
             }
         }
 
-        function openFinishWorkoutModal() {
-            if (!activeWorkout) return;
-            const elapsedMinutes = Math.max(1, Math.round((Date.now() - activeWorkout.startTime) / 60000));
-            document.getElementById('input-workout-duration').value = elapsedMinutes;
-            document.getElementById('modal-finish-workout').classList.add('open');
+        function spawnConfettiParticles() {
+            const sheet = document.getElementById('celebration-sheet');
+            sheet.querySelectorAll('.confetti-piece').forEach(el => el.remove());
+            const colors = ['#30d158', '#0a84ff', '#ffd60a', '#ff375f', '#5e5ce6', '#64d2ff'];
+            for (let i = 0; i < 28; i++) {
+                const p = document.createElement('div');
+                p.className = 'confetti-piece';
+                p.style.left = Math.random() * 94 + 3 + '%';
+                p.style.background = colors[i % colors.length];
+                p.style.animationDelay = (Math.random() * 0.45) + 's';
+                sheet.appendChild(p);
+            }
         }
 
-        function confirmSaveWorkoutToJournal() {
+        function finishWorkoutWithCelebration() {
             if (!activeWorkout) return;
-            const durationMins = parseInt(document.getElementById('input-workout-duration').value) || 45;
+            if (workoutTimerInterval) clearInterval(workoutTimerInterval);
 
-            // Nur Übungen speichern, bei denen mindestens 1 Satz abgehakt wurde (oder falls keiner abgehakt wurde, alle)
+            const trainTimeFormatted = formatSecondsMMSS(activeWorkout.trainSeconds);
+            const pauseTimeFormatted = formatSecondsMMSS(activeWorkout.pauseSeconds);
+            const durationMins = Math.max(1, Math.round(activeWorkout.trainSeconds / 60));
+
             let anyChecked = false;
             activeWorkout.exercises.forEach(ex => {
                 if (ex.sets.some(s => s.done)) anyChecked = true;
@@ -2522,8 +3283,13 @@
                 sets: anyChecked ? ex.sets.filter(s => s.done) : ex.sets
             })).filter(ex => ex.sets.length > 0);
 
+            let completedSetsCount = 0;
+            loggedExercises.forEach(ex => { completedSetsCount += ex.sets.length; });
+            const earnedXP = completedSetsCount * XP_PER_WORKOUT_SET;
+
             journalData.unshift({
                 id: 'j_' + Date.now(),
+                dateKey: getDateKey(new Date()),
                 dateISO: new Date().toISOString(),
                 dateFormatted: new Date().toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric' }),
                 catId: activeWorkout.catId,
@@ -2531,16 +3297,33 @@
                 catIcon: activeWorkout.catIcon,
                 catColor: activeWorkout.catColor,
                 duration: durationMins,
+                trainTimeStr: trainTimeFormatted,
+                pauseTimeStr: pauseTimeFormatted,
+                earnedXP: earnedXP,
                 exercises: loggedExercises
             });
 
+            const finishedCatName = activeWorkout.catName;
             activeWorkout = null;
-            if (workoutTimerInterval) clearInterval(workoutTimerInterval);
 
             saveAll();
-            closeModals();
+            renderHome();
             renderFitness();
             renderJournal();
+
+            // Feier-Modal mit Trainingszeit, Pausenzeit & XP anzeigen
+            document.getElementById('celeb-cat-subtitle').innerText = `${finishedCatName} erfolgreich abgeschlossen!`;
+            document.getElementById('celeb-train-time').innerText = trainTimeFormatted;
+            document.getElementById('celeb-pause-time').innerText = pauseTimeFormatted;
+            document.getElementById('celeb-xp-earned').innerText = `+${earnedXP} XP`;
+            document.getElementById('celeb-sets-count').innerText = `${completedSetsCount} Sätze`;
+
+            document.getElementById('modal-celebrate-workout').classList.add('open');
+            spawnConfettiParticles();
+        }
+
+        function closeCelebrationAndOpenJournal() {
+            closeModals();
             switchTab('journal', document.getElementById('nav-journal'));
         }
 
@@ -2616,7 +3399,7 @@
             renderFitness();
         }
 
-        /* --- 4. JOURNAL REITER RENDERN (INKL. MUSKELGRUPPEN-FILTER) --- */
+        /* --- 4. JOURNAL REITER RENDERN (OHNE GESAMT-VOLUMEN, MIT SÄTZEN/XP & GRAPH) --- */
         function setJournalFilter(filterName) {
             selectedJournalFilter = filterName;
             renderJournal();
@@ -2626,8 +3409,8 @@
             const filterBar = document.getElementById('journal-filter-bar');
             const statsContainer = document.getElementById('journal-stats-container');
             const entriesContainer = document.getElementById('journal-entries-container');
+            const chartContainer = document.getElementById('journal-progression-chart');
 
-            // Alle verfügbaren Muskelgruppen sammeln
             const muscleNames = new Set();
             fitnessData.forEach(c => muscleNames.add(c.name));
             journalData.forEach(j => muscleNames.add(j.catName));
@@ -2639,26 +3422,25 @@
             });
             filterBar.innerHTML = filterHTML;
 
-            // Einträge nach gewählter Muskelgruppe filtern
             const filtered = selectedJournalFilter === 'ALL'
                 ? journalData
                 : journalData.filter(j => j.catName === selectedJournalFilter);
 
-            // Fortschritts-Statistik berechnen
             let totalSessions = filtered.length;
             let maxWeight = 0;
-            let totalVolume = 0;
+            let totalCompletedSets = 0;
 
             filtered.forEach(entry => {
                 entry.exercises.forEach(ex => {
+                    totalCompletedSets += (ex.sets ? ex.sets.length : 0);
                     ex.sets.forEach(s => {
                         const w = parseFloat(s.weight) || 0;
-                        const r = parseFloat(s.reps) || 0;
                         if (w > maxWeight) maxWeight = w;
-                        totalVolume += (w * r);
                     });
                 });
             });
+
+            const totalWorkoutXP = totalCompletedSets * XP_PER_WORKOUT_SET;
 
             statsContainer.innerHTML = `
                 <div class="journal-stat-box">
@@ -2670,10 +3452,27 @@
                     <div class="journal-stat-lbl">Max Gewicht</div>
                 </div>
                 <div class="journal-stat-box">
-                    <div class="journal-stat-val">${Math.round(totalVolume)} kg</div>
-                    <div class="journal-stat-lbl">Gesamt-Volumen</div>
+                    <div class="journal-stat-val" style="color:var(--accent-blue);">${totalCompletedSets} Sätze</div>
+                    <div class="journal-stat-lbl">+${totalWorkoutXP} XP verdient</div>
                 </div>
             `;
+
+            // Kraft-Verlaufs-Graph der letzten 6 Sessions (chronologisch)
+            const recentSessions = filtered.slice(0, 6).reverse();
+            if (recentSessions.length > 0) {
+                const cLabels = recentSessions.map(s => s.dateFormatted.split(',')[1]?.trim().slice(0, 6) || 'Tag');
+                const cWeights = recentSessions.map(s => {
+                    let mW = 0;
+                    s.exercises.forEach(ex => ex.sets.forEach(st => {
+                        const w = parseFloat(st.weight) || 0;
+                        if (w > mW) mW = w;
+                    }));
+                    return mW;
+                });
+                chartContainer.innerHTML = createSmoothSVGChart(cLabels, cWeights, '#0a84ff', 'kg');
+            } else {
+                chartContainer.innerHTML = `<p class="empty-hint" style="padding-top:35px;">Absolviere ein Training für deine Kraft-Kurve.</p>`;
+            }
 
             if (filtered.length === 0) {
                 entriesContainer.innerHTML = `
@@ -2691,8 +3490,10 @@
                 const cColor = entry.catColor || '#0a84ff';
                 const iconColor = cColor === '#111216' ? '#ffffff' : cColor;
 
+                let entrySetsCount = 0;
                 let exListHTML = '';
                 entry.exercises.forEach(ex => {
+                    entrySetsCount += (ex.sets ? ex.sets.length : 0);
                     let setsPills = '';
                     ex.sets.forEach((s, idx) => {
                         setsPills += `<span class="journal-set-tag">${idx + 1}. ${s.weight} kg × ${s.reps}</span>`;
@@ -2704,6 +3505,11 @@
                         </div>`;
                 });
 
+                const xpForEntry = entrySetsCount * XP_PER_WORKOUT_SET;
+                const timeInfo = entry.trainTimeStr
+                    ? `⏱ Training: ${entry.trainTimeStr} • ⏸ Pause: ${entry.pauseTimeStr || '00:00'}`
+                    : `⏱ ${entry.duration} Min.`;
+
                 html += `
                 <div class="bevel-card">
                     <div class="category-header" style="margin-bottom:8px;">
@@ -2712,9 +3518,12 @@
                                 <span class="material-symbols-rounded" style="font-size:20px;">${entry.catIcon || 'fitness_center'}</span>
                             </div>
                             <div>
-                                <h2 class="category-title">${entry.catName}</h2>
-                                <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
-                                    ${entry.dateFormatted} • ⏱ ${entry.duration} Min.
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <h2 class="category-title">${entry.catName}</h2>
+                                    <span class="xp-pill">+${xpForEntry} XP</span>
+                                </div>
+                                <div style="font-size:11.5px; color:var(--text-muted); margin-top:3px;">
+                                    ${entry.dateFormatted} • ${timeInfo}
                                 </div>
                             </div>
                         </div>
@@ -2732,10 +3541,12 @@
         function deleteJournalEntry(entryId) {
             journalData = journalData.filter(j => j.id !== entryId);
             saveAll();
+            renderHome();
+            renderFitness();
             renderJournal();
         }
 
-        /* --- 5. LIVE FIREBASE RANKING & NEUES INVITE SYSTEM --- */
+        /* --- 5. LIVE FIREBASE RANKING & INVITE SYSTEM --- */
         async function syncMyProfileToFirebase() {
             const myXP = calculateTotalXP();
             const myLvl = getLevelFromXP(myXP);
@@ -2753,9 +3564,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-            } catch (e) {
-                console.warn('Firebase Sync Hinweis:', e);
-            }
+            } catch (e) {}
         }
 
         async function linkFriendsInFirebase(friendCode) {
@@ -2765,7 +3574,6 @@
                 localStorage.setItem('apexfit_friend_ids', JSON.stringify(friendIds));
             }
             try {
-                // Gegenseitige Freundschaft in Firebase hinterlegen, damit BEIDE sich sofort sehen
                 await fetch(`${FIREBASE_DB_URL}/users/${myUserId}/friends/${friendCode}.json`, {
                     method: 'PUT',
                     body: JSON.stringify(true)
@@ -2774,9 +3582,7 @@
                     method: 'PUT',
                     body: JSON.stringify(true)
                 });
-            } catch (e) {
-                console.warn('Friend Link Fehler:', e);
-            }
+            } catch (e) {}
         }
 
         async function syncAndLoadLeaderboard(showSpinner = false) {
@@ -2786,7 +3592,6 @@
             await syncMyProfileToFirebase();
 
             try {
-                // 1. Eigene Freundesliste aus Firebase abrufen (falls uns jemand per Link hinzugefügt hat)
                 const friendsRes = await fetch(`${FIREBASE_DB_URL}/users/${myUserId}/friends.json`);
                 const remoteFriendsObj = await friendsRes.json();
                 if (remoteFriendsObj && typeof remoteFriendsObj === 'object') {
@@ -2798,7 +3603,6 @@
                     localStorage.setItem('apexfit_friend_ids', JSON.stringify(friendIds));
                 }
 
-                // 2. Live-Profile aller Freunde aus Firebase laden
                 const players = [
                     {
                         id: myUserId,
@@ -2878,7 +3682,6 @@
             container.innerHTML = html;
         }
 
-        /* --- INVITE MODAL (CODE & LINK) --- */
         function openInviteModal() {
             document.getElementById('my-friend-code-display').innerText = myUserId;
             document.getElementById('modal-invite').classList.add('open');
@@ -2956,13 +3759,11 @@
             syncAndLoadLeaderboard(true);
         }
 
-        // Prüfen, ob die App über einen Einladungs-Link (?invite=AF-XXXXX) geöffnet wurde
         async function checkIncomingInviteLink() {
             const params = new URLSearchParams(window.location.search);
             const invitedBy = params.get('invite');
             if (invitedBy) {
                 const cleanCode = invitedBy.toUpperCase().trim();
-                // URL oben im Browser wieder säubern
                 window.history.replaceState({}, document.title, window.location.pathname);
                 if (cleanCode && cleanCode !== myUserId) {
                     await linkFriendsInFirebase(cleanCode);
@@ -2988,10 +3789,13 @@
                 syncAndLoadLeaderboard(true);
             } else if (tabId === 'journal') {
                 renderJournal();
+            } else if (tabId === 'fitness') {
+                renderFitness();
+            } else if (tabId === 'home') {
+                renderHome();
             }
         }
 
-        // Automatische Hintergrund-Aktualisierung für das Ranking alle 20 Sekunden
         setInterval(() => {
             if (document.getElementById('view-leaderboard').classList.contains('active')) {
                 syncAndLoadLeaderboard(false);
@@ -2999,6 +3803,7 @@
         }, 20000);
 
         // Initialer Start
+        checkNotesAutoCleanup();
         initPickers();
         renderHome();
         renderFitness();
